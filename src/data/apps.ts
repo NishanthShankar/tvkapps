@@ -36,51 +36,63 @@ export const apps: AppRecord[] = [
     slug: 'makkal-kural',
     name: 'Makkal Kural',
     tamilName: 'மக்கள் குரல்',
-    category: 'Citizen voice',
-    tagline: "Every citizen's voice, on record.",
+    category: 'Requests & reviews',
+    tagline: 'File it. Fix it. Rate it.',
     shortDescription:
-      'A direct line between people and the offices that serve them - file a grievance, follow it end to end, and hold the system accountable.',
+      'Two tabs for the way you actually deal with government - Requests to file when something is broken, Reviews to rate when something is done. Resolved requests flow into reviews automatically.',
     longDescription:
-      'Makkal Kural turns the long walk to a government office into a thirty-second post. Citizens raise issues with photos and location, the right department receives it instantly, and every step is timestamped in public view. No more lost paper trails, no more guessing where a complaint went.',
+      'Makkal Kural has two tabs and one purpose. File a request when a service fails - we use your approximate location to find the constituency and read your text to tag the department, then route it to the right office and track it through to resolution. When it gets resolved, you leave a review - and the whole arc lands on the public timeline. Or skip the request and review an office you visited directly. Either way, the leaderboard your MLA sees is the same one you see.',
     accent: 'rust',
     layout: 'hero',
     features: [
       {
-        title: 'File in 30 seconds',
-        body: 'Voice note, photo, or text. Auto-routed to the right department by location and category.',
+        title: 'Two tabs: Requests and Reviews',
+        body: 'File a request when a counter visit fails. Leave a review when it succeeds. Resolved requests roll into the public Reviews feed automatically - no double-entry.',
       },
       {
-        title: 'Live status, always',
-        body: 'Every action by every officer is timestamped. You see exactly who is holding things up.',
+        title: 'Location finds your constituency',
+        body: 'Coarse network geolocation maps you to one of Tamil Nadu’s 234 assembly constituencies. No precise GPS. No street-level tracking. You can override the pick manually.',
       },
       {
-        title: 'Public accountability',
-        body: 'Resolution rates per ward, per department, per officer - open data, refreshed daily.',
+        title: 'Text finds the department',
+        body: 'Just write what happened. An on-device Tamil + English classifier tags the right department, office, and service - so you never scroll a list of 240 departments.',
       },
       {
-        title: 'Tamil-first interface',
-        body: 'Designed for voice and Tamil text first. English is the translation, not the default.',
+        title: 'Public by design - across web, Android, iOS',
+        body: 'One identity across three surfaces. Reviews and resolved-request scorecards are aggregated by office, department, and constituency. Open data, refreshed nightly.',
       },
     ],
     stats: [
-      { value: '24h', label: 'Median first response' },
-      { value: '11', label: 'Districts piloting today' },
-      { value: '100%', label: 'Status updates in public view' },
+      { value: '234', label: 'Constituencies covered' },
+      { value: '92%', label: 'Classifier accuracy' },
+      { value: '<5s', label: 'Avg. tag time per post' },
     ],
     faq: [
       {
-        q: 'Is my identity public?',
-        a: 'No. Your name and contact are visible only to the assigned officer. The grievance itself is public so others can see patterns.',
+        q: 'How do Requests and Reviews relate?',
+        a: 'Requests are filed when something goes wrong - they are routed and tracked. When a request is marked resolved, the app prompts you to leave a star rating and a short note, and that entry then appears in the Reviews tab too. Reviews can also be posted directly without a prior request.',
       },
       {
-        q: 'What if my issue is not resolved?',
-        a: 'After the SLA expires, the complaint auto-escalates to the next level and a red flag appears against the officer publicly.',
+        q: 'How does location find my constituency without GPS?',
+        a: 'We use coarse network geolocation accurate to roughly 2 km. That’s enough to identify one of Tamil Nadu’s 234 assembly constituencies, not enough to know your street. You can also pick the constituency manually.',
+      },
+      {
+        q: 'How does the department classifier work?',
+        a: 'A small Indic NLP model runs on-device for short posts. Longer posts go to a hosted Tamil + English model, never linked to your identity, location, or post history during inference.',
+      },
+      {
+        q: 'Can I post anonymously?',
+        a: 'Yes - anonymous is the default. Verified handles get a higher trust weight on aggregated rankings, but anonymous posts count too.',
+      },
+      {
+        q: 'How do you stop fake reviews and frivolous requests?',
+        a: 'One verified mobile number per identity. New accounts are weighted down until they age. An anomaly detector flags rings and bots, and we publish the false-positive rate openly.',
       },
     ],
     meta: {
-      title: 'Makkal Kural - Tamil Nadu citizen grievance app',
+      title: 'Makkal Kural - Requests and reviews for Tamil Nadu government offices',
       description:
-        'File grievances with photo and location. Track every step in public view. Built for Tamil Nadu citizens, Tamil-first.',
+        'Two-tab citizen platform: file a request when a service fails, leave a review when it’s done. Approximate location finds your constituency, text finds the department. Web, Android, iOS.',
       keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
     },
   },
