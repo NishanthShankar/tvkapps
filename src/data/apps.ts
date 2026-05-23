@@ -41,7 +41,7 @@ export const apps: AppRecord[] = [
     shortDescription:
       'Two tabs for the way you actually deal with government - Requests to file when something is broken, Reviews to rate when something is done. Resolved requests flow into reviews automatically.',
     longDescription:
-      'Makkal Kural has two tabs and one purpose. File a request when a service fails - we use your approximate location to find the constituency and read your text to tag the department, then route it to the right office and track it through to resolution. When it gets resolved, you leave a review - and the whole arc lands on the public timeline. Or skip the request and review an office you visited directly. Either way, the leaderboard your MLA sees is the same one you see.',
+      "Makkal Kural has two tabs and one purpose. File a request when a service fails - we use your approximate location to find the constituency and read your text to tag the department, then route it to the right office and track it through to resolution. When it gets resolved, you leave a review - and the whole arc lands on the public timeline. Each issue is shown on the home feed of only the people in its scope (home, street, ward, constituency, district, or state) so timelines stay relevant - and when the government needs public consensus before acting, only voters inside that scope can upvote or downvote.",
     accent: 'rust',
     layout: 'hero',
     features: [
@@ -58,8 +58,16 @@ export const apps: AppRecord[] = [
         body: 'Just write what happened. An on-device Tamil + English classifier tags the right department, office, and service - so you never scroll a list of 240 departments.',
       },
       {
-        title: 'Public by design - across web, Android, iOS',
-        body: 'One identity across three surfaces. Reviews and resolved-request scorecards are aggregated by office, department, and constituency. Open data, refreshed nightly.',
+        title: 'Scope-aware visibility',
+        body: 'Every issue is auto-assigned a scope - home, street, ward, constituency, district, or state - and shown on the home feed of only the people inside that scope. Anyone with the link can still view.',
+      },
+      {
+        title: 'Voter-eligible voting',
+        body: "When a request needs public consensus before action, only voters inside the issue's scope can upvote or downvote - verified via voter ID at signup. Everyone else sees the running tally.",
+      },
+      {
+        title: 'Web, Android, iOS - one identity',
+        body: 'Same identity across three surfaces. Reviews and resolved-request scorecards aggregated by office, department, and constituency. Open data, refreshed nightly.',
       },
     ],
     stats: [
@@ -71,6 +79,18 @@ export const apps: AppRecord[] = [
       {
         q: 'How do Requests and Reviews relate?',
         a: 'Requests are filed when something goes wrong - they are routed and tracked. When a request is marked resolved, the app prompts you to leave a star rating and a short note, and that entry then appears in the Reviews tab too. Reviews can also be posted directly without a prior request.',
+      },
+      {
+        q: "Why can't I see all issues on my home feed?",
+        a: "Each issue is shown on the home feed of only the people in its scope - so a streetlight on someone else's street stays on their feed, not yours. You can still open any issue if you have a link or the ID. The goal is timeline hygiene, not secrecy.",
+      },
+      {
+        q: 'How is the scope of an issue decided?',
+        a: 'The same Tamil + English classifier that picks the department also picks the smallest reasonable scope (home, street, ward, constituency, district, state). If the confidence is below the threshold, the requester picks the scope from a shortlist before the issue goes live.',
+      },
+      {
+        q: 'Who can upvote and downvote a request?',
+        a: 'Voting is restricted to people inside the request\'s scope - confirmed via voter ID at signup. A constituency-level request can be voted on only by voters registered in that constituency. Everyone else sees the running totals but can\'t move them. This stops vote-brigading by people outside the issue\'s actual community.',
       },
       {
         q: 'How does location find my constituency without GPS?',

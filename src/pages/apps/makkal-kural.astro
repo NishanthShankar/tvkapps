@@ -61,6 +61,51 @@ const leaderboard = [
   { constituency: 'Coimbatore North · TN-99', dept: 'TN Water Supply', score: 2.2, n: 156 },
 ];
 
+const scopeLevels = [
+  {
+    label: 'Home',
+    audience: '1',
+    audienceNote: 'just you',
+    barPct: 4,
+    example: 'The corporation dug up the sewage line into my compound and never refilled it.',
+  },
+  {
+    label: 'Street',
+    audience: '~80',
+    audienceNote: 'people on your street',
+    barPct: 12,
+    example: 'Streetlight at the end of 4th Cross hasn’t worked for a month.',
+  },
+  {
+    label: 'Ward',
+    audience: '~5K',
+    audienceNote: 'ward residents',
+    barPct: 26,
+    example: 'Garbage trucks haven’t come to Ward 17 for two weeks.',
+  },
+  {
+    label: 'Constituency',
+    audience: '~250K',
+    audienceNote: 'registered voters',
+    barPct: 48,
+    example: 'MLA hasn’t held a janata darshan in six months.',
+  },
+  {
+    label: 'District',
+    audience: '~4M',
+    audienceNote: 'district residents',
+    barPct: 72,
+    example: 'District hospital has been out of HBV vaccine for the entire month.',
+  },
+  {
+    label: 'State',
+    audience: '80M',
+    audienceNote: 'every citizen',
+    barPct: 100,
+    example: 'The new education policy reduces Tamil-medium instruction hours.',
+  },
+];
+
 const ldJson = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -438,8 +483,191 @@ const faqJson = {
     </div>
   </section>
 
+  <!-- SCOPE - WHO SEES WHAT -->
+  <section class="relative bg-[var(--color-cream)] py-24 md:py-32 overflow-hidden">
+    <div aria-hidden="true" class="absolute -top-32 -right-20 h-[420px] w-[420px] rounded-full blur-3xl opacity-15"
+      style="background: radial-gradient(closest-side, var(--color-rust), transparent 70%);"></div>
+
+    <div class="container-x relative">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-14 md:mb-16">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow text-[var(--color-rust)]">Who sees what</span>
+          <h2 class="mt-3 font-display text-[36px] sm:text-[56px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
+            Scope,<br/>
+            <span class="italic font-[450] text-[var(--color-rust-deep)]">not secrecy.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md leading-relaxed">
+            A blocked drain on your compound is a Home issue. A streetlight is a Street issue. A district hospital running
+            out of vaccines is a District issue. Makkal Kural shows each issue on the home feed of only the people inside
+            its scope - but anyone with the link can still view, comment, and follow.
+          </p>
+        </div>
+      </div>
+
+      <!-- 6-level scope ladder -->
+      <div class="rounded-2xl border border-[var(--color-line)] overflow-hidden divide-y divide-[var(--color-line)] bg-[var(--color-cream-2)]/40">
+        {scopeLevels.map((level, i) => (
+          <article class="p-5 md:p-7">
+            <div class="grid grid-cols-12 gap-y-3 md:gap-6 items-baseline">
+              <!-- left: level + label -->
+              <div class="col-span-12 md:col-span-3 flex items-baseline gap-3">
+                <span class="font-mono text-[11px] text-[var(--color-rust)] shrink-0">L.0{i + 1}</span>
+                <span class="font-display text-xl md:text-2xl tracking-tight">{level.label}</span>
+              </div>
+
+              <!-- middle: example -->
+              <p class="col-span-12 md:col-span-6 text-[13.5px] text-[var(--color-ink)]/75 leading-relaxed italic">
+                "{level.example}"
+              </p>
+
+              <!-- right: audience + bar -->
+              <div class="col-span-12 md:col-span-3 flex flex-col gap-1.5">
+                <div class="flex items-baseline justify-between gap-3">
+                  <span class="font-display text-xl tracking-tight text-[var(--color-rust)]">{level.audience}</span>
+                  <span class="text-[11px] text-[var(--color-ink)]/55 text-right">{level.audienceNote}</span>
+                </div>
+                <div class="h-1 w-full rounded-full bg-[var(--color-cream-3)] overflow-hidden">
+                  <div class="h-full rounded-full bg-[var(--color-rust)] transition-all" style={`width: ${level.barPct}%`}></div>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- AI CONFIDENCE + USER CONFIRMATION -->
+      <div class="mt-16 grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-10">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow text-[var(--color-rust)]">How the scope is decided</span>
+          <h3 class="mt-3 font-display text-[28px] sm:text-[40px] md:text-[48px] leading-[1.05] tracking-[-0.02em] max-w-2xl">
+            AI picks the scope.<br/>
+            <span class="italic font-[450]">You confirm when in doubt.</span>
+          </h3>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- high confidence -->
+        <article class="rounded-2xl bg-[var(--color-cream-2)] border border-[var(--color-line)] p-6 md:p-8">
+          <div class="flex items-center justify-between gap-3 mb-5 flex-wrap">
+            <span class="rounded-full bg-[color-mix(in_srgb,var(--color-leaf)_18%,transparent)] text-[var(--color-leaf-deep)] px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider">High confidence</span>
+            <span class="font-mono text-[11px] text-[var(--color-ink)]/45">Auto-posted</span>
+          </div>
+          <p class="text-[14px] text-[var(--color-ink)]/85 leading-relaxed italic">"Streetlight at the end of 4th Cross hasn’t worked for a month."</p>
+          <div class="mt-5 flex items-center justify-between rounded-xl bg-[var(--color-cream)] border border-[var(--color-line)] px-4 py-3 gap-3 flex-wrap">
+            <span class="text-[11.5px] text-[var(--color-ink)]/60 uppercase tracking-wider">Detected scope</span>
+            <div class="flex items-center gap-2">
+              <span class="font-medium text-[var(--color-leaf-deep)]">Street</span>
+              <span class="font-mono text-[11px] text-[var(--color-ink)]/45">92%</span>
+              <svg class="text-[var(--color-leaf)]" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+            </div>
+          </div>
+          <p class="mt-3 text-[12px] text-[var(--color-ink)]/55">Confidence above 80% - posted directly to the Street feed.</p>
+        </article>
+
+        <!-- low confidence + user confirmation -->
+        <article class="rounded-2xl bg-[var(--color-cream-2)] border border-[var(--color-line)] p-6 md:p-8">
+          <div class="flex items-center justify-between gap-3 mb-5 flex-wrap">
+            <span class="rounded-full bg-[color-mix(in_srgb,var(--color-gold)_24%,transparent)] text-[var(--color-gold-deep)] px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider">Confirm scope</span>
+            <span class="font-mono text-[11px] text-[var(--color-ink)]/45">User picks</span>
+          </div>
+          <p class="text-[14px] text-[var(--color-ink)]/85 leading-relaxed italic">"The bus stop near the school has been broken for three weeks."</p>
+          <div class="mt-5 rounded-xl bg-[var(--color-cream)] border border-[var(--color-line)] p-4">
+            <p class="text-[11.5px] text-[var(--color-ink)]/55 uppercase tracking-wider mb-2.5">Pick the right scope <span class="font-mono normal-case text-[10.5px] text-[var(--color-ink)]/40 tracking-normal">conf. 64%</span></p>
+            <div class="flex flex-wrap items-center gap-2">
+              <button class="rounded-full bg-[var(--color-rust)] text-[var(--color-cream)] px-3 py-1.5 text-[12px] font-medium">Ward</button>
+              <button class="rounded-full bg-[var(--color-cream-2)] border border-[var(--color-line)] px-3 py-1.5 text-[12px] text-[var(--color-ink)]/70">Street</button>
+              <button class="rounded-full bg-[var(--color-cream-2)] border border-[var(--color-line)] px-3 py-1.5 text-[12px] text-[var(--color-ink)]/70">Constituency</button>
+            </div>
+          </div>
+          <p class="mt-3 text-[12px] text-[var(--color-ink)]/55">Below the threshold - the requester picks from a shortlist. The model learns from each correction.</p>
+        </article>
+      </div>
+
+      <!-- VOTER-ELIGIBLE VOTING -->
+      <div class="mt-20 grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-10">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow text-[var(--color-rust)]">Voter ID, not just any ID</span>
+          <h3 class="mt-3 font-display text-[28px] sm:text-[40px] md:text-[48px] leading-[1.05] tracking-[-0.02em] max-w-2xl">
+            Only the affected<br/>
+            <span class="italic font-[450]">get to vote on it.</span>
+          </h3>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md leading-relaxed">
+            Your voter ID tells the app your street, ward, and constituency. When a request goes out for public consensus,
+            only the voters inside the relevant scope can upvote or downvote. Everyone else sees the running tally - just can’t move it.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- eligible voter -->
+        <article class="rounded-2xl bg-[var(--color-cream-2)] border border-[var(--color-line)] p-6 md:p-8">
+          <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+            <span class="rounded-full bg-[color-mix(in_srgb,var(--color-leaf)_18%,transparent)] text-[var(--color-leaf-deep)] px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider">You can vote</span>
+            <span class="font-mono text-[11px] text-[var(--color-ink)]/55">Voter · Egmore · TN-15</span>
+          </div>
+          <p class="text-[14px] text-[var(--color-ink)]/85 leading-relaxed italic">"The MLA's office hasn't held a janata darshan in six months."</p>
+          <div class="mt-3 flex items-center gap-2 text-[11px] text-[var(--color-ink)]/50">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            <span>Scope: <span class="font-medium text-[var(--color-ink)]/75">Constituency · Egmore · TN-15</span></span>
+          </div>
+          <div class="mt-5 flex items-center gap-3 flex-wrap">
+            <button class="flex items-center gap-2 rounded-full bg-[var(--color-rust)] text-[var(--color-cream)] px-4 py-2.5 text-[13px] font-medium hover:bg-[var(--color-rust-deep)] transition">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+              <span>1,247</span>
+            </button>
+            <button class="flex items-center gap-2 rounded-full bg-[var(--color-cream)] border border-[var(--color-line)] text-[var(--color-ink)] px-4 py-2.5 text-[13px] font-medium hover:bg-[var(--color-cream-2)] transition">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+              <span>89</span>
+            </button>
+            <span class="ml-auto text-[11px] text-[var(--color-leaf-deep)] font-medium">14:1 in favour</span>
+          </div>
+        </article>
+
+        <!-- view-only -->
+        <article class="rounded-2xl bg-[var(--color-ink)] text-[var(--color-cream)] p-6 md:p-8 relative overflow-hidden">
+          <div aria-hidden="true" class="absolute -top-20 -right-20 h-[240px] w-[240px] rounded-full blur-3xl opacity-20"
+            style="background: radial-gradient(closest-side, var(--color-rust), transparent 70%);"></div>
+          <div class="relative">
+            <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+              <span class="rounded-full bg-[var(--color-cream)]/12 border border-[var(--color-cream)]/20 px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider">View only</span>
+              <span class="font-mono text-[11px] text-[var(--color-cream)]/55">Voter · Coimbatore S · TN-100</span>
+            </div>
+            <p class="text-[14px] text-[var(--color-cream)]/85 leading-relaxed italic">"The MLA's office hasn't held a janata darshan in six months."</p>
+            <div class="mt-3 flex items-center gap-2 text-[11px] text-[var(--color-cream)]/50">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+              <span>Scope: <span class="font-medium text-[var(--color-cream)]/80">Constituency · Egmore · TN-15</span></span>
+            </div>
+            <div class="mt-5 flex items-center gap-3 flex-wrap">
+              <div class="flex items-center gap-2 rounded-full bg-[var(--color-cream)]/8 border border-[var(--color-cream)]/15 text-[var(--color-cream)]/70 px-4 py-2.5 text-[13px] font-medium cursor-not-allowed">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                <span>1,247</span>
+              </div>
+              <div class="flex items-center gap-2 rounded-full bg-[var(--color-cream)]/8 border border-[var(--color-cream)]/15 text-[var(--color-cream)]/70 px-4 py-2.5 text-[13px] font-medium cursor-not-allowed">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                <span>89</span>
+              </div>
+              <span class="ml-auto inline-flex items-center gap-1.5 text-[11px] text-[var(--color-cream)]/55">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Outside scope
+              </span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <p class="mt-8 text-center text-[12.5px] text-[var(--color-ink)]/55 max-w-2xl mx-auto">
+        Relevant voters are notified to weigh in. The government gets a clean consensus signal from the actually-affected - not the loudest internet quote.
+      </p>
+    </div>
+  </section>
+
   <!-- LIVE FEED SAMPLE -->
-  <section class="bg-[var(--color-cream)] py-24 md:py-32">
+  <section class="bg-[var(--color-cream-2)] py-24 md:py-32">
     <div class="container-x">
       <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-12">
         <div class="col-span-12 md:col-span-7">
@@ -491,7 +719,7 @@ const faqJson = {
   </section>
 
   <!-- LEADERBOARD PREVIEW -->
-  <section class="relative py-24 md:py-32 bg-[var(--color-cream-2)]">
+  <section class="relative py-24 md:py-32 bg-[var(--color-cream)]">
     <div class="container-x">
       <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-start">
         <div class="col-span-12 md:col-span-5">
@@ -543,7 +771,7 @@ const faqJson = {
   </section>
 
   <!-- FEATURES -->
-  <section class="bg-[var(--color-cream)] py-24 md:py-32">
+  <section class="bg-[var(--color-cream-2)] py-24 md:py-32">
     <div class="container-x">
       <div class="grid grid-cols-12 gap-y-8 md:gap-8 items-end mb-12">
         <div class="col-span-12 md:col-span-7">
