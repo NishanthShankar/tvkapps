@@ -1,0 +1,144 @@
+---
+import { getApp } from '../../data/apps';
+const app = getApp('makkal-kural')!;
+---
+<section id="makkal-kural" class="relative isolate overflow-hidden bg-[var(--color-ink)] text-[var(--color-cream)] grain">
+  <!-- subtle red wash -->
+  <div aria-hidden="true" class="absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full blur-3xl opacity-25"
+    style="background: radial-gradient(closest-side, var(--color-rust), transparent 70%);"></div>
+
+  <div class="container-x relative py-24 md:py-32">
+    <!-- top label row -->
+    <div class="grid grid-cols-12 gap-6 mb-16">
+      <div class="col-span-12 md:col-span-6 flex items-center gap-3">
+        <span class="eyebrow text-[var(--color-rust)]">App 01 &nbsp;/&nbsp; {app.category}</span>
+      </div>
+      <div class="col-span-12 md:col-span-6 md:text-right">
+        <span class="font-tamil text-lg text-[var(--color-cream)]/55">{app.tamilName}</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-12 gap-8 md:gap-12 items-center">
+      <!-- left: editorial -->
+      <div class="col-span-12 lg:col-span-7 reveal">
+        <h2 class="font-display text-[44px] sm:text-[64px] md:text-[80px] leading-[0.98] tracking-[-0.02em]">
+          {app.name}.<br/>
+          <span class="italic font-[450] text-[var(--color-rust)]">{app.tagline}</span>
+        </h2>
+
+        <p class="mt-8 max-w-xl text-[17px] leading-[1.6] text-[var(--color-cream)]/75">
+          {app.longDescription}
+        </p>
+
+        <ol class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6 max-w-2xl">
+          {app.features.map((f, i) => (
+            <li class="border-t border-[var(--color-cream)]/15 pt-4">
+              <span class="text-[var(--color-rust)] font-mono text-xs">F.0{i + 1}</span>
+              <p class="font-medium text-[16px] mt-1.5">{f.title}</p>
+              <p class="mt-1 text-[14px] text-[var(--color-cream)]/65 leading-relaxed">{f.body}</p>
+            </li>
+          ))}
+        </ol>
+
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a href={`/apps/${app.slug}`} class="btn bg-[var(--color-rust)] text-[var(--color-cream)] hover:bg-[var(--color-rust-deep)]">
+            Open the {app.name} page
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#download" class="btn border border-[var(--color-cream)]/25 text-[var(--color-cream)] hover:bg-[var(--color-cream)]/10">
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- right: phone mockup -->
+      <div class="col-span-12 lg:col-span-5 reveal">
+        <div class="relative mx-auto max-w-[300px]">
+          <!-- phone frame -->
+          <div class="device relative bg-[#0a0a0a] p-3 rounded-[40px]">
+            <div class="rounded-[28px] overflow-hidden bg-[var(--color-cream)] text-[var(--color-ink)] h-[580px] flex flex-col">
+              <!-- status bar -->
+              <div class="flex items-center justify-between px-5 py-2.5 text-[11px] font-medium">
+                <span>9:41</span>
+                <span class="flex items-center gap-1">
+                  <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-ink)]"></span>
+                  <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-ink)]"></span>
+                  <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-ink)]/30"></span>
+                </span>
+              </div>
+              <!-- app header -->
+              <div class="px-5 pt-2 pb-4">
+                <p class="font-tamil text-[11px] text-[var(--color-ink)]/50">மக்கள் குரல்</p>
+                <h4 class="font-display text-[22px] leading-tight">Your grievances</h4>
+              </div>
+              <!-- list of grievances -->
+              <div class="px-3 space-y-2.5 overflow-hidden">
+                <div class="rounded-2xl bg-[var(--color-cream-2)] p-3.5">
+                  <div class="flex justify-between items-start">
+                    <div>
+                      <p class="text-[11px] uppercase tracking-wider text-[var(--color-rust)] font-semibold">In progress</p>
+                      <p class="text-[13px] font-medium mt-0.5">Streetlight - 4th cross</p>
+                    </div>
+                    <span class="text-[10px] text-[var(--color-ink)]/50">2d ago</span>
+                  </div>
+                  <div class="mt-3 h-1 rounded-full bg-[var(--color-cream-3)] overflow-hidden">
+                    <div class="h-full w-2/3 bg-[var(--color-rust)]"></div>
+                  </div>
+                  <p class="mt-2 text-[10.5px] text-[var(--color-ink)]/60">Assigned to AE, Ward 17</p>
+                </div>
+
+                <div class="rounded-2xl bg-[var(--color-cream-2)] p-3.5">
+                  <div class="flex justify-between items-start">
+                    <div>
+                      <p class="text-[11px] uppercase tracking-wider text-[var(--color-leaf)] font-semibold">Resolved</p>
+                      <p class="text-[13px] font-medium mt-0.5">Garbage pickup missed</p>
+                    </div>
+                    <span class="text-[10px] text-[var(--color-ink)]/50">6d ago</span>
+                  </div>
+                  <p class="mt-2 text-[10.5px] text-[var(--color-ink)]/60">Cleared 11:42, photo uploaded</p>
+                </div>
+
+                <div class="rounded-2xl bg-[var(--color-cream-2)] p-3.5">
+                  <div class="flex justify-between items-start">
+                    <div>
+                      <p class="text-[11px] uppercase tracking-wider text-amber-700 font-semibold">Escalated</p>
+                      <p class="text-[13px] font-medium mt-0.5">Water connection delay</p>
+                    </div>
+                    <span class="text-[10px] text-[var(--color-ink)]/50">9d ago</span>
+                  </div>
+                  <p class="mt-2 text-[10.5px] text-[var(--color-ink)]/60">Auto-escalated to EE</p>
+                </div>
+              </div>
+
+              <!-- FAB -->
+              <div class="mt-auto px-5 pb-5">
+                <button class="w-full rounded-full bg-[var(--color-ink)] text-[var(--color-cream)] py-3 text-[13px] font-medium flex items-center justify-center gap-2">
+                  <span>New grievance</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- floating callout -->
+          <div class="absolute -left-10 top-1/3 hidden md:block">
+            <div class="rounded-xl bg-[var(--color-cream)] text-[var(--color-ink)] px-3 py-2 shadow-xl text-[11px] font-medium">
+              <p class="text-[var(--color-rust)] text-[10px] uppercase tracking-wider">Avg. response</p>
+              <p class="font-display text-xl">24h</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- stats strip -->
+    <div class="mt-24 grid grid-cols-3 border-t border-[var(--color-cream)]/15">
+      {app.stats.map((s) => (
+        <div class="border-r last:border-r-0 border-[var(--color-cream)]/15 py-8 pr-6">
+          <p class="font-display text-3xl md:text-5xl tracking-[-0.02em]">{s.value}</p>
+          <p class="text-xs uppercase tracking-wider text-[var(--color-cream)]/55 mt-2">{s.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import HomeHero from '../components/sections/HomeHero.astro';
+import MakkalKuralSection from '../components/sections/MakkalKuralSection.astro';
+import NilamSection from '../components/sections/NilamSection.astro';
+import ThittamSection from '../components/sections/ThittamSection.astro';
+import Principles from '../components/sections/Principles.astro';
+import ClosingCTA from '../components/sections/ClosingCTA.astro';
+import { apps } from '../data/apps';
+
+const title = 'tvkapps - A suite of citizen apps for Tamil Nadu';
+const description =
+  'A Tamil-first, open-source suite of apps for Tamil Nadu citizens: land records, citizen grievance, welfare scheme discovery, and more.';
+
+const ldJson = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'tvkapps',
+  url: 'https://tvkapps.example',
+  description,
+  sameAs: [],
+};
+
+const itemListJson = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: apps.map((a, i) => ({
+    '@type': 'SoftwareApplication',
+    position: i + 1,
+    name: a.name,
+    description: a.shortDescription,
+    applicationCategory: a.category,
+    operatingSystem: 'Android',
+    url: `https://tvkapps.example/apps/${a.slug}`,
+  })),
+};
+---
+<Base title={title} description={description}>
+  <section id="suite" class="sr-only" aria-hidden="true"></section>
+  <HomeHero />
+  <MakkalKuralSection />
+  <NilamSection />
+  <ThittamSection />
+  <Principles />
+  <ClosingCTA />
+
+  <script type="application/ld+json" set:html={JSON.stringify(ldJson)} />
+  <script type="application/ld+json" set:html={JSON.stringify(itemListJson)} />
+</Base>

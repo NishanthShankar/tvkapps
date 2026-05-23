@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="Page not found - tvkapps"
+  description="The page you're looking for doesn't exist."
+>
+  <section class="relative overflow-hidden py-32 md:py-40">
+    <div aria-hidden="true" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full blur-3xl opacity-25"
+      style="background: radial-gradient(closest-side, var(--color-rust), transparent 70%);"></div>
+    <div class="container-x relative text-center max-w-2xl mx-auto">
+      <span class="eyebrow text-[var(--color-ink)]/55 inline-flex justify-center">Error 404</span>
+      <h1 class="mt-4 font-display text-[88px] md:text-[140px] leading-[0.95] tracking-[-0.025em]">
+        Not <span class="italic font-[450] text-[var(--color-rust)]">found.</span>
+      </h1>
+      <p class="mt-6 text-[17px] text-[var(--color-ink)]/70">
+        The page you're looking for doesn't exist - or has moved. Try the home page or one of the apps.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <a href="/" class="btn btn-ink">Back to home</a>
+        <a href="/#suite" class="btn btn-ghost">See the apps</a>
+      </div>
+    </div>
+  </section>
+</Base>

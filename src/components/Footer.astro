@@ -1,0 +1,54 @@
+---
+import { apps } from '../data/apps';
+const year = new Date().getFullYear();
+---
+<footer class="relative mt-24 border-t border-[var(--color-line)] bg-[var(--color-cream-2)]">
+  <div class="container-x py-16 grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <div>
+      <a href="/" class="flex items-center gap-2 mb-4">
+        <span class="grid h-7 w-7 place-items-center rounded-md bg-[var(--color-ink)] text-[var(--color-cream)] font-display text-[15px] leading-none">t</span>
+        <span class="text-[15px] font-medium tracking-tight">tvk<span class="text-[var(--color-rust)]">/</span>apps</span>
+      </a>
+      <p class="font-display text-[22px] leading-[1.2] max-w-sm tracking-tight">
+        A suite of citizen apps for the way Tamil Nadu actually lives.
+      </p>
+      <p class="mt-6 text-sm text-[var(--color-ink)]/60 max-w-sm">
+        Built open-source, designed Tamil-first, hosted on Indian infrastructure.
+      </p>
+    </div>
+
+    <div>
+      <p class="eyebrow text-[var(--color-ink)]/60">Apps</p>
+      <ul class="mt-4 space-y-2 text-sm">
+        {apps.map((a) => (
+          <li><a href={`/apps/${a.slug}`} class="hover:text-[var(--color-rust)] transition">{a.name}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <p class="eyebrow text-[var(--color-ink)]/60">Project</p>
+      <ul class="mt-4 space-y-2 text-sm">
+        <li><a href="/#suite" class="hover:text-[var(--color-rust)] transition">The suite</a></li>
+        <li><a href="/#principles" class="hover:text-[var(--color-rust)] transition">Principles</a></li>
+        <li><a href="#" class="hover:text-[var(--color-rust)] transition">GitHub</a></li>
+        <li><a href="#" class="hover:text-[var(--color-rust)] transition">Press kit</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="eyebrow text-[var(--color-ink)]/60">Contact</p>
+      <ul class="mt-4 space-y-2 text-sm">
+        <li><a href="mailto:hello@tvkapps.example" class="hover:text-[var(--color-rust)] transition">hello@tvkapps.example</a></li>
+        <li><a href="#" class="hover:text-[var(--color-rust)] transition">Twitter / X</a></li>
+        <li><a href="#" class="hover:text-[var(--color-rust)] transition">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="hairline"></div>
+  <div class="container-x py-6 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between text-xs text-[var(--color-ink)]/55">
+    <p>&copy; {year} tvkapps. Open source under MIT.</p>
+    <p class="font-tamil">தமிழ்நாட்டுக்காக, தமிழர்களால்.</p>
+  </div>
+</footer>

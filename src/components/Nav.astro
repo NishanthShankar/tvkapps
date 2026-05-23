@@ -1,0 +1,37 @@
+---
+import { apps } from '../data/apps';
+---
+<header class="sticky top-0 z-50 backdrop-blur-md bg-[color-mix(in_srgb,var(--color-cream)_82%,transparent)] border-b border-[var(--color-line)]">
+  <div class="container-x flex h-16 items-center justify-between">
+    <a href="/" class="flex items-center gap-2 group">
+      <span class="grid h-7 w-7 place-items-center rounded-md bg-[var(--color-ink)] text-[var(--color-cream)] font-display text-[15px] leading-none">t</span>
+      <span class="text-[15px] font-medium tracking-tight">
+        tvk<span class="text-[var(--color-rust)]">/</span>apps
+      </span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-1 text-sm">
+      {apps.map((a) => (
+        <a
+          href={`/apps/${a.slug}`}
+          class="px-3 py-2 rounded-full text-[var(--color-ink)]/70 hover:text-[var(--color-ink)] hover:bg-[var(--color-cream-2)] transition"
+        >
+          {a.name}
+        </a>
+      ))}
+      <a href="/#suite" class="px-3 py-2 rounded-full text-[var(--color-ink)]/70 hover:text-[var(--color-ink)] hover:bg-[var(--color-cream-2)] transition">
+        The suite
+      </a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="/#suite" class="hidden sm:inline-flex btn btn-ghost py-2 px-4 text-[13px]">
+        Browse all apps
+      </a>
+      <a href="#download" class="btn btn-ink py-2 px-4 text-[13px]">
+        <span>Get the apps</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</header>

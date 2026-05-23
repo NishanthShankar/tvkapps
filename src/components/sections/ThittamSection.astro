@@ -1,0 +1,168 @@
+---
+import { getApp } from '../../data/apps';
+const app = getApp('thittam')!;
+
+const steps = [
+  {
+    n: '01',
+    title: 'Tell us about you',
+    body: 'Six questions. Age, household, occupation, income band. Tamil voice input if you prefer.',
+    chip: 'Step 1 / Onboard',
+  },
+  {
+    n: '02',
+    title: 'See your matches',
+    body: 'We score 240+ schemes against your profile in real time and rank them by likelihood + benefit.',
+    chip: 'Step 2 / Match',
+  },
+  {
+    n: '03',
+    title: 'Apply with one tap',
+    body: 'Documents auto-pulled from DigiLocker. Apply, track, and renew - all without leaving Thittam.',
+    chip: 'Step 3 / Apply',
+  },
+];
+---
+<section id="thittam" class="relative overflow-hidden py-24 md:py-36"
+  style="background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-cream-2) 60%, var(--color-cream) 100%);">
+  <!-- decorative gold corner -->
+  <div aria-hidden="true" class="absolute top-0 right-0 h-[420px] w-[420px] rounded-full blur-3xl opacity-25"
+    style="background: radial-gradient(closest-side, var(--color-gold), transparent 70%);"></div>
+
+  <div class="container-x relative">
+    <!-- centered editorial header -->
+    <div class="max-w-3xl mx-auto text-center reveal">
+      <span class="eyebrow text-[var(--color-gold-deep)] justify-center inline-flex">App 03 &nbsp;/&nbsp; {app.category}</span>
+      <p class="mt-4 font-tamil text-2xl text-[var(--color-ink)]/55">{app.tamilName}</p>
+      <h2 class="mt-3 font-display text-[44px] sm:text-[64px] md:text-[80px] leading-[1.0] tracking-[-0.02em]">
+        {app.name}.<br/>
+        <span class="italic font-[450] text-[var(--color-gold-deep)]">{app.tagline}</span>
+      </h2>
+      <p class="mt-6 text-[17px] leading-[1.6] text-[var(--color-ink)]/75 max-w-2xl mx-auto">
+        {app.longDescription}
+      </p>
+    </div>
+
+    <!-- the three step cards, asymmetric stagger -->
+    <div class="mt-20 relative">
+      <!-- connecting dotted line behind cards -->
+      <svg aria-hidden="true" class="absolute inset-0 w-full h-full hidden lg:block" preserveAspectRatio="none" viewBox="0 0 1200 360">
+        <path d="M 200 80 Q 400 60 600 180 T 1000 280" fill="none" stroke="var(--color-gold)" stroke-width="1.5" stroke-dasharray="3 6" opacity="0.55"/>
+      </svg>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 relative">
+        {steps.map((step, idx) => (
+          <div class={`reveal ${idx === 0 ? 'lg:mt-0' : idx === 1 ? 'lg:mt-16' : 'lg:mt-32'}`}>
+            <!-- screen mockup card -->
+            <div class="relative rounded-[24px] bg-white border border-[var(--color-line)] shadow-[0_30px_60px_-30px_rgba(14,14,14,0.18)] overflow-hidden">
+              <!-- step badge -->
+              <div class="flex items-center justify-between px-5 pt-5">
+                <span class="rounded-full bg-[color-mix(in_srgb,var(--color-gold)_18%,transparent)] text-[var(--color-gold-deep)] px-2.5 py-1 text-[10px] uppercase tracking-wider font-semibold">
+                  {step.chip}
+                </span>
+                <span class="font-mono text-[11px] text-[var(--color-ink)]/40">{step.n}</span>
+              </div>
+
+              <!-- step-specific content visualization -->
+              <div class="px-5 mt-5">
+                {idx === 0 && (
+                  <div class="space-y-2.5">
+                    <p class="text-[11px] uppercase tracking-wider text-[var(--color-ink)]/45">Your profile</p>
+                    {['Age band', 'Household size', 'Primary occupation', 'Annual income'].map((label, i) => (
+                      <div class="flex items-center justify-between rounded-xl bg-[var(--color-cream)] px-3 py-2.5">
+                        <span class="text-[12px] text-[var(--color-ink)]/65">{label}</span>
+                        <span class={`text-[11px] font-medium ${i < 3 ? 'text-[var(--color-gold-deep)]' : 'text-[var(--color-ink)]/35'}`}>
+                          {i < 3 ? 'Filled' : '...'}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {idx === 1 && (
+                  <div class="space-y-2.5">
+                    <p class="text-[11px] uppercase tracking-wider text-[var(--color-ink)]/45">Matched (12)</p>
+                    {[
+                      { name: 'CM Free Bus Travel', pct: '98%' },
+                      { name: 'Pudumai Penn Scholarship', pct: '94%' },
+                      { name: 'Free Saree-Dhoti', pct: '88%' },
+                      { name: 'Maternity Benefit', pct: '72%' },
+                    ].map((s) => (
+                      <div class="flex items-center justify-between rounded-xl bg-[var(--color-cream)] px-3 py-2.5">
+                        <span class="text-[12px] font-medium">{s.name}</span>
+                        <span class="text-[11px] font-mono text-[var(--color-gold-deep)]">{s.pct}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {idx === 2 && (
+                  <div>
+                    <p class="text-[11px] uppercase tracking-wider text-[var(--color-ink)]/45 mb-3">Pudumai Penn Scholarship</p>
+                    <div class="rounded-xl bg-[var(--color-cream)] p-3.5">
+                      <p class="text-[11px] text-[var(--color-ink)]/55">Required documents</p>
+                      <ul class="mt-2 space-y-1.5">
+                        {['Aadhaar', '10th marksheet', 'Income certificate', 'Bank passbook'].map((doc) => (
+                          <li class="flex items-center justify-between text-[12px]">
+                            <span>{doc}</span>
+                            <span class="text-[10px] font-medium text-[var(--color-leaf)]">From DigiLocker</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <button class="mt-3 w-full rounded-full bg-[var(--color-ink)] text-[var(--color-cream)] py-2.5 text-[12px] font-medium flex items-center justify-center gap-2">
+                      Apply now
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              <!-- text -->
+              <div class="px-5 pt-6 pb-6 mt-4 border-t border-[var(--color-line)]">
+                <h3 class="font-display text-xl tracking-tight">{step.title}</h3>
+                <p class="mt-1.5 text-[14px] text-[var(--color-ink)]/65 leading-relaxed">{step.body}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- feature row + CTA -->
+    <div class="mt-24 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 items-start">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6">
+        {app.features.map((f, i) => (
+          <li>
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="font-mono text-[11px] text-[var(--color-gold-deep)]">F.0{i + 1}</span>
+              <span class="text-[10px] uppercase tracking-wider text-[var(--color-ink)]/40">Feature</span>
+            </div>
+            <p class="font-medium text-[16px]">{f.title}</p>
+            <p class="mt-1 text-[14px] text-[var(--color-ink)]/65 leading-relaxed">{f.body}</p>
+          </li>
+        ))}
+      </ul>
+
+      <div class="rounded-[var(--radius-card)] bg-[var(--color-ink)] text-[var(--color-cream)] p-8 relative overflow-hidden">
+        <div aria-hidden="true" class="absolute -bottom-20 -right-20 h-60 w-60 rounded-full blur-3xl opacity-40"
+          style="background: radial-gradient(closest-side, var(--color-gold), transparent 70%);"></div>
+        <div class="relative">
+          <p class="eyebrow text-[var(--color-gold)]">By the numbers</p>
+          <div class="mt-6 space-y-5">
+            {app.stats.map((s) => (
+              <div class="flex items-baseline justify-between border-b border-[var(--color-cream)]/15 pb-3 last:border-0">
+                <span class="text-xs uppercase tracking-wider text-[var(--color-cream)]/55">{s.label}</span>
+                <span class="font-display text-2xl">{s.value}</span>
+              </div>
+            ))}
+          </div>
+          <a href={`/apps/${app.slug}`} class="mt-8 inline-flex items-center gap-2 text-sm font-medium text-[var(--color-gold)] hover:text-[var(--color-cream)] transition">
+            Open the {app.name} page
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
