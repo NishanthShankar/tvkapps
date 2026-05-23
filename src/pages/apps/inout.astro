@@ -202,11 +202,11 @@ const faqJson = {
       </div>
 
       <!-- stats strip -->
-      <div class="mt-14 md:mt-16 grid grid-cols-3 border-t border-[var(--color-line)]">
+      <div class="mt-16 md:mt-20 grid grid-cols-3 border-t border-[var(--color-line)]">
         {app.stats.map((s) => (
-          <div class="border-r last:border-r-0 border-[var(--color-line)] py-5 md:py-7 pr-3 sm:pr-6">
-            <p class="font-display text-2xl sm:text-3xl md:text-5xl tracking-[-0.02em] text-[var(--color-leaf)]">{s.value}</p>
-            <p class="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--color-ink)]/55 mt-2 leading-tight">{s.label}</p>
+          <div class="border-r last:border-r-0 border-[var(--color-line)] py-8 md:py-12 px-4 sm:px-6 first:pl-0">
+            <p class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-[-0.02em] leading-none text-[var(--color-leaf)]">{s.value}</p>
+            <p class="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--color-ink)]/55 mt-3 md:mt-5 leading-tight">{s.label}</p>
           </div>
         ))}
       </div>
