@@ -163,7 +163,7 @@ const faqJson = {
   <!-- TWO TABS: REQUESTS & REVIEWS -->
   <section class="relative bg-[var(--color-cream)] py-24 md:py-32">
     <div class="container-x">
-      <div class="grid grid-cols-12 gap-10 items-end mb-14">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-14">
         <div class="col-span-12 md:col-span-7">
           <span class="eyebrow text-[var(--color-rust)]">The model</span>
           <h2 class="mt-3 font-display text-[40px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
@@ -212,9 +212,9 @@ const faqJson = {
           </ul>
 
           <ul class="mt-7 space-y-2 text-[13px] text-[var(--color-ink)]/70">
-            <li class="flex items-center gap-2"><span class="text-[var(--color-rust)] font-mono text-[11px]">F.01</span> Auto-routed to the right office</li>
-            <li class="flex items-center gap-2"><span class="text-[var(--color-rust)] font-mono text-[11px]">F.02</span> Live status with timestamped actions</li>
-            <li class="flex items-center gap-2"><span class="text-[var(--color-rust)] font-mono text-[11px]">F.03</span> Auto-escalates after SLA</li>
+            <li class="flex items-baseline gap-2"><span class="text-[var(--color-rust)] font-mono text-[11px] shrink-0">F.01</span> <span class="min-w-0 flex-1">Auto-routed to the right office</span></li>
+            <li class="flex items-baseline gap-2"><span class="text-[var(--color-rust)] font-mono text-[11px] shrink-0">F.02</span> <span class="min-w-0 flex-1">Live status with timestamped actions</span></li>
+            <li class="flex items-baseline gap-2"><span class="text-[var(--color-rust)] font-mono text-[11px] shrink-0">F.03</span> <span class="min-w-0 flex-1">Auto-escalates after SLA</span></li>
           </ul>
         </article>
 
@@ -288,9 +288,9 @@ const faqJson = {
             </ul>
 
             <ul class="mt-7 space-y-2 text-[13px] text-[var(--color-cream)]/75">
-              <li class="flex items-center gap-2"><span class="text-[var(--color-rust)] font-mono text-[11px]">F.01</span> 1-5 star + free text + photo</li>
-              <li class="flex items-center gap-2"><span class="text-[var(--color-rust)] font-mono text-[11px]">F.02</span> Aggregated rankings, open data</li>
-              <li class="flex items-center gap-2"><span class="text-[var(--color-rust)] font-mono text-[11px]">F.03</span> One source of truth, two entry points</li>
+              <li class="flex items-baseline gap-2"><span class="text-[var(--color-rust)] font-mono text-[11px] shrink-0">F.01</span> <span class="min-w-0 flex-1">1-5 star + free text + photo</span></li>
+              <li class="flex items-baseline gap-2"><span class="text-[var(--color-rust)] font-mono text-[11px] shrink-0">F.02</span> <span class="min-w-0 flex-1">Aggregated rankings, open data</span></li>
+              <li class="flex items-baseline gap-2"><span class="text-[var(--color-rust)] font-mono text-[11px] shrink-0">F.03</span> <span class="min-w-0 flex-1">One source of truth, two entry points</span></li>
             </ul>
           </div>
         </article>
@@ -301,7 +301,7 @@ const faqJson = {
   <!-- HOW IT WORKS - the two crux mechanics -->
   <section class="relative bg-[var(--color-cream-2)] py-24 md:py-32">
     <div class="container-x">
-      <div class="grid grid-cols-12 gap-10 items-end mb-16">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-16">
         <div class="col-span-12 md:col-span-7">
           <span class="eyebrow text-[var(--color-rust)]">How both tabs work</span>
           <h2 class="mt-3 font-display text-[40px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
@@ -368,15 +368,15 @@ const faqJson = {
           <ul class="mt-6 space-y-2.5 text-[13.5px] text-[var(--color-ink)]/75">
             <li class="flex items-start gap-2">
               <svg class="mt-0.5 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-rust)" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
-              Coarse network geolocation, accurate to ~2 km. Never your street.
+              <span class="min-w-0 flex-1">Coarse network geolocation, accurate to ~2 km. Never your street.</span>
             </li>
             <li class="flex items-start gap-2">
               <svg class="mt-0.5 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-rust)" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
-              Maps you to one of 234 assembly constituencies.
+              <span class="min-w-0 flex-1">Maps you to one of 234 assembly constituencies.</span>
             </li>
             <li class="flex items-start gap-2">
               <svg class="mt-0.5 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-rust)" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
-              Override manually if you're reviewing an office in a different ward.
+              <span class="min-w-0 flex-1">Override manually if you're reviewing an office in a different ward.</span>
             </li>
           </ul>
         </article>
@@ -422,15 +422,15 @@ const faqJson = {
           <ul class="mt-6 space-y-2.5 text-[13.5px] text-[var(--color-ink)]/75">
             <li class="flex items-start gap-2">
               <svg class="mt-0.5 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-rust)" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
-              On-device classifier for short reviews. Cloud Indic-NLP for longer ones.
+              <span class="min-w-0 flex-1">On-device classifier for short reviews. Cloud Indic-NLP for longer ones.</span>
             </li>
             <li class="flex items-start gap-2">
               <svg class="mt-0.5 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-rust)" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
-              Trained on a Tamil + English corpus of 1.2M government interactions.
+              <span class="min-w-0 flex-1">Trained on a Tamil + English corpus of 1.2M government interactions.</span>
             </li>
             <li class="flex items-start gap-2">
               <svg class="mt-0.5 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-rust)" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
-              You can correct the tags before posting - the model learns from every fix.
+              <span class="min-w-0 flex-1">You can correct the tags before posting - the model learns from every fix.</span>
             </li>
           </ul>
         </article>
@@ -441,7 +441,7 @@ const faqJson = {
   <!-- LIVE FEED SAMPLE -->
   <section class="bg-[var(--color-cream)] py-24 md:py-32">
     <div class="container-x">
-      <div class="grid grid-cols-12 gap-10 items-end mb-12">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-12">
         <div class="col-span-12 md:col-span-7">
           <span class="eyebrow text-[var(--color-rust)]">In the wild</span>
           <h2 class="mt-3 font-display text-[40px] md:text-[56px] leading-[1.02] tracking-[-0.02em] max-w-2xl">
@@ -493,7 +493,7 @@ const faqJson = {
   <!-- LEADERBOARD PREVIEW -->
   <section class="relative py-24 md:py-32 bg-[var(--color-cream-2)]">
     <div class="container-x">
-      <div class="grid grid-cols-12 gap-10 items-start">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-start">
         <div class="col-span-12 md:col-span-5">
           <span class="eyebrow text-[var(--color-rust)]">Public rankings</span>
           <h2 class="mt-3 font-display text-[40px] md:text-[56px] leading-[1.02] tracking-[-0.02em]">
@@ -545,7 +545,7 @@ const faqJson = {
   <!-- FEATURES -->
   <section class="bg-[var(--color-cream)] py-24 md:py-32">
     <div class="container-x">
-      <div class="grid grid-cols-12 gap-8 items-end mb-12">
+      <div class="grid grid-cols-12 gap-y-8 md:gap-8 items-end mb-12">
         <div class="col-span-12 md:col-span-7">
           <span class="eyebrow text-[var(--color-rust)]">What it does</span>
           <h2 class="mt-3 font-display text-[40px] md:text-[56px] leading-[1.02] tracking-[-0.02em] max-w-2xl">
@@ -573,7 +573,7 @@ const faqJson = {
   <!-- PLATFORMS -->
   <section class="bg-[var(--color-ink)] text-[var(--color-cream)] py-24 md:py-32">
     <div class="container-x">
-      <div class="grid grid-cols-12 gap-10 items-end mb-14">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-14">
         <div class="col-span-12 md:col-span-7">
           <span class="eyebrow text-[var(--color-rust)]">Three surfaces, one identity</span>
           <h2 class="mt-3 font-display text-[40px] md:text-[56px] leading-[1.02] tracking-[-0.02em] max-w-2xl">
@@ -638,7 +638,7 @@ const faqJson = {
   <!-- FAQ -->
   <section class="py-24 md:py-32 bg-[var(--color-cream)]">
     <div class="container-x">
-      <div class="grid grid-cols-12 gap-10">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10">
         <div class="col-span-12 md:col-span-4">
           <span class="eyebrow text-[var(--color-rust)]">FAQ</span>
           <h2 class="mt-3 font-display text-[40px] md:text-[52px] leading-[1.02] tracking-[-0.02em]">
@@ -699,7 +699,7 @@ const faqJson = {
         style="background: linear-gradient(135deg, var(--color-rust) 0%, var(--color-rust-deep) 100%); color: var(--color-cream);">
         <div aria-hidden="true" class="absolute -bottom-32 -left-20 h-[420px] w-[420px] rounded-full blur-3xl opacity-25"
           style="background: radial-gradient(closest-side, var(--color-gold), transparent 70%);"></div>
-        <div class="relative grid grid-cols-12 gap-8 items-end">
+        <div class="relative grid grid-cols-12 gap-y-8 md:gap-8 items-end">
           <div class="col-span-12 md:col-span-7">
             <span class="eyebrow text-[var(--color-cream)]/80">Get Makkal Kural</span>
             <h2 class="mt-4 font-display text-[36px] sm:text-[52px] md:text-[64px] lg:text-[72px] leading-[1.05] tracking-[-0.02em]">
