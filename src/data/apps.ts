@@ -97,54 +97,62 @@ export const apps: AppRecord[] = [
     },
   },
   {
-    slug: 'nilam',
-    name: 'Nilam',
-    tamilName: 'நிலம்',
-    category: 'Land & property',
-    tagline: 'Your land, in your pocket.',
+    slug: 'inout',
+    name: 'InOut',
+    tamilName: 'உள்ளே வெளியே',
+    category: 'TASMAC oversight',
+    tagline: 'for TASMAC.',
     shortDescription:
-      'Patta, chitta, FMB, encumbrance certificates and survey records - the whole stack, queried from one map.',
+      "A public clock for every TASMAC shop in Tamil Nadu. Shopkeepers check in and out, citizens see the log, and inspectors see who didn't close on time.",
     longDescription:
-      'Nilam unifies the dozen ways a Tamil Nadu citizen interacts with their land. Tap a parcel on the map, see the chain of ownership, download a digitally signed patta, request a survey, or flag an encroachment - all without standing in a queue.',
+      "InOut puts a public clock on every TASMAC shop in Tamil Nadu. Shopkeepers check in at opening and check out at closing - the timestamps land on the shop's public page in real time. If a shop is still open past the declared closing hour, the inspecting officials for that constituency see it immediately and can follow up. From any shop's page, citizens can flag bribes, underage sales, or staff abuse for the same officials to act on.",
     accent: 'leaf',
     layout: 'split',
     features: [
       {
-        title: 'Map-first records',
-        body: 'Find your parcel by tapping the map, not by deciphering survey numbers from a 1980s register.',
+        title: 'One tap to open. One tap to close.',
+        body: 'Shopkeepers check in at the start of every shift and check out at close. The timestamp, a selfie, and a GPS fix at the shop location land on the public log immediately - no editing, no backdating.',
       },
       {
-        title: 'Digitally signed extracts',
-        body: 'Patta, chitta, EC - downloaded as PDF with QR-verified signatures. Accepted at every counter.',
+        title: 'The 10 PM list',
+        body: "If a shop isn't marked closed within 15 minutes of the declared closing hour, it appears on the inspecting officer's \"still open\" list for that constituency. The flag clears only when the shop confirms close.",
       },
       {
-        title: 'Encroachment reporting',
-        body: 'Drop a pin, attach evidence. Routed to the tahsildar with a tracked timeline.',
+        title: 'A page for every shop',
+        body: "Every TASMAC shop has a public profile - today's shifts, the last 30 days of operations, complaint count, and a button to flag bribes, underage sales, or staff abuse.",
       },
       {
-        title: 'Mutation, online',
-        body: 'Initiate transfer-of-title after a sale or inheritance with a step-by-step guided flow.',
+        title: 'Officials see what citizens see, plus more',
+        body: 'Inspectors get a constituency map of all shops with live status, complaint volume, and a one-tap escalation to the local TASMAC office.',
       },
     ],
     stats: [
-      { value: '12.4M', label: 'Parcels mapped' },
-      { value: '6 min', label: 'Avg. patta download' },
-      { value: '0', label: 'Trips to the office' },
+      { value: '4,800+', label: 'TASMAC shops covered' },
+      { value: '10 PM', label: 'Mandatory closing time' },
+      { value: '234', label: 'Constituencies under oversight' },
     ],
     faq: [
       {
-        q: 'Are the digital extracts legally valid?',
-        a: 'Yes. The QR signature is issued under the IT Act, and is treated as equivalent to a manually signed and stamped extract.',
+        q: 'Why does TASMAC need this?',
+        a: 'Closing-hour violations and late-night sales are routine, and complaints from citizens often vanish in the chain between the customer, the shop, and the inspectorate. InOut closes the loop: every shift is timestamped, every late close is flagged automatically, and every complaint is tied to a specific shop and shift.',
       },
       {
-        q: 'What about disputed land?',
-        a: 'Disputes appear as a flag on the parcel with case status. The underlying records remain visible but extracts are watermarked accordingly.',
+        q: 'Can shopkeepers fake check-ins?',
+        a: 'Each check-in pairs a timestamp with a GPS fix at the registered shop location and a face match against the shopkeeper on file. Backdated entries are rejected. If GPS is unavailable, the shop is marked "unverified-open" - which is itself a flag for the inspector.',
+      },
+      {
+        q: 'How are complaints verified?',
+        a: 'Anonymous complaints land in the inspector\'s queue with the shop, shift, and timestamp. The inspector decides whether to act. Complaint outcomes (acted on / dismissed) are public, so patterns of dismissal show up over time.',
+      },
+      {
+        q: 'Is the public log open data?',
+        a: 'Yes. Daily open/close timestamps, late-close flags, and aggregate complaint counts per shop are available as a public dataset, refreshed nightly. Names of staff, customers, and complainants are never published.',
       },
     ],
     meta: {
-      title: 'Nilam - Tamil Nadu land records app',
+      title: 'InOut - public clock for Tamil Nadu TASMAC shops',
       description:
-        'Patta, chitta, EC, FMB and mutation - the entire land record stack in one map-first app for Tamil Nadu.',
+        "A check-in / check-out log for every TASMAC shop in Tamil Nadu. Public timestamps, automatic late-close flags, complaint reporting tied to each shop's shift.",
       keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
     },
   },

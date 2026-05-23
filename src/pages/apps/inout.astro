@@ -1,0 +1,624 @@
+---
+import Base from '../../layouts/Base.astro';
+import { apps, getApp } from '../../data/apps';
+
+const app = getApp('inout')!;
+const others = apps.filter((a) => a.slug !== app.slug);
+
+const dayTimeline = [
+  {
+    time: '12:00 PM',
+    label: 'Checked in',
+    body: "Shopkeeper marks the shop open. Selfie + GPS fix at the registered location. Public log updated instantly.",
+    tone: 'leaf' as const,
+  },
+  {
+    time: '4:30 PM',
+    label: 'Complaint filed',
+    body: 'A citizen on the shop page reports an underage sale. Goes to the constituency inspector\'s queue, tied to this shift.',
+    tone: 'amber' as const,
+  },
+  {
+    time: '7:15 PM',
+    label: 'Inspector action',
+    body: 'Inspector responds: visited shop, warning issued. Outcome posted publicly so citizens see the action.',
+    tone: 'amber' as const,
+  },
+  {
+    time: '10:00 PM',
+    label: 'Mandatory close',
+    body: 'Government-declared closing hour. Shopkeeper has 15 minutes to check out.',
+    tone: 'ink' as const,
+  },
+  {
+    time: '10:15 PM',
+    label: 'Flagged: still open',
+    body: 'No check-out recorded. Shop appears on the "still open" list for the constituency inspector.',
+    tone: 'rust' as const,
+  },
+  {
+    time: '10:42 PM',
+    label: 'Inspector escalation',
+    body: 'Inspector calls the shop manager and the local TASMAC office. Shop confirms closed at 10:44 PM; flag cleared.',
+    tone: 'leaf' as const,
+  },
+];
+
+const audiences = [
+  {
+    role: 'Shopkeeper',
+    tamil: 'கடைக்காரர்',
+    bullets: [
+      'Check in at opening, check out at closing',
+      'See today\'s shifts + active complaints',
+      'Receive inspector notifications',
+    ],
+    accent: 'leaf' as const,
+  },
+  {
+    role: 'Citizen',
+    tamil: 'பொதுமக்கள்',
+    bullets: [
+      'See any shop\'s live status + last 30 days',
+      'Report bribes, underage sales, staff abuse',
+      'Watch the public ledger for a constituency',
+    ],
+    accent: 'ink' as const,
+  },
+  {
+    role: 'Inspector',
+    tamil: 'அதிகாரி',
+    bullets: [
+      'Constituency map with live shop status',
+      '"Still open" list past closing hour',
+      'Complaint queue per shop, per shift',
+    ],
+    accent: 'rust' as const,
+  },
+];
+
+const complaintTypes = [
+  {
+    title: 'Bribery',
+    body: 'Demanded extra to stay open past hours or to favour a customer in a queue.',
+    chip: 'High priority',
+    icon: 'M12 2v20M5 9l7-7 7 7M5 15l7 7 7-7',
+  },
+  {
+    title: 'Underage sale',
+    body: 'Alcohol sold to someone clearly under 21. Verified against the receipt/timestamp.',
+    chip: 'Critical',
+    icon: 'M12 8v4M12 16h.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0z',
+  },
+  {
+    title: 'Staff abuse',
+    body: 'Misbehaviour with a customer - shouting, intimidation, harassment.',
+    chip: 'Investigate',
+    icon: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
+  },
+  {
+    title: 'Stock manipulation',
+    body: 'Premium SKUs hidden, or bundled forcibly with slow-movers.',
+    chip: 'Verify',
+    icon: 'M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z',
+  },
+];
+
+const constituencyShops = [
+  { num: '#3417', name: 'Anna Nagar West', status: 'late', detail: '22 min past close', updated: '10:22 PM' },
+  { num: '#3402', name: 'Shenoy Nagar', status: 'open', detail: 'On schedule', updated: '10:18 PM' },
+  { num: '#3411', name: '11th Main Rd', status: 'closed', detail: 'Closed 9:58 PM', updated: '9:58 PM' },
+  { num: '#3422', name: 'Padi Junction', status: 'closed', detail: 'Closed 10:02 PM', updated: '10:02 PM' },
+  { num: '#3409', name: 'TVS Avenue', status: 'unverified', detail: 'GPS lost · check in 12:11', updated: '10:21 PM' },
+];
+
+const statusColor = (s: string) => {
+  if (s === 'late') return 'var(--color-rust)';
+  if (s === 'open') return 'var(--color-leaf)';
+  if (s === 'unverified') return 'rgb(217, 119, 6)';
+  return 'rgba(14,14,14,0.3)';
+};
+
+const ldJson = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: app.name,
+  alternateName: app.tamilName,
+  description: app.shortDescription,
+  applicationCategory: app.category,
+  operatingSystem: 'Android, iOS, Web',
+  inLanguage: ['ta', 'en'],
+};
+
+const faqJson = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: app.faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<Base
+  title={app.meta.title}
+  description={app.meta.description}
+  keywords={app.meta.keywords}
+  type="article"
+>
+  <!-- HERO -->
+  <section class="relative overflow-hidden">
+    <div aria-hidden="true" class="absolute -top-40 -right-40 h-[640px] w-[640px] rounded-full blur-3xl opacity-30"
+      style="background: radial-gradient(closest-side, var(--color-leaf), transparent 70%);"></div>
+    <div aria-hidden="true" class="absolute -bottom-40 -left-40 h-[440px] w-[440px] rounded-full blur-3xl opacity-20"
+      style="background: radial-gradient(closest-side, var(--color-rust), transparent 70%);"></div>
+
+    <div class="container-x relative pt-20 pb-24 md:pt-28 md:pb-32">
+      <nav class="text-xs text-[var(--color-ink)]/55 mb-12">
+        <a href="/" class="hover:text-[var(--color-ink)]">tvkapps</a>
+        <span class="mx-2 opacity-50">/</span>
+        <a href="/#suite" class="hover:text-[var(--color-ink)]">apps</a>
+        <span class="mx-2 opacity-50">/</span>
+        <span class="text-[var(--color-ink)]/80">InOut</span>
+      </nav>
+
+      <div class="grid grid-cols-12 gap-6 lg:gap-8 items-end">
+        <div class="col-span-12 lg:col-span-8">
+          <span class="eyebrow text-[var(--color-leaf)]">{app.category} &nbsp;/&nbsp; App 02</span>
+          <div class="mt-4 flex items-end gap-3 sm:gap-5 flex-wrap">
+            <h1 class="font-display text-[56px] sm:text-[96px] md:text-[128px] lg:text-[152px] leading-[0.9] tracking-[-0.028em]">
+              In<span class="italic font-[450] text-[var(--color-leaf)]">Out</span>.
+            </h1>
+            <span class="font-tamil text-2xl sm:text-3xl md:text-4xl text-[var(--color-ink)]/55 pb-2 sm:pb-5">{app.tamilName}</span>
+          </div>
+          <p class="mt-6 font-display text-xl sm:text-2xl md:text-4xl italic font-[450] text-[var(--color-leaf-deep)] max-w-2xl">
+            {app.tagline}
+          </p>
+        </div>
+        <div class="col-span-12 lg:col-span-4 flex flex-wrap gap-3 lg:justify-end">
+          <a href="#download" class="btn bg-[var(--color-leaf)] text-[var(--color-cream)] hover:bg-[var(--color-leaf-deep)]">
+            Get the app
+          </a>
+          <a href="/" class="btn btn-ghost">All apps</a>
+        </div>
+      </div>
+
+      <p class="mt-10 md:mt-12 max-w-3xl text-[16px] sm:text-[18px] md:text-[20px] leading-[1.55] text-[var(--color-ink)]/75">
+        {app.longDescription}
+      </p>
+
+      <!-- platform badges -->
+      <div class="mt-10 flex flex-wrap items-center gap-3">
+        <span class="text-xs uppercase tracking-wider text-[var(--color-ink)]/50">For</span>
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-[color-mix(in_srgb,var(--color-leaf)_14%,transparent)] border border-[color-mix(in_srgb,var(--color-leaf)_30%,transparent)] px-3 py-1.5 text-[12px] font-medium text-[var(--color-leaf-deep)]">
+          Shopkeepers
+        </span>
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-cream-2)] border border-[var(--color-line)] px-3 py-1.5 text-[12px] font-medium">
+          Citizens
+        </span>
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-ink)] text-[var(--color-cream)] px-3 py-1.5 text-[12px] font-medium">
+          Inspectors
+        </span>
+      </div>
+
+      <!-- stats strip -->
+      <div class="mt-14 md:mt-16 grid grid-cols-3 border-t border-[var(--color-line)]">
+        {app.stats.map((s) => (
+          <div class="border-r last:border-r-0 border-[var(--color-line)] py-5 md:py-7 pr-3 sm:pr-6">
+            <p class="font-display text-2xl sm:text-3xl md:text-5xl tracking-[-0.02em] text-[var(--color-leaf)]">{s.value}</p>
+            <p class="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--color-ink)]/55 mt-2 leading-tight">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE AUDIENCES -->
+  <section class="bg-[var(--color-cream-2)] py-24 md:py-32">
+    <div class="container-x">
+      <div class="grid grid-cols-12 gap-10 items-end mb-14">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow text-[var(--color-leaf)]">Three audiences</span>
+          <h2 class="mt-3 font-display text-[40px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
+            One app.<br/>
+            <span class="italic font-[450]">Three views.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md">
+            Same database, three lenses. Shopkeepers see only their shop. Citizens see every shop publicly. Inspectors
+            see their constituency in full, plus the queue of complaints to act on.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--color-line)] rounded-2xl overflow-hidden border border-[var(--color-line)]">
+        {audiences.map((a) => (
+          <article class={`p-7 md:p-9 ${a.accent === 'ink' ? 'bg-[var(--color-ink)] text-[var(--color-cream)]' : 'bg-[var(--color-cream)]'}`}>
+            <div class="flex items-center justify-between mb-8">
+              <span class={`font-mono text-[11px] ${a.accent === 'rust' ? 'text-[var(--color-rust)]' : a.accent === 'leaf' ? 'text-[var(--color-leaf)]' : 'text-[var(--color-leaf)]'}`}>
+                {a.role.toUpperCase()}
+              </span>
+              <span class={`font-tamil text-sm ${a.accent === 'ink' ? 'text-[var(--color-cream)]/50' : 'text-[var(--color-ink)]/50'}`}>{a.tamil}</span>
+            </div>
+            <h3 class={`font-display text-3xl tracking-tight ${a.accent === 'ink' ? 'text-[var(--color-cream)]' : ''}`}>
+              {a.role}
+            </h3>
+            <ul class={`mt-6 space-y-2.5 text-[13.5px] leading-relaxed ${a.accent === 'ink' ? 'text-[var(--color-cream)]/75' : 'text-[var(--color-ink)]/70'}`}>
+              {a.bullets.map((b) => (
+                <li class="flex items-start gap-2">
+                  <svg class="mt-0.5 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={a.accent === 'rust' ? 'var(--color-rust)' : 'var(--color-leaf)'} stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+                  {b}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- A DAY IN A SHOP - TIMELINE -->
+  <section class="bg-[var(--color-cream)] py-24 md:py-32 relative overflow-hidden">
+    <div class="container-x">
+      <div class="grid grid-cols-12 gap-10 items-end mb-14">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow text-[var(--color-leaf)]">A day in a shop</span>
+          <h2 class="mt-3 font-display text-[40px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
+            How the<br/>
+            <span class="italic font-[450]">10 PM rule</span><br/>
+            actually works.
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md">
+            One shop. One day. Six events. The same loop runs across 4,800+ TASMAC shops every day - and the public
+            sees every step of it.
+          </p>
+          <div class="mt-6 inline-flex items-center gap-2 rounded-full bg-[color-mix(in_srgb,var(--color-leaf)_12%,transparent)] border border-[color-mix(in_srgb,var(--color-leaf)_28%,transparent)] px-3 py-1.5 text-xs">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--color-leaf)" stroke-width="2"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="10"/></svg>
+            <span class="text-[var(--color-leaf-deep)] font-medium">TASMAC &middot; #3417 &middot; Anna Nagar West</span>
+          </div>
+        </div>
+      </div>
+
+      <ol class="relative pl-6 sm:pl-8 md:pl-12 border-l-2 border-[var(--color-line)] space-y-7 md:space-y-8">
+        {dayTimeline.map((e) => (
+          <li class="relative">
+            <span
+              class="absolute -left-[34px] sm:-left-[42px] md:-left-[58px] top-1.5 grid place-items-center h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-[var(--color-cream)] border-2"
+              style={`border-color: ${e.tone === 'leaf' ? 'var(--color-leaf)' : e.tone === 'rust' ? 'var(--color-rust)' : e.tone === 'amber' ? 'rgb(217,119,6)' : 'var(--color-line)'};`}
+            >
+              <span
+                class="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full"
+                style={`background: ${e.tone === 'leaf' ? 'var(--color-leaf)' : e.tone === 'rust' ? 'var(--color-rust)' : e.tone === 'amber' ? 'rgb(217,119,6)' : 'rgba(14,14,14,0.4)'};`}
+              ></span>
+            </span>
+            <div class="flex flex-col md:flex-row md:items-baseline md:gap-6">
+              <span class="font-mono text-xs sm:text-sm text-[var(--color-ink)]/55 md:w-24 shrink-0">{e.time}</span>
+              <div class="flex-1">
+                <p class="font-display text-xl sm:text-2xl tracking-tight"
+                  style={`color: ${e.tone === 'leaf' ? 'var(--color-leaf-deep)' : e.tone === 'rust' ? 'var(--color-rust-deep)' : 'inherit'};`}>
+                  {e.label}
+                </p>
+                <p class="mt-2 text-[14px] sm:text-[15px] text-[var(--color-ink)]/70 leading-relaxed max-w-2xl">{e.body}</p>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- TWO VIEWS: SHOP PAGE + INSPECTOR -->
+  <section class="bg-[var(--color-cream-2)] py-24 md:py-32">
+    <div class="container-x">
+      <div class="grid grid-cols-12 gap-10 items-end mb-14">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow text-[var(--color-leaf)]">What people see</span>
+          <h2 class="mt-3 font-display text-[40px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
+            Two interfaces,<br/>
+            <span class="italic font-[450]">one source of truth.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md">
+            The Shop Page is open to anyone with the link - search engines included. The Inspector view is the same
+            data, plus tools to act on it.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- CITIZEN: SHOP PAGE -->
+        <article class="rounded-[24px] bg-[var(--color-cream)] border border-[var(--color-line)] p-7 md:p-9">
+          <div class="flex items-center justify-between mb-6">
+            <span class="rounded-full bg-[var(--color-cream-2)] border border-[var(--color-line)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">Citizen view</span>
+            <span class="font-mono text-[11px] text-[var(--color-ink)]/45">public · indexed</span>
+          </div>
+          <h3 class="font-display text-2xl tracking-tight">Shop page</h3>
+          <p class="mt-2 text-[14px] text-[var(--color-ink)]/65 leading-relaxed">
+            Search any TASMAC shop on the web. Get a live page with today's status, 30-day history, and a button to
+            report an issue.
+          </p>
+
+          <!-- mini shop card -->
+          <div class="mt-7 rounded-2xl bg-white border border-[var(--color-line)] overflow-hidden">
+            <div class="bg-[color-mix(in_srgb,var(--color-rust)_10%,white)] border-b border-[var(--color-line)] px-5 py-2.5 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="relative flex">
+                  <span class="absolute h-2 w-2 rounded-full bg-[var(--color-rust)] opacity-60 animate-ping"></span>
+                  <span class="relative h-2 w-2 rounded-full bg-[var(--color-rust)]"></span>
+                </span>
+                <span class="text-[11px] uppercase tracking-wider text-[var(--color-rust-deep)] font-semibold">Still open &middot; 22 min late</span>
+              </div>
+              <span class="font-mono text-[10.5px] text-[var(--color-ink)]/55">10:22 PM</span>
+            </div>
+            <div class="p-5">
+              <p class="text-[10px] uppercase tracking-wider text-[var(--color-ink)]/50">TASMAC &middot; #3417</p>
+              <p class="font-display text-xl tracking-tight mt-0.5">Anna Nagar West</p>
+              <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+                <div class="rounded-xl bg-[var(--color-cream-2)] p-2.5">
+                  <p class="text-[10px] uppercase tracking-wider text-[var(--color-ink)]/50">On time</p>
+                  <p class="font-display text-base mt-0.5 text-[var(--color-leaf-deep)]">28 / 30</p>
+                </div>
+                <div class="rounded-xl bg-[var(--color-cream-2)] p-2.5">
+                  <p class="text-[10px] uppercase tracking-wider text-[var(--color-ink)]/50">Complaints</p>
+                  <p class="font-display text-base mt-0.5">3</p>
+                </div>
+                <div class="rounded-xl bg-[var(--color-cream-2)] p-2.5">
+                  <p class="text-[10px] uppercase tracking-wider text-[var(--color-ink)]/50">Avg. close</p>
+                  <p class="font-display text-base mt-0.5">10:04 PM</p>
+                </div>
+              </div>
+              <button class="mt-4 w-full rounded-full bg-[var(--color-ink)] text-[var(--color-cream)] py-2.5 text-[12.5px] font-medium">
+                Report an issue
+              </button>
+            </div>
+          </div>
+
+          <p class="mt-4 text-[12px] text-[var(--color-ink)]/55">
+            URL pattern: <span class="font-mono">inout.app/s/3417</span> &middot; indexable by search engines.
+          </p>
+        </article>
+
+        <!-- INSPECTOR: CONSTITUENCY VIEW -->
+        <article class="rounded-[24px] bg-[var(--color-ink)] text-[var(--color-cream)] p-7 md:p-9 relative overflow-hidden">
+          <div aria-hidden="true" class="absolute -top-20 -right-20 h-[280px] w-[280px] rounded-full blur-3xl opacity-25"
+            style="background: radial-gradient(closest-side, var(--color-rust), transparent 70%);"></div>
+          <div class="relative">
+            <div class="flex items-center justify-between mb-6">
+              <span class="rounded-full bg-[var(--color-cream)]/10 border border-[var(--color-cream)]/20 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">Inspector view</span>
+              <span class="font-mono text-[11px] text-[var(--color-cream)]/50">authenticated</span>
+            </div>
+            <h3 class="font-display text-2xl tracking-tight">Constituency dashboard</h3>
+            <p class="mt-2 text-[14px] text-[var(--color-cream)]/65 leading-relaxed">
+              Every shop in your constituency, live. Filter by status, jump to the offending shop, escalate in one tap.
+            </p>
+
+            <!-- constituency stats -->
+            <div class="mt-7 rounded-2xl bg-[var(--color-cream)]/6 border border-[var(--color-cream)]/12 overflow-hidden">
+              <div class="px-4 sm:px-5 py-3 border-b border-[var(--color-cream)]/12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                  <p class="text-[10px] uppercase tracking-wider text-[var(--color-cream)]/50">Constituency</p>
+                  <p class="font-display text-base">Anna Nagar &middot; TN-03</p>
+                </div>
+                <div class="flex items-center gap-3 text-[11px] font-mono flex-wrap">
+                  <span class="flex items-center gap-1.5">
+                    <span class="h-2 w-2 rounded-full bg-[var(--color-leaf)]"></span><span>3 open</span>
+                  </span>
+                  <span class="flex items-center gap-1.5">
+                    <span class="h-2 w-2 rounded-full bg-[var(--color-rust)]"></span><span>1 late</span>
+                  </span>
+                  <span class="flex items-center gap-1.5">
+                    <span class="h-2 w-2 rounded-full bg-amber-500"></span><span>1 unverified</span>
+                  </span>
+                </div>
+              </div>
+              <ul class="divide-y divide-[var(--color-cream)]/10">
+                {constituencyShops.map((s) => (
+                  <li class="px-4 sm:px-5 py-3">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="flex items-center gap-2 min-w-0 flex-1">
+                        <span class="h-2 w-2 rounded-full shrink-0" style={`background: ${statusColor(s.status)};`}></span>
+                        <span class="font-mono text-[11px] text-[var(--color-cream)]/55 shrink-0">{s.num}</span>
+                        <span class="font-medium text-[12.5px] truncate">{s.name}</span>
+                      </div>
+                      <span class="font-mono text-[10.5px] text-[var(--color-cream)]/45 shrink-0">{s.updated}</span>
+                    </div>
+                    <p class="mt-1 ml-[18px] text-[11px] text-[var(--color-cream)]/55">{s.detail}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <p class="mt-4 text-[12px] text-[var(--color-cream)]/55">
+              One-tap escalation to the local TASMAC office &middot; SLAs tracked per shop.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPLAINTS -->
+  <section class="bg-[var(--color-cream)] py-24 md:py-32">
+    <div class="container-x">
+      <div class="grid grid-cols-12 gap-10 items-end mb-14">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow text-[var(--color-leaf)]">From the customer side of the counter</span>
+          <h2 class="mt-3 font-display text-[40px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
+            Four kinds of complaints,<br/>
+            <span class="italic font-[450]">one place to send them.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md">
+            Anyone with the shop's link can file a complaint - anonymously by default. It goes to the constituency
+            inspector with the shift and timestamp pre-attached.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--color-line)] rounded-2xl overflow-hidden border border-[var(--color-line)]">
+        {complaintTypes.map((c, i) => (
+          <article class="bg-[var(--color-cream)] p-7">
+            <div class="flex items-center justify-between mb-8">
+              <div class="grid place-items-center h-10 w-10 rounded-xl bg-[color-mix(in_srgb,var(--color-leaf)_12%,transparent)] text-[var(--color-leaf-deep)]">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d={c.icon}/>
+                </svg>
+              </div>
+              <span class="text-[10px] uppercase tracking-wider text-[var(--color-rust)] font-mono">{c.chip}</span>
+            </div>
+            <h3 class="font-display text-xl tracking-tight">{c.title}</h3>
+            <p class="mt-2 text-[13.5px] text-[var(--color-ink)]/65 leading-relaxed">{c.body}</p>
+            <p class="mt-5 text-[11px] font-mono text-[var(--color-ink)]/45">C.0{i + 1}</p>
+          </article>
+        ))}
+      </div>
+
+      <!-- assurance row -->
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="flex items-start gap-3">
+          <svg class="mt-0.5 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-leaf)" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          <div>
+            <p class="font-medium text-[14.5px]">Anonymous by default</p>
+            <p class="text-[13px] text-[var(--color-ink)]/65 mt-1">Verified handles available for higher trust weight - never required.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <svg class="mt-0.5 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-leaf)" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          <div>
+            <p class="font-medium text-[14.5px]">Outcomes are public</p>
+            <p class="text-[13px] text-[var(--color-ink)]/65 mt-1">Dismissal patterns show up on the inspector's public record.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <svg class="mt-0.5 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-leaf)" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          <div>
+            <p class="font-medium text-[14.5px]">Tied to a specific shift</p>
+            <p class="text-[13px] text-[var(--color-ink)]/65 mt-1">Every complaint carries the shop, shift, and timestamp - no "we don't know who was on duty".</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="bg-[var(--color-cream-2)] py-24 md:py-32">
+    <div class="container-x">
+      <div class="mb-12">
+        <span class="eyebrow text-[var(--color-leaf)]">What it does</span>
+        <h2 class="mt-3 font-display text-[40px] md:text-[56px] leading-[1.02] tracking-[-0.02em] max-w-2xl">
+          Four features.<br/>
+          <span class="italic font-[450]">No bloat.</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[var(--color-line)] rounded-2xl overflow-hidden border border-[var(--color-line)]">
+        {app.features.map((f, i) => (
+          <article class="bg-[var(--color-cream)] p-8 md:p-10">
+            <div class="flex items-center gap-2 mb-6">
+              <span class="font-mono text-[11px] text-[var(--color-leaf)]">F.0{i + 1}</span>
+              <span class="h-px flex-1 bg-[var(--color-line)]"></span>
+            </div>
+            <h3 class="font-display text-2xl tracking-tight">{f.title}</h3>
+            <p class="mt-3 text-[15px] text-[var(--color-ink)]/70 leading-relaxed">{f.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-24 md:py-32 bg-[var(--color-cream)]">
+    <div class="container-x">
+      <div class="grid grid-cols-12 gap-10">
+        <div class="col-span-12 md:col-span-4">
+          <span class="eyebrow text-[var(--color-leaf)]">FAQ</span>
+          <h2 class="mt-3 font-display text-[40px] md:text-[52px] leading-[1.02] tracking-[-0.02em]">
+            Honest answers,<br/>
+            <span class="italic font-[450] text-[var(--color-leaf-deep)]">up front.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-8">
+          <div class="divide-y divide-[var(--color-line)] border-y border-[var(--color-line)]">
+            {app.faq.map((item) => (
+              <details class="group py-5">
+                <summary class="flex cursor-pointer list-none items-start justify-between gap-6">
+                  <span class="font-display text-xl tracking-tight">{item.q}</span>
+                  <span class="shrink-0 rounded-full border border-[var(--color-line)] h-7 w-7 grid place-items-center transition group-open:rotate-45">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                  </span>
+                </summary>
+                <p class="mt-3 max-w-2xl text-[15px] text-[var(--color-ink)]/70 leading-relaxed">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OTHER APPS -->
+  <section class="bg-[var(--color-cream-2)] py-24 md:py-32">
+    <div class="container-x">
+      <span class="eyebrow text-[var(--color-ink)]/55">Continue exploring</span>
+      <h2 class="mt-3 font-display text-[36px] md:text-[48px] leading-[1.02] tracking-[-0.02em] max-w-xl">
+        The other apps in the suite.
+      </h2>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+        {others.map((o) => (
+          <a href={`/apps/${o.slug}`} class="group rounded-[var(--radius-card)] border border-[var(--color-line)] bg-[var(--color-cream)] p-8 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-30px_rgba(14,14,14,0.18)] transition">
+            <div class="flex items-center justify-between">
+              <span class={`h-2 w-2 rounded-full ${o.accent === 'rust' ? 'bg-[var(--color-rust)]' : o.accent === 'leaf' ? 'bg-[var(--color-leaf)]' : 'bg-[var(--color-gold)]'}`}></span>
+              <span class="font-tamil text-sm text-[var(--color-ink)]/50">{o.tamilName}</span>
+            </div>
+            <h3 class="mt-6 font-display text-3xl tracking-tight">{o.name}</h3>
+            <p class="mt-2 text-[15px] text-[var(--color-ink)]/65 max-w-md">{o.tagline}</p>
+            <div class="mt-6 flex items-center gap-2 text-sm font-medium">
+              <span class="opacity-70 group-hover:opacity-100 transition">Read more</span>
+              <svg class="transition group-hover:translate-x-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download" class="relative py-24 md:py-32 bg-[var(--color-cream)]">
+    <div class="container-x">
+      <div class="rounded-[28px] p-10 md:p-16 grain relative overflow-hidden"
+        style="background: linear-gradient(135deg, var(--color-leaf) 0%, var(--color-leaf-deep) 100%); color: var(--color-cream);">
+        <div aria-hidden="true" class="absolute -bottom-32 -right-20 h-[420px] w-[420px] rounded-full blur-3xl opacity-25"
+          style="background: radial-gradient(closest-side, var(--color-gold), transparent 70%);"></div>
+        <div class="relative grid grid-cols-12 gap-8 items-end">
+          <div class="col-span-12 md:col-span-7">
+            <span class="eyebrow text-[var(--color-cream)]/80">Get InOut</span>
+            <h2 class="mt-4 font-display text-[40px] sm:text-[56px] md:text-[64px] lg:text-[72px] leading-[1.0] tracking-[-0.02em]">
+              10 PM.<br/>4,800 shops.<br/>One public log.
+            </h2>
+          </div>
+          <div class="col-span-12 md:col-span-5">
+            <form class="rounded-2xl bg-[var(--color-cream)]/12 backdrop-blur border border-[var(--color-cream)]/20 p-3 flex items-center gap-2">
+              <input type="email" required placeholder="you@example.com"
+                class="flex-1 bg-transparent px-3 py-2.5 text-[15px] text-[var(--color-cream)] placeholder:text-[var(--color-cream)]/55 focus:outline-none"/>
+              <button type="submit" class="btn bg-[var(--color-cream)] text-[var(--color-leaf-deep)] hover:bg-white">
+                Notify me
+              </button>
+            </form>
+            <p class="mt-3 text-[11px] text-[var(--color-cream)]/65">
+              Shopkeeper Android app and citizen web go live together. Inspector dashboard a fortnight later.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(ldJson)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqJson)} />
+</Base>

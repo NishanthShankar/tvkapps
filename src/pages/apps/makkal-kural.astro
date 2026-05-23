@@ -104,16 +104,16 @@ const faqJson = {
         <span class="text-[var(--color-cream)]/85">Makkal Kural</span>
       </nav>
 
-      <div class="grid grid-cols-12 gap-8 items-end">
+      <div class="grid grid-cols-12 gap-6 lg:gap-8 items-end">
         <div class="col-span-12 lg:col-span-8">
           <span class="eyebrow text-[var(--color-rust)]">{app.category} &nbsp;/&nbsp; App 01</span>
-          <div class="mt-4 flex items-end gap-5 flex-wrap">
-            <h1 class="font-display text-[64px] sm:text-[96px] md:text-[128px] leading-[0.92] tracking-[-0.025em]">
+          <div class="mt-4 flex items-end gap-3 sm:gap-5 flex-wrap">
+            <h1 class="font-display text-[48px] sm:text-[80px] md:text-[112px] lg:text-[128px] leading-[0.92] tracking-[-0.025em]">
               Makkal<br/>Kural.
             </h1>
-            <span class="font-tamil text-3xl md:text-4xl text-[var(--color-cream)]/55 pb-4">{app.tamilName}</span>
+            <span class="font-tamil text-xl sm:text-3xl md:text-4xl text-[var(--color-cream)]/55 pb-2 sm:pb-4">{app.tamilName}</span>
           </div>
-          <p class="mt-6 font-display text-2xl md:text-4xl italic font-[450] text-[var(--color-rust)] max-w-2xl">
+          <p class="mt-6 font-display text-xl sm:text-2xl md:text-4xl italic font-[450] text-[var(--color-rust)] max-w-2xl">
             {app.tagline}
           </p>
         </div>
@@ -127,7 +127,7 @@ const faqJson = {
         </div>
       </div>
 
-      <p class="mt-12 max-w-3xl text-[18px] md:text-[20px] leading-[1.55] text-[var(--color-cream)]/75">
+      <p class="mt-10 md:mt-12 max-w-3xl text-[16px] sm:text-[18px] md:text-[20px] leading-[1.55] text-[var(--color-cream)]/75">
         {app.longDescription}
       </p>
 
@@ -149,11 +149,11 @@ const faqJson = {
       </div>
 
       <!-- stats strip -->
-      <div class="mt-16 grid grid-cols-3 border-t border-[var(--color-cream)]/15">
+      <div class="mt-14 md:mt-16 grid grid-cols-3 border-t border-[var(--color-cream)]/15">
         {app.stats.map((s) => (
-          <div class="border-r last:border-r-0 border-[var(--color-cream)]/15 py-7 pr-6">
-            <p class="font-display text-3xl md:text-5xl tracking-[-0.02em] text-[var(--color-rust)]">{s.value}</p>
-            <p class="text-xs uppercase tracking-wider text-[var(--color-cream)]/55 mt-2">{s.label}</p>
+          <div class="border-r last:border-r-0 border-[var(--color-cream)]/15 py-5 md:py-7 pr-3 sm:pr-6">
+            <p class="font-display text-2xl sm:text-3xl md:text-5xl tracking-[-0.02em] text-[var(--color-rust)]">{s.value}</p>
+            <p class="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--color-cream)]/55 mt-2 leading-tight">{s.label}</p>
           </div>
         ))}
       </div>
@@ -234,8 +234,12 @@ const faqJson = {
               </svg>
             </div>
             <!-- mobile horizontal version -->
-            <div class="flex lg:hidden flex-col items-center gap-2">
-              <span class="rounded-full bg-[var(--color-rust)] text-[var(--color-cream)] px-3 py-1.5 text-[10.5px] font-mono uppercase tracking-wider">Resolved + rated flows to reviews</span>
+            <div class="flex lg:hidden flex-col items-center gap-3 py-2">
+              <svg width="20" height="36" viewBox="0 0 20 36" fill="none" stroke="var(--color-rust)" stroke-width="1.5">
+                <path d="M10 2 L10 26" stroke-dasharray="3 5"/>
+                <path d="M3 22 L10 32 L17 22"/>
+              </svg>
+              <span class="rounded-full bg-[var(--color-rust)] text-[var(--color-cream)] px-3 py-1.5 text-[10.5px] font-mono uppercase tracking-wider whitespace-nowrap">Resolved + rated</span>
             </div>
           </div>
         </div>
@@ -455,7 +459,7 @@ const faqJson = {
       <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
         {sampleReviews.map((r) => (
           <li class="rounded-2xl bg-[var(--color-cream)] border border-[var(--color-line)] p-6 md:p-7 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-30px_rgba(14,14,14,0.18)] transition">
-            <header class="flex items-center justify-between">
+            <header class="flex items-center justify-between gap-2 flex-wrap">
               <div class="flex items-center gap-1">
                 {Array.from({ length: 5 }).map((_, i) =>
                   i < r.rating ? (
@@ -466,7 +470,7 @@ const faqJson = {
                 )}
                 <span class="ml-1.5 text-[11px] font-mono text-[var(--color-ink)]/45">{r.rating}/5</span>
               </div>
-              <span class="flex items-center gap-2 text-[11px] text-[var(--color-ink)]/45">
+              <span class="flex items-center gap-2 text-[11px] text-[var(--color-ink)]/45 flex-wrap justify-end">
                 {r.source === 'request' && (
                   <span class="rounded-full bg-[color-mix(in_srgb,var(--color-rust)_12%,transparent)] text-[var(--color-rust-deep)] px-2 py-0.5 text-[10px] font-mono">from req {r.requestId}</span>
                 )}
@@ -516,12 +520,18 @@ const faqJson = {
             </div>
             <ul class="divide-y divide-[var(--color-cream)]/12">
               {leaderboard.map((row, i) => (
-                <li class="grid grid-cols-12 items-center gap-3 py-4">
-                  <span class="col-span-1 font-mono text-xs text-[var(--color-cream)]/45">{(i + 1).toString().padStart(2, '0')}</span>
-                  <span class="col-span-5 text-[14px] font-medium">{row.constituency}</span>
-                  <span class="col-span-3 text-[13px] text-[var(--color-cream)]/65">{row.dept}</span>
-                  <span class="col-span-2 text-right text-[13px] font-mono text-[var(--color-rust)]">★ {row.score}</span>
-                  <span class="col-span-1 text-right text-[11px] text-[var(--color-cream)]/45">{row.n}</span>
+                <li class="flex items-start sm:items-center justify-between gap-3 py-3.5">
+                  <div class="flex items-baseline gap-3 min-w-0 flex-1">
+                    <span class="font-mono text-xs text-[var(--color-cream)]/45 shrink-0">{(i + 1).toString().padStart(2, '0')}</span>
+                    <div class="min-w-0">
+                      <p class="text-[14px] font-medium truncate">{row.constituency}</p>
+                      <p class="text-[12px] text-[var(--color-cream)]/65 mt-0.5">{row.dept}</p>
+                    </div>
+                  </div>
+                  <div class="flex items-baseline gap-2 sm:gap-4 shrink-0 text-right">
+                    <span class="text-[13px] font-mono text-[var(--color-rust)]">★ {row.score}</span>
+                    <span class="text-[11px] font-mono text-[var(--color-cream)]/45 w-8 text-right">{row.n}</span>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -692,7 +702,7 @@ const faqJson = {
         <div class="relative grid grid-cols-12 gap-8 items-end">
           <div class="col-span-12 md:col-span-7">
             <span class="eyebrow text-[var(--color-cream)]/80">Get Makkal Kural</span>
-            <h2 class="mt-4 font-display text-[44px] md:text-[72px] leading-[1.0] tracking-[-0.02em]">
+            <h2 class="mt-4 font-display text-[36px] sm:text-[52px] md:text-[64px] lg:text-[72px] leading-[1.05] tracking-[-0.02em]">
               Three minutes.<br/>One review.<br/>234 constituencies watching.
             </h2>
           </div>

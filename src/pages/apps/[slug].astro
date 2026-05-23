@@ -3,8 +3,9 @@ import Base from '../../layouts/Base.astro';
 import { apps, getApp, accentStyles } from '../../data/apps';
 
 export function getStaticPaths() {
+  const dedicated = new Set(['makkal-kural', 'inout']);
   return apps
-    .filter((a) => a.slug !== 'makkal-kural')
+    .filter((a) => !dedicated.has(a.slug))
     .map((a) => ({ params: { slug: a.slug } }));
 }
 
@@ -71,18 +72,18 @@ const others = apps.filter((a) => a.slug !== app.slug);
         <span class="text-[var(--color-ink)]/80">{app.name}</span>
       </nav>
 
-      <div class="grid grid-cols-12 gap-8 items-end">
+      <div class="grid grid-cols-12 gap-6 lg:gap-8 items-end">
         <div class="col-span-12 lg:col-span-8">
           <span class="eyebrow" style={`color: ${accentVar};`}>
             {app.category}
           </span>
-          <div class="mt-4 flex items-end gap-5">
-            <h1 class="font-display text-[56px] sm:text-[80px] md:text-[112px] leading-[0.95] tracking-[-0.025em]">
+          <div class="mt-4 flex items-end gap-3 sm:gap-5 flex-wrap">
+            <h1 class="font-display text-[48px] sm:text-[72px] md:text-[96px] lg:text-[112px] leading-[0.95] tracking-[-0.025em]">
               {app.name}
             </h1>
-            <span class="font-tamil text-2xl md:text-3xl text-[var(--color-ink)]/55 pb-3">{app.tamilName}</span>
+            <span class="font-tamil text-xl sm:text-2xl md:text-3xl text-[var(--color-ink)]/55 pb-2 sm:pb-3">{app.tamilName}</span>
           </div>
-          <p class="mt-6 font-display text-2xl md:text-3xl italic font-[450] max-w-2xl" style={`color: ${accentDeep};`}>
+          <p class="mt-6 font-display text-xl sm:text-2xl md:text-3xl italic font-[450] max-w-2xl" style={`color: ${accentDeep};`}>
             {app.tagline}
           </p>
         </div>
@@ -99,11 +100,11 @@ const others = apps.filter((a) => a.slug !== app.slug);
       </p>
 
       <!-- stats strip -->
-      <div class="mt-14 grid grid-cols-3 border-t border-[var(--color-line)]">
+      <div class="mt-12 md:mt-14 grid grid-cols-3 border-t border-[var(--color-line)]">
         {app.stats.map((s) => (
-          <div class="border-r last:border-r-0 border-[var(--color-line)] py-6 pr-6">
-            <p class="font-display text-3xl md:text-5xl tracking-[-0.02em]" style={`color: ${accentVar};`}>{s.value}</p>
-            <p class="text-xs uppercase tracking-wider text-[var(--color-ink)]/55 mt-2">{s.label}</p>
+          <div class="border-r last:border-r-0 border-[var(--color-line)] py-5 md:py-6 pr-3 sm:pr-6">
+            <p class="font-display text-2xl sm:text-3xl md:text-5xl tracking-[-0.02em]" style={`color: ${accentVar};`}>{s.value}</p>
+            <p class="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--color-ink)]/55 mt-2 leading-tight">{s.label}</p>
           </div>
         ))}
       </div>
