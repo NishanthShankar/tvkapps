@@ -1,0 +1,158 @@
+---
+import type { AccentKey } from '../data/apps';
+
+interface Props {
+  slug: string;
+  accent?: AccentKey;
+  variant?: 'light' | 'dark';
+  label?: string;
+}
+
+const { slug, accent = 'rust', variant = 'light', label = 'Worth shipping?' } = Astro.props;
+const accentVar = `var(--color-${accent})`;
+const isDark = variant === 'dark';
+---
+<div
+  class:list={[
+    'vote-widget inline-flex items-center gap-3 rounded-full p-1.5 pl-4 border',
+    isDark
+      ? 'border-[var(--color-cream)]/15 bg-[var(--color-cream)]/[0.04] text-[var(--color-cream)]'
+      : 'border-[var(--color-line)] bg-[var(--color-cream)]',
+  ]}
+  data-slug={slug}
+  style={`--accent: ${accentVar};`}
+>
+  <span class:list={[
+    'text-[11px] uppercase tracking-wider font-mono pr-1',
+    isDark ? 'text-[var(--color-cream)]/55' : 'text-[var(--color-ink)]/55',
+  ]}>
+    {label}
+  </span>
+  <button
+    type="button"
+    class:list={[
+      'vote-btn vote-up inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-medium transition disabled:cursor-not-allowed',
+      isDark
+        ? 'border border-[var(--color-cream)]/15 hover:bg-[var(--color-cream)]/8'
+        : 'border border-[var(--color-line)] hover:bg-[var(--color-cream-2)]',
+    ]}
+    data-dir="up"
+    aria-label="Upvote"
+  >
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    <span class="vote-count vote-count-up font-mono tabular-nums">·</span>
+  </button>
+  <button
+    type="button"
+    class:list={[
+      'vote-btn vote-down inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-medium transition disabled:cursor-not-allowed',
+      isDark
+        ? 'border border-[var(--color-cream)]/15 hover:bg-[var(--color-cream)]/8'
+        : 'border border-[var(--color-line)] hover:bg-[var(--color-cream-2)]',
+    ]}
+    data-dir="down"
+    aria-label="Downvote"
+  >
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    <span class="vote-count vote-count-down font-mono tabular-nums">·</span>
+  </button>
+</div>
+
+<style is:global>
+  .vote-widget .vote-btn.voted {
+    background: var(--accent);
+    color: var(--color-cream);
+    border-color: var(--accent);
+  }
+  .vote-widget .vote-btn.voted:hover {
+    background: var(--accent);
+  }
+  .vote-widget .vote-btn[data-state="loading"] {
+    opacity: 0.7;
+  }
+</style>
+
+<script>
+  type Counts = Record<string, { up: number; down: number }>;
+  type Dir = 'up' | 'down';
+
+  const widgets = document.querySelectorAll<HTMLElement>('.vote-widget');
+  if (widgets.length) {
+    const fmt = (n: number) =>
+      n >= 10_000 ? `${(n / 1000).toFixed(1)}k` : n.toLocaleString('en-IN');
+
+    const applyVotedState = (widget: HTMLElement, dir: Dir) => {
+      widget.querySelectorAll<HTMLButtonElement>('.vote-btn').forEach((b) => {
+        b.disabled = true;
+      });
+      widget.querySelector(`.vote-${dir}`)?.classList.add('voted');
+    };
+
+    const setCount = (widget: HTMLElement, dir: Dir, n: number) => {
+      const el = widget.querySelector(`.vote-count-${dir}`);
+      if (el) el.textContent = fmt(n);
+    };
+
+    // Fetch all counts in one shot (10s cache on the server keeps Upstash quiet).
+    fetch('/api/votes')
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((counts: Counts) => {
+        widgets.forEach((w) => {
+          const slug = w.dataset.slug!;
+          const c = counts[slug] ?? { up: 0, down: 0 };
+          setCount(w, 'up', c.up);
+          setCount(w, 'down', c.down);
+          const voted = localStorage.getItem(`tvkapps:voted:${slug}`);
+          if (voted === 'up' || voted === 'down') applyVotedState(w, voted);
+        });
+      })
+      .catch(() => {
+        widgets.forEach((w) => {
+          setCount(w, 'up', 0);
+          setCount(w, 'down', 0);
+        });
+      });
+
+    widgets.forEach((widget) => {
+      widget.querySelectorAll<HTMLButtonElement>('.vote-btn').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const slug = widget.dataset.slug!;
+          if (localStorage.getItem(`tvkapps:voted:${slug}`)) return;
+          const dir = btn.dataset.dir as Dir;
+
+          // Optimistic: bump the local count, mark voted, disable buttons.
+          const countEl = btn.querySelector('.vote-count') as HTMLElement | null;
+          const previous = countEl?.textContent ?? '0';
+          const previousNumeric = parseInt(previous.replace(/[^0-9]/g, ''), 10) || 0;
+          if (countEl) countEl.textContent = fmt(previousNumeric + 1);
+          applyVotedState(widget, dir);
+          localStorage.setItem(`tvkapps:voted:${slug}`, dir);
+          btn.dataset.state = 'loading';
+
+          try {
+            const res = await fetch('/api/vote', {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              body: JSON.stringify({ slug, dir }),
+            });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = (await res.json()) as { count: number };
+            if (countEl && typeof data.count === 'number') {
+              countEl.textContent = fmt(data.count);
+            }
+          } catch {
+            // Rollback on failure
+            if (countEl) countEl.textContent = previous;
+            localStorage.removeItem(`tvkapps:voted:${slug}`);
+            widget.querySelectorAll<HTMLButtonElement>('.vote-btn').forEach((b) => {
+              b.disabled = false;
+            });
+            widget.querySelector(`.vote-${dir}`)?.classList.remove('voted');
+          } finally {
+            btn.dataset.state = '';
+          }
+        });
+      });
+    });
+  }
+</script>

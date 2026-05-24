@@ -1,5 +1,6 @@
 ---
 import { getApp } from '../../data/apps';
+import VoteWidget from '../VoteWidget.astro';
 const app = getApp('inout')!;
 ---
 <section id="inout" class="relative overflow-hidden bg-[var(--color-cream)] py-20 md:py-28 lg:py-36">
@@ -27,12 +28,13 @@ const app = getApp('inout')!;
           {app.longDescription}
         </p>
 
-        <div class="mt-12 flex flex-wrap gap-3">
+        <div class="mt-12 flex flex-wrap gap-3 items-center">
           <a href={`/apps/${app.slug}`} class="btn bg-[var(--color-leaf)] text-[var(--color-cream)] hover:bg-[var(--color-leaf-deep)]">
             Open the {app.name} page
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
           <a href="#download" class="btn btn-ghost">Download</a>
+          <VoteWidget slug={app.slug} accent="leaf" variant="light" />
         </div>
       </div>
 

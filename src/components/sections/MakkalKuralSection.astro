@@ -1,5 +1,6 @@
 ---
 import { getApp } from '../../data/apps';
+import VoteWidget from '../VoteWidget.astro';
 const app = getApp('makkal-kural')!;
 ---
 <section id="makkal-kural" class="relative isolate overflow-hidden bg-[var(--color-ink)] text-[var(--color-cream)] grain">
@@ -40,7 +41,7 @@ const app = getApp('makkal-kural')!;
           ))}
         </ol>
 
-        <div class="mt-10 flex flex-wrap gap-3">
+        <div class="mt-10 flex flex-wrap gap-3 items-center">
           <a href={`/apps/${app.slug}`} class="btn bg-[var(--color-rust)] text-[var(--color-cream)] hover:bg-[var(--color-rust-deep)]">
             Open the {app.name} page
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -48,6 +49,7 @@ const app = getApp('makkal-kural')!;
           <a href="#download" class="btn border border-[var(--color-cream)]/25 text-[var(--color-cream)] hover:bg-[var(--color-cream)]/10">
             Download
           </a>
+          <VoteWidget slug={app.slug} accent="rust" variant="dark" />
         </div>
       </div>
 

@@ -1,5 +1,6 @@
 ---
 import { getApp } from '../../data/apps';
+import VoteWidget from '../VoteWidget.astro';
 const app = getApp('whistle')!;
 
 const recipients = [
@@ -54,7 +55,7 @@ const recipients = [
           &mdash;&nbsp; If you have a problem, just whistle.
         </p>
 
-        <div class="mt-10 flex flex-wrap gap-3">
+        <div class="mt-10 flex flex-wrap gap-3 items-center">
           <a href={`/apps/${app.slug}`} class="btn bg-[var(--color-siren)] text-[var(--color-cream)] hover:bg-[var(--color-siren-deep)]">
             Open the {app.name} page
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -62,6 +63,7 @@ const recipients = [
           <a href="#download" class="btn border border-[var(--color-cream)]/25 text-[var(--color-cream)] hover:bg-[var(--color-cream)]/10">
             Download
           </a>
+          <VoteWidget slug={app.slug} accent="siren" variant="dark" />
         </div>
       </div>
 

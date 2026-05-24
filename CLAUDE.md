@@ -47,3 +47,35 @@ This frames any citizen-initiated report, complaint, or grievance as a **whistle
 ## Routing notes
 
 - `src/pages/apps/[slug].astro` filters out `makkal-kural`, `inout`, and `whistle` from getStaticPaths because they have dedicated routes. Add any other dedicated page to the filter list there.
+
+## Voting (Upstash Redis)
+
+Per-app upvote/downvote counts are stored in Upstash Redis via REST. The site runs as `output: 'server'` with every page marked `export const prerender = true;` so pages stay static and only the two `/api/*` routes touch the network.
+
+### Env vars
+
+Set in `.env` (and on the host):
+
+```
+UPSTASH_REDIS_REST_URL=https://....upstash.io
+UPSTASH_REDIS_REST_TOKEN=...
+```
+
+Create the DB at https://console.upstash.com/redis. If the env vars are missing, vote endpoints return 503 but the rest of the site keeps working.
+
+### Endpoints
+
+- `GET /api/votes` → `{ slug: { up, down } }` for every app. 10-second public cache.
+- `POST /api/vote` body `{ slug, dir: 'up'|'down' }` → `{ ok, count }`. Per-IP 10-second rate-limit via `SET vote:rl:<ip> 1 EX 10 NX`. Client also keeps a permanent `localStorage` mark so a browser can only vote once per app.
+
+### Redis key shapes
+
+- `vote:<slug>:up` – integer, INCR on each upvote
+- `vote:<slug>:down` – integer
+- `vote:rl:<ip>` – string `"1"` with 10-second TTL, used as a per-IP throttle token
+
+### Adapter
+
+Currently using `@astrojs/vercel` v8. All dynamic routes (the two `/api/*` endpoints) get bundled into a single Node 22.x serverless function (`_render.func`), so per-route Edge runtime config is a no-op with this adapter version - everything runs as a serverless function. Cold start ~150ms, warm ~30-50ms (Upstash round-trip dominates). Fine for this workload.
+
+If we ever need Edge specifically, the cleanest path is to host the endpoints outside Astro (Vercel Edge Function in a separate file, or a dedicated Worker). For now: Node serverless is the right tradeoff.
