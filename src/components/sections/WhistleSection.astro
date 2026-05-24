@@ -1,0 +1,166 @@
+---
+import { getApp } from '../../data/apps';
+const app = getApp('whistle')!;
+
+const recipients = [
+  {
+    n: '01',
+    title: 'Your emergency contacts',
+    body: 'SMS + WhatsApp with your live location, sent the moment you press.',
+  },
+  {
+    n: '02',
+    title: 'Local police station',
+    body: 'Nearest station gets your alert with route and shift on duty.',
+  },
+  {
+    n: '03',
+    title: 'Nearest Singa Pen patrol',
+    body: 'Patrol app in the vehicle gets the alert + a route to you. Median arrival under 4 minutes.',
+  },
+];
+---
+<section id="whistle" class="relative isolate overflow-hidden bg-[var(--color-ink)] text-[var(--color-cream)] grain">
+  <!-- siren wash -->
+  <div aria-hidden="true" class="absolute -top-40 -left-40 h-[640px] w-[640px] rounded-full blur-3xl opacity-25"
+    style="background: radial-gradient(closest-side, var(--color-siren), transparent 70%);"></div>
+  <div aria-hidden="true" class="absolute -bottom-40 -right-32 h-[500px] w-[500px] rounded-full blur-3xl opacity-20"
+    style="background: radial-gradient(closest-side, var(--color-rust), transparent 70%);"></div>
+
+  <div class="container-x relative py-20 md:py-28 lg:py-32">
+    <!-- top label row -->
+    <div class="grid grid-cols-12 gap-6 mb-12 md:mb-16">
+      <div class="col-span-12 md:col-span-6 flex items-center gap-3">
+        <span class="eyebrow text-[var(--color-siren)]" style="color: color-mix(in srgb, var(--color-siren) 80%, white);">App 04 &nbsp;/&nbsp; {app.category}</span>
+      </div>
+      <div class="col-span-12 md:col-span-6 md:text-right">
+        <span class="font-tamil text-lg text-[var(--color-cream)]/55">{app.tamilName}</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-12 gap-y-10 md:gap-12 items-center">
+      <!-- left editorial -->
+      <div class="col-span-12 lg:col-span-7 reveal">
+        <h2 class="font-display text-[36px] sm:text-[56px] md:text-[72px] lg:text-[80px] leading-[1.0] tracking-[-0.02em]">
+          {app.name}.<br/>
+          <span class="italic font-[450]" style="color: color-mix(in srgb, var(--color-siren) 75%, white);">{app.tagline}</span>
+        </h2>
+
+        <p class="mt-8 max-w-xl text-[17px] leading-[1.6] text-[var(--color-cream)]/75">
+          {app.longDescription}
+        </p>
+
+        <p class="mt-4 text-[12px] sm:text-[13px] font-mono uppercase tracking-[0.2em] text-[var(--color-rust)]">
+          &mdash;&nbsp; If you have a problem, just whistle.
+        </p>
+
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a href={`/apps/${app.slug}`} class="btn bg-[var(--color-siren)] text-[var(--color-cream)] hover:bg-[var(--color-siren-deep)]">
+            Open the {app.name} page
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#download" class="btn border border-[var(--color-cream)]/25 text-[var(--color-cream)] hover:bg-[var(--color-cream)]/10">
+            Download
+          </a>
+        </div>
+      </div>
+
+      <!-- right: SOS button mockup -->
+      <div class="col-span-12 lg:col-span-5 reveal">
+        <div class="relative mx-auto max-w-[300px]">
+          <!-- phone frame -->
+          <div class="device relative bg-[#0a0a0a] p-3 rounded-[40px]">
+            <div class="rounded-[28px] overflow-hidden bg-[var(--color-cream)] text-[var(--color-ink)] h-[580px] flex flex-col">
+              <!-- status bar -->
+              <div class="flex items-center justify-between px-5 py-2.5 text-[11px] font-medium">
+                <span>9:41</span>
+                <span class="flex items-center gap-1">
+                  <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-ink)]"></span>
+                  <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-ink)]"></span>
+                  <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-ink)]/30"></span>
+                </span>
+              </div>
+
+              <!-- app header -->
+              <div class="px-5 pt-1 pb-3 flex items-end justify-between">
+                <div>
+                  <p class="font-tamil text-[11px] text-[var(--color-ink)]/50">விசில்</p>
+                  <h4 class="font-display text-[22px] leading-tight">SOS</h4>
+                </div>
+                <span class="rounded-full bg-[color-mix(in_srgb,var(--color-leaf)_14%,transparent)] text-[var(--color-leaf-deep)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider">ID verified</span>
+              </div>
+
+              <!-- centred SOS button with pulse rings -->
+              <div class="relative flex-1 grid place-items-center px-6">
+                <span aria-hidden="true" class="absolute h-[210px] w-[210px] rounded-full border border-[var(--color-rust)] opacity-25 animate-ping" style="animation-duration: 2.4s;"></span>
+                <span aria-hidden="true" class="absolute h-[175px] w-[175px] rounded-full border border-[var(--color-rust)] opacity-35"></span>
+                <span aria-hidden="true" class="absolute h-[150px] w-[150px] rounded-full border-2 border-[var(--color-rust)] opacity-50"></span>
+                <button class="relative h-[130px] w-[130px] rounded-full text-[var(--color-cream)] shadow-[0_30px_60px_-20px_rgba(214,41,62,0.7)]"
+                  style="background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--color-rust) 80%, white), var(--color-rust) 55%, var(--color-rust-deep));">
+                  <svg class="mx-auto" width="44" height="44" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <rect x="3" y="10.5" width="4" height="3" rx="0.5"/>
+                    <path d="M7 9 H14 A4 4 0 0 1 14 17 H7 Z"/>
+                    <circle cx="11.5" cy="13" r="1.4" fill="var(--color-rust-deep)"/>
+                    <circle cx="17.5" cy="7.5" r="1.3" fill="none" stroke="currentColor" stroke-width="1.4"/>
+                  </svg>
+                  <span class="block text-[11px] font-bold uppercase tracking-[0.18em] mt-1">SOS</span>
+                </button>
+              </div>
+
+              <!-- alert details -->
+              <div class="px-5 pb-5 mt-2">
+                <p class="text-[10.5px] uppercase tracking-wider text-[var(--color-ink)]/55 mb-2.5 text-center">On press, all three are alerted</p>
+                <div class="flex items-center gap-1.5 justify-between">
+                  <span class="flex-1 rounded-full bg-[var(--color-cream-2)] px-2 py-1.5 text-[10px] font-medium text-center">Contacts</span>
+                  <span class="flex-1 rounded-full bg-[var(--color-cream-2)] px-2 py-1.5 text-[10px] font-medium text-center">Police</span>
+                  <span class="flex-1 rounded-full bg-[color-mix(in_srgb,var(--color-siren)_15%,var(--color-cream))] text-[var(--color-siren-deep)] px-2 py-1.5 text-[10px] font-semibold text-center">Singa Pen</span>
+                </div>
+                <p class="mt-3 text-center text-[11px] text-[var(--color-ink)]/55">Nearest patrol &middot; <span class="text-[var(--color-rust)] font-semibold">1.2 km</span> away</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- floating callout -->
+          <div class="absolute -left-10 top-[36%] hidden md:flex items-center gap-1.5">
+            <div class="rounded-xl bg-[var(--color-cream)] text-[var(--color-ink)] px-3 py-2 shadow-xl text-[11px] font-medium border border-[var(--color-line)] max-w-[140px]">
+              <p class="text-[var(--color-rust)] text-[9.5px] uppercase tracking-wider">Audible</p>
+              <p class="font-display text-[14px] leading-tight">Phone whistles at max volume</p>
+            </div>
+          </div>
+
+          <div class="absolute -right-12 bottom-[70px] hidden md:flex items-center gap-1.5">
+            <svg class="text-[var(--color-siren)] rotate-180" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M15 6l6 6-6 6"/></svg>
+            <div class="rounded-xl bg-[var(--color-siren)] text-[var(--color-cream)] px-3 py-2 shadow-xl text-[11px] font-medium max-w-[150px]">
+              <p class="text-[var(--color-cream)]/65 text-[9px] uppercase tracking-wider">Routes</p>
+              <p class="font-display text-[14px] leading-tight mt-0.5">Singa Pen<br/>patrol to you</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- recipient cards -->
+    <div class="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--color-cream)]/15 rounded-2xl overflow-hidden">
+      {recipients.map((r) => (
+        <article class="bg-[var(--color-ink)] p-6 md:p-8">
+          <div class="flex items-center gap-2 mb-5">
+            <span class="font-mono text-[11px] text-[var(--color-rust)]">R.{r.n}</span>
+            <span class="h-px flex-1 bg-[var(--color-cream)]/15"></span>
+          </div>
+          <h3 class="font-display text-xl tracking-tight">{r.title}</h3>
+          <p class="mt-2 text-[14px] text-[var(--color-cream)]/65 leading-relaxed">{r.body}</p>
+        </article>
+      ))}
+    </div>
+
+    <!-- stats strip -->
+    <div class="mt-16 md:mt-24 lg:mt-28 grid grid-cols-3 border-t border-[var(--color-cream)]/15">
+      {app.stats.map((s) => (
+        <div class="border-r last:border-r-0 border-[var(--color-cream)]/15 py-8 md:py-12 px-4 sm:px-6 first:pl-0">
+          <p class="font-display text-2xl sm:text-3xl md:text-5xl lg:text-6xl tracking-[-0.02em] leading-none" style="color: color-mix(in srgb, var(--color-siren) 70%, white);">{s.value}</p>
+          <p class="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--color-cream)]/55 mt-3 md:mt-5 leading-tight">{s.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

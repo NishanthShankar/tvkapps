@@ -15,7 +15,14 @@ This frames any citizen-initiated report, complaint, or grievance as a **whistle
 - **Makkal Kural**: Posts on the Requests tab are called **whistles**. The tab name in the UI is "Whistles". The "Reviews" tab stays as Reviews (reviews are not whistles - whistles are about problems).
 - **InOut**: When a citizen flags a TASMAC shop for bribery, underage sale, staff abuse, or stock manipulation, they are **whistling**. Shopkeeper check-ins/check-outs are NOT whistles (those are operational logs).
 - **Thittam**: No whistle concept (welfare scheme discovery is not problem-reporting).
+- **Whistle (the app)**: The literal embodiment of the brand mantra. A one-tap SOS for women - alerts emergency contacts, the police, and the nearest Singa Pen patrol vehicle, and starts the phone whistling at maximum volume. Identity-verified accounts only (live face match against a government photo ID). Admin side has live patrol oversight + anomaly detection.
 - **Future apps**: Anytime a citizen reports a problem, the verb is *whistle* and the artifact is *a whistle*.
+
+### Accent color per app
+- Makkal Kural - `rust` (warm red)
+- InOut - `leaf` (forest green)
+- Thittam - `gold` (warm yellow)
+- Whistle - `siren` (deep navy/indigo) - with `rust` as a secondary accent for the SOS button itself
 
 ### Visual treatment
 
@@ -39,4 +46,4 @@ This frames any citizen-initiated report, complaint, or grievance as a **whistle
 
 ## Routing notes
 
-- `src/pages/apps/[slug].astro` filters out `makkal-kural` and `inout` from getStaticPaths because they have dedicated routes. Add any other dedicated page to the filter list there.
+- `src/pages/apps/[slug].astro` filters out `makkal-kural`, `inout`, and `whistle` from getStaticPaths because they have dedicated routes. Add any other dedicated page to the filter list there.

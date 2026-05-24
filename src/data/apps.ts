@@ -1,4 +1,4 @@
-export type AccentKey = 'rust' | 'leaf' | 'gold';
+export type AccentKey = 'rust' | 'leaf' | 'gold' | 'siren';
 export type LayoutKey = 'hero' | 'split' | 'flow';
 
 export interface AppFeature {
@@ -228,6 +228,82 @@ export const apps: AppRecord[] = [
       keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
     },
   },
+  {
+    slug: 'whistle',
+    name: 'Whistle',
+    tamilName: 'விசில்',
+    category: 'Women safety',
+    tagline: 'For her safety.',
+    shortDescription:
+      'A one-tap SOS for women. Alerts emergency contacts, the police, and the nearest Singa Pen patrol vehicle - and starts whistling at max volume to scare off the perpetrator. ID-verified accounts only.',
+    longDescription:
+      "Whistle is the panic button Tamil Nadu's women have been waiting for. A homescreen shortcut, one tap - emergency contacts get a message with your live location, the local police are notified, and the nearest Singa Pen patrol vehicle gets a route to you. The phone simultaneously starts whistling at maximum volume to startle the perpetrator and draw bystander attention. Singa Pen patrol vehicles stream their GPS to an internal oversight dashboard - not the public - where anomaly detection flags idle vehicles, off-route patrolling, or active responses. Every account is gated behind live face verification matched against a government photo ID at signup, so the patrol never gets drained by fakes. If you have a problem, just whistle.",
+    accent: 'siren',
+    layout: 'split',
+    features: [
+      {
+        title: 'One-tap SOS',
+        body: 'A homescreen shortcut. One tap alerts your emergency contacts, the local police, and the nearest Singa Pen patrol vehicle - all with your live location. An 8-second cancel window catches accidents.',
+      },
+      {
+        title: 'Nearest Singa Pen patrol, routed to you',
+        body: 'The patrol app in the Singa Pen vehicle gets the alert and a route the moment you press. Median statewide arrival is under four minutes.',
+      },
+      {
+        title: 'Loud audible whistle',
+        body: 'Optional. The moment you press, your phone whistles at maximum volume. Useful to startle a perpetrator and pull bystanders in. Stops only with your PIN.',
+      },
+      {
+        title: 'Live face + photo ID verified',
+        body: 'At signup, a live face video is matched against a government photo ID (Aadhaar, PAN, TN citizenship card, or school/college ID). Keeps the network honest and the patrol from being drained by fakes.',
+      },
+      {
+        title: 'Admin oversight, not public surveillance',
+        body: 'Patrol vehicles share their live GPS with the Singa Pen oversight dashboard only - never the public. Anomaly detection flags idle, off-route, or actively-responding vehicles automatically.',
+      },
+      {
+        title: 'Women safely escorted, counted',
+        body: 'Every alert that ends with a Singa Pen escort or de-escalation is logged. The dashboard shows the running count, median arrival, and unresolved alerts per constituency.',
+      },
+    ],
+    stats: [
+      { value: '<4 min', label: 'Median patrol arrival' },
+      { value: '8,500+', label: 'Singa Pen officers' },
+      { value: '47,200+', label: 'Women safely escorted (pilot)' },
+    ],
+    faq: [
+      {
+        q: 'What exactly happens when I press the Whistle button?',
+        a: "Three things at once. Your emergency contacts get an SMS and WhatsApp with your live location. The nearest police station is notified. The nearest Singa Pen patrol vehicle gets a route to you on their patrol app. If audible whistle is enabled, your phone also starts whistling at full volume. An 8-second cancel window lets you abort accidents.",
+      },
+      {
+        q: 'Why do I need a photo ID to sign up?',
+        a: "To stop men creating fake accounts to test response time or drain patrol resources. At signup, a live face video is matched against a government photo ID (Aadhaar, PAN, TN citizenship card, or school/college ID). The ID image is hashed against the face match and discarded - we don't store the document itself.",
+      },
+      {
+        q: 'Who can see the patrol vehicle locations?',
+        a: "Only the Singa Pen oversight dashboard. Patrol-vehicle GPS streams to the administration for anomaly detection (idle vehicle, off-route, actively responding) but is never public. The public sees only an aggregate 'patrols active' count per constituency.",
+      },
+      {
+        q: 'Will the loud whistle drain my battery?',
+        a: "It runs while the alarm is active - until the patrol arrives or you cancel with your PIN. On a typical phone that's 4-6 minutes of audio, roughly 3% battery.",
+      },
+      {
+        q: 'What if I press it by accident?',
+        a: 'An 8-second cancel window appears. If you cancel, no one is notified. After 8 seconds the alarm is sent. False alarms are not penalized - we know panic happens.',
+      },
+      {
+        q: 'What stops the data from being misused?',
+        a: 'Patrol-vehicle location stays inside the Singa Pen oversight system. Account creation uses the same identity layer as voter ID. The source code for alert routing, anomaly detection, and dashboards is published on GitHub.',
+      },
+    ],
+    meta: {
+      title: 'Whistle - One-tap women safety app for Tamil Nadu',
+      description:
+        'One-tap SOS for women. Alerts emergency contacts, the police, and the nearest Singa Pen patrol vehicle. The phone whistles at max volume. ID-verified accounts only. If you have a problem, just whistle.',
+      keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
+    },
+  },
 ];
 
 export const accentStyles: Record<
@@ -254,6 +330,13 @@ export const accentStyles: Record<
     soft: 'bg-[color-mix(in_srgb,var(--color-gold)_15%,transparent)]',
     tint: 'text-[var(--color-gold-deep)]',
     ring: 'ring-[var(--color-gold)]',
+  },
+  siren: {
+    bg: 'bg-[var(--color-siren)]',
+    ink: 'text-[var(--color-siren)]',
+    soft: 'bg-[color-mix(in_srgb,var(--color-siren)_14%,transparent)]',
+    tint: 'text-[var(--color-siren-deep)]',
+    ring: 'ring-[var(--color-siren)]',
   },
 };
 

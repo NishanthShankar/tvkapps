@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import { apps, getApp, accentStyles } from '../../data/apps';
 
 export function getStaticPaths() {
-  const dedicated = new Set(['makkal-kural', 'inout']);
+  const dedicated = new Set(['makkal-kural', 'inout', 'whistle']);
   return apps
     .filter((a) => !dedicated.has(a.slug))
     .map((a) => ({ params: { slug: a.slug } }));
