@@ -80,7 +80,7 @@ const app = getApp('makkal-kural')!;
               <div class="px-5 pb-1">
                 <div class="flex items-center gap-1 border-b border-[var(--color-line)]">
                   <button class="relative px-3 py-2 text-[12px] font-semibold">
-                    Requests
+                    Whistles
                     <span class="absolute bottom-[-1px] left-1 right-1 h-[2px] bg-[var(--color-rust)] rounded-full"></span>
                   </button>
                   <button class="px-3 py-2 text-[12px] text-[var(--color-ink)]/45">Reviews</button>
@@ -88,7 +88,7 @@ const app = getApp('makkal-kural')!;
                 </div>
               </div>
 
-              <!-- requests list -->
+              <!-- whistles list -->
               <div class="px-3 pt-2.5 space-y-2 overflow-hidden">
                 <!-- BRIDGE: resolved, awaiting review -->
                 <div class="rounded-2xl border-2 border-[var(--color-rust)] bg-[color-mix(in_srgb,var(--color-rust)_8%,var(--color-cream))] p-3.5">
@@ -138,29 +138,36 @@ const app = getApp('makkal-kural')!;
                 </div>
               </div>
 
-              <!-- new request FAB -->
+              <!-- whistle FAB - the primary "report a problem" CTA, styled as a whistle button -->
               <div class="mt-auto px-4 pb-5 pt-4">
-                <button class="w-full rounded-full bg-[var(--color-ink)] text-[var(--color-cream)] py-3 text-[13px] font-medium flex items-center justify-center gap-2">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-                  <span>New request</span>
+                <button class="relative w-full rounded-full bg-[var(--color-rust)] text-[var(--color-cream)] py-3.5 text-[13px] font-semibold flex items-center justify-center gap-2 shadow-[0_10px_30px_-8px_rgba(214,41,62,0.55)]">
+                  <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <rect x="3" y="10.5" width="4" height="3" rx="0.5"/>
+                    <path d="M7 9 H14 A4 4 0 0 1 14 17 H7 Z"/>
+                    <circle cx="11.5" cy="13" r="1.3" fill="var(--color-rust)"/>
+                    <circle cx="17.5" cy="7.5" r="1.2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+                  </svg>
+                  <span>Whistle</span>
                 </button>
               </div>
             </div>
           </div>
 
           <!-- floating callouts -->
-          <div class="absolute -left-12 top-[34%] hidden md:block">
+          <div class="absolute -left-10 top-[30%] hidden md:block">
             <div class="rounded-xl bg-[var(--color-cream)] text-[var(--color-ink)] px-3 py-2 shadow-xl text-[11px] font-medium border border-[var(--color-line)]">
               <p class="text-[var(--color-rust)] text-[9.5px] uppercase tracking-wider">Resolved →</p>
               <p class="font-display text-[15px] leading-tight">flows to<br/>Reviews</p>
             </div>
           </div>
 
-          <div class="absolute -right-10 top-[60%] hidden md:block">
-            <div class="rounded-xl bg-[var(--color-ink)] text-[var(--color-cream)] px-3 py-2 shadow-xl text-[11px] font-medium">
-              <p class="text-[var(--color-rust)] text-[9.5px] uppercase tracking-wider">234 of 234</p>
-              <p class="font-display text-base">constituencies</p>
+          <!-- whistle tagline callout, pointing to the Whistle CTA -->
+          <div class="absolute -right-8 bottom-[34px] hidden md:flex items-center gap-1.5">
+            <div class="rounded-xl bg-[var(--color-rust)] text-[var(--color-cream)] px-3 py-2.5 shadow-xl text-[11px] font-medium max-w-[150px]">
+              <p class="text-[var(--color-cream)]/65 text-[9px] uppercase tracking-wider">The mantra</p>
+              <p class="font-display text-[14px] leading-tight mt-0.5">If you have a problem,<br/>just whistle.</p>
             </div>
+            <svg class="text-[var(--color-rust)] -mb-6 rotate-90" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M15 6l6 6-6 6"/></svg>
           </div>
         </div>
       </div>

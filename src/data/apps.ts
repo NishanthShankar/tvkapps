@@ -39,15 +39,15 @@ export const apps: AppRecord[] = [
     category: 'Requests & reviews',
     tagline: 'File it. Fix it. Rate it.',
     shortDescription:
-      'Two tabs for the way you actually deal with government - Requests to file when something is broken, Reviews to rate when something is done. Resolved requests flow into reviews automatically.',
+      "Two tabs for the way you actually deal with government - Whistles to file when something is broken, Reviews to rate when something is done. Resolved whistles flow into reviews automatically. If you have a problem, just whistle.",
     longDescription:
-      "Makkal Kural has two tabs and one purpose. File a request when a service fails - we use your approximate location to find the constituency and read your text to tag the department, then route it to the right office and track it through to resolution. When it gets resolved, you leave a review - and the whole arc lands on the public timeline. Each issue is shown on the home feed of only the people in its scope (home, street, ward, constituency, district, or state) so timelines stay relevant - and when the government needs public consensus before acting, only voters inside that scope can upvote or downvote.",
+      "Makkal Kural has two tabs and one purpose. Whistle when a service fails - we use your approximate location to find the constituency and read your text to tag the department, then route the whistle to the right office and track it through to resolution. When it gets resolved, you leave a review - and the whole arc lands on the public timeline. Each whistle is shown on the home feed of only the people in its scope (home, street, ward, constituency, district, or state) so timelines stay relevant - and when the government needs public consensus before acting, only voters inside that scope can upvote or downvote. If you have a problem, just whistle.",
     accent: 'rust',
     layout: 'hero',
     features: [
       {
-        title: 'Two tabs: Requests and Reviews',
-        body: 'File a request when a counter visit fails. Leave a review when it succeeds. Resolved requests roll into the public Reviews feed automatically - no double-entry.',
+        title: 'Two tabs: Whistles and Reviews',
+        body: 'Whistle when a counter visit fails. Leave a review when it succeeds. Resolved whistles roll into the public Reviews feed automatically - no double-entry.',
       },
       {
         title: 'Location finds your constituency',
@@ -63,7 +63,7 @@ export const apps: AppRecord[] = [
       },
       {
         title: 'Voter-eligible voting',
-        body: "When a request needs public consensus before action, only voters inside the issue's scope can upvote or downvote - verified via voter ID at signup. Everyone else sees the running tally.",
+        body: "When a whistle needs public consensus before action, only voters inside the issue's scope can upvote or downvote - verified via voter ID at signup. Everyone else sees the running tally.",
       },
       {
         title: 'Web, Android, iOS - one identity',
@@ -77,8 +77,8 @@ export const apps: AppRecord[] = [
     ],
     faq: [
       {
-        q: 'How do Requests and Reviews relate?',
-        a: 'Requests are filed when something goes wrong - they are routed and tracked. When a request is marked resolved, the app prompts you to leave a star rating and a short note, and that entry then appears in the Reviews tab too. Reviews can also be posted directly without a prior request.',
+        q: 'How do Whistles and Reviews relate?',
+        a: 'Whistles are filed when something goes wrong - they are routed and tracked. When a whistle is marked resolved, the app prompts you to leave a star rating and a short note, and that entry then appears in the Reviews tab too. Reviews can also be posted directly without a prior whistle.',
       },
       {
         q: "Why can't I see all issues on my home feed?",
@@ -89,8 +89,8 @@ export const apps: AppRecord[] = [
         a: 'The same Tamil + English classifier that picks the department also picks the smallest reasonable scope (home, street, ward, constituency, district, state). If the confidence is below the threshold, the requester picks the scope from a shortlist before the issue goes live.',
       },
       {
-        q: 'Who can upvote and downvote a request?',
-        a: 'Voting is restricted to people inside the request\'s scope - confirmed via voter ID at signup. A constituency-level request can be voted on only by voters registered in that constituency. Everyone else sees the running totals but can\'t move them. This stops vote-brigading by people outside the issue\'s actual community.',
+        q: 'Who can upvote and downvote a whistle?',
+        a: "Voting is restricted to people inside the whistle's scope - confirmed via voter ID at signup. A constituency-level whistle can be voted on only by voters registered in that constituency. Everyone else sees the running totals but can't move them. This stops vote-brigading by people outside the issue's actual community.",
       },
       {
         q: 'How does location find my constituency without GPS?',
@@ -105,7 +105,7 @@ export const apps: AppRecord[] = [
         a: 'Yes - anonymous is the default. Verified handles get a higher trust weight on aggregated rankings, but anonymous posts count too.',
       },
       {
-        q: 'How do you stop fake reviews and frivolous requests?',
+        q: 'How do you stop fake reviews and frivolous whistles?',
         a: 'One verified mobile number per identity. New accounts are weighted down until they age. An anomaly detector flags rings and bots, and we publish the false-positive rate openly.',
       },
     ],
@@ -139,11 +139,11 @@ export const apps: AppRecord[] = [
       },
       {
         title: 'A page for every shop',
-        body: "Every TASMAC shop has a public profile - today's shifts, the last 30 days of operations, complaint count, and a button to flag bribes, underage sales, or staff abuse.",
+        body: "Every TASMAC shop has a public profile - today's shifts, the last 30 days of operations, whistle count, and a Whistle button to flag bribes, underage sales, or staff abuse.",
       },
       {
         title: 'Officials see what citizens see, plus more',
-        body: 'Inspectors get a constituency map of all shops with live status, complaint volume, and a one-tap escalation to the local TASMAC office.',
+        body: 'Inspectors get a constituency map of all shops with live status, whistle volume, and a one-tap escalation to the local TASMAC office.',
       },
     ],
     stats: [
@@ -154,25 +154,25 @@ export const apps: AppRecord[] = [
     faq: [
       {
         q: 'Why does TASMAC need this?',
-        a: 'Closing-hour violations and late-night sales are routine, and complaints from citizens often vanish in the chain between the customer, the shop, and the inspectorate. InOut closes the loop: every shift is timestamped, every late close is flagged automatically, and every complaint is tied to a specific shop and shift.',
+        a: "Closing-hour violations and late-night sales are routine, and citizen whistles often vanish in the chain between the customer, the shop, and the inspectorate. InOut closes the loop: every shift is timestamped, every late close is flagged automatically, and every whistle is tied to a specific shop and shift. If you have a problem, just whistle.",
       },
       {
         q: 'Can shopkeepers fake check-ins?',
         a: 'Each check-in pairs a timestamp with a GPS fix at the registered shop location and a face match against the shopkeeper on file. Backdated entries are rejected. If GPS is unavailable, the shop is marked "unverified-open" - which is itself a flag for the inspector.',
       },
       {
-        q: 'How are complaints verified?',
-        a: 'Anonymous complaints land in the inspector\'s queue with the shop, shift, and timestamp. The inspector decides whether to act. Complaint outcomes (acted on / dismissed) are public, so patterns of dismissal show up over time.',
+        q: 'How are whistles verified?',
+        a: "Anonymous whistles land in the inspector's queue with the shop, shift, and timestamp. The inspector decides whether to act. Whistle outcomes (acted on / dismissed) are public, so patterns of dismissal show up over time.",
       },
       {
         q: 'Is the public log open data?',
-        a: 'Yes. Daily open/close timestamps, late-close flags, and aggregate complaint counts per shop are available as a public dataset, refreshed nightly. Names of staff, customers, and complainants are never published.',
+        a: 'Yes. Daily open/close timestamps, late-close flags, and aggregate whistle counts per shop are available as a public dataset, refreshed nightly. Names of staff, customers, and whistleblowers are never published.',
       },
     ],
     meta: {
       title: 'InOut - public clock for Tamil Nadu TASMAC shops',
       description:
-        "A check-in / check-out log for every TASMAC shop in Tamil Nadu. Public timestamps, automatic late-close flags, complaint reporting tied to each shop's shift.",
+        "A check-in / check-out log for every TASMAC shop in Tamil Nadu. Public timestamps, automatic late-close flags, citizen whistles tied to each shop's shift. If you have a problem, just whistle.",
       keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
     },
   },
