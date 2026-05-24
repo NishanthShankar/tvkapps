@@ -23,6 +23,7 @@ This frames any citizen-initiated report, complaint, or grievance as a **whistle
 - InOut - `leaf` (forest green)
 - Thittam - `gold` (warm yellow)
 - Whistle - `siren` (alarm red - rose-600 #e11d48) - signifies danger / emergency. Distinct from rust by leaning cooler/more saturated. SOS button uses `rust` for layered red.
+- DocInOut - `pulse` (medical teal - teal-600 #0d9488) - PHC + hospital doctor oversight. Healthcare context, distinct from the other accents.
 
 ### Identity verification (Makkal Kural + Whistle)
 
@@ -57,7 +58,7 @@ This phrasing should appear prominently on any page that mentions ID verificatio
 
 ## Routing notes
 
-- `src/pages/apps/[slug].astro` filters out `makkal-kural`, `inout`, and `whistle` from getStaticPaths because they have dedicated routes. Add any other dedicated page to the filter list there.
+- `src/pages/apps/[slug].astro` filters out `makkal-kural`, `inout`, `whistle`, and `docinout` from getStaticPaths because they have dedicated routes. Add any other dedicated page to the filter list there.
 
 ## Voting (Upstash Redis)
 

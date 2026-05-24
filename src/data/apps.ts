@@ -1,4 +1,4 @@
-export type AccentKey = 'rust' | 'leaf' | 'gold' | 'siren';
+export type AccentKey = 'rust' | 'leaf' | 'gold' | 'siren' | 'pulse';
 export type LayoutKey = 'hero' | 'split' | 'flow';
 
 export interface AppFeature {
@@ -308,6 +308,82 @@ export const apps: AppRecord[] = [
       keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
     },
   },
+  {
+    slug: 'docinout',
+    name: 'DocInOut',
+    tamilName: 'டாக் வருகை',
+    category: 'PHC + hospital oversight',
+    tagline: 'For the doctors who show up.',
+    shortDescription:
+      "A public attendance clock for every PHC and government hospital doctor in Tamil Nadu. Doctors check in/out, patients whistle missed appointments, abuse, or bribery, and an AI dashboard flags anomalies for the Health Department in real time.",
+    longDescription:
+      "DocInOut puts the same public clock InOut runs on TASMAC shops on every government doctor at a PHC or hospital. Doctors check in at shift start - selfie + GPS at the registered facility - and check out at close. Patients can whistle a missed appointment, a demanded bribe, abuse, or any other failure of care; the whistle is tied to the specific shift and routed straight to the DMS. An AI dashboard surfaces the patterns a human reviewer would miss: doctors who chronically run late, facilities clustering complaints, off-pattern absences. Critical whistles (bribery, abuse) float to the top automatically. If you have a problem, just whistle.",
+    accent: 'pulse',
+    layout: 'split',
+    features: [
+      {
+        title: 'One tap to start the shift',
+        body: 'Doctors check in at shift start with a selfie + GPS fix at the registered PHC or hospital. Check-out closes the shift. No backdating, no edits.',
+      },
+      {
+        title: 'The "missed appointment" whistle',
+        body: "Patient turns up at the assigned time, doctor isn't there - whistle it. Tied to the specific shift, the facility, and routed straight to the DMS for follow-up.",
+      },
+      {
+        title: 'AI anomaly detection',
+        body: 'Late check-ins, early departures, off-pattern absences, complaint clusters at a facility, repeat-offender doctors - all surface on the Health Department dashboard automatically.',
+      },
+      {
+        title: 'Critical-whistle highlighting',
+        body: 'The AI ranks every whistle by severity. Bribery, sexual abuse, life-threatening neglect float to the top of the queue with auto-escalation to the District Medical Officer.',
+      },
+      {
+        title: 'A public page for every doctor',
+        body: "Facility, specialisation, today's shift status, the last 30 days of attendance, whistle count. Open data, refreshed nightly. Doctors who consistently show up look good. Those who don't, don't.",
+      },
+      {
+        title: 'Direct line to the administration',
+        body: 'No middle layer. The whistle queue lands in the DMS dashboard, anomalies land in the DDHS dashboard, escalations go to the Health Secretary. Every action is timestamped.',
+      },
+    ],
+    stats: [
+      { value: '1,950+', label: 'PHCs + hospital posts' },
+      { value: '<6 min', label: 'Median whistle ack time' },
+      { value: 'Live', label: 'AI anomaly dashboard' },
+    ],
+    faq: [
+      {
+        q: 'How is a doctor’s attendance verified?',
+        a: 'Each check-in pairs a timestamp with a GPS fix at the registered facility and a face match against the doctor on file. Backdated entries are rejected. If GPS is unavailable, the doctor is marked "unverified-present" - which is itself a flag for the DMS.',
+      },
+      {
+        q: 'What can patients whistle about?',
+        a: 'Missed appointment (doctor not there at the scheduled time), demanded bribe, abuse or harassment, refusal to treat, or any quality-of-care concern. Every whistle is tied to the shop (facility), the shift, and a timestamp.',
+      },
+      {
+        q: 'Who sees the AI dashboard?',
+        a: "The DMS dashboard for routine whistles and same-day attendance, the DDHS / Health Department dashboard for trend anomalies and repeat offenders, the Health Secretary for state-wide rollups. Patrol-vehicle-style location data is never public; only the per-facility aggregate is.",
+      },
+      {
+        q: 'What does the AI actually detect?',
+        a: "Late check-ins crossing a per-facility threshold, absences without sanctioned leave, complaint clusters at a single facility, repeat-doctor complaints from different patients in a short window, and statistically unusual patterns - the kinds of things a human reviewer would only see after dozens of reports.",
+      },
+      {
+        q: 'Are doctors named publicly?',
+        a: "Yes. Every government doctor has a public profile page - the same way a TASMAC shop does in InOut. Posted whistles show department, facility, and the doctor's name; the patient's name is never shown.",
+      },
+      {
+        q: 'What if a doctor has a legitimate reason to be absent?',
+        a: 'Sanctioned leave, official visits, emergencies - all entered in advance through the doctor app or by the facility in-charge, and shown on the public profile. AI anomaly detection ignores any time marked under approved leave.',
+      },
+    ],
+    meta: {
+      title: 'DocInOut - PHC and hospital doctor accountability app for Tamil Nadu',
+      description:
+        "A public attendance clock for every government doctor at a PHC or hospital. Doctor check-in/out, patient whistles for missed appointments and abuse, AI anomaly dashboard for the Health Department. If you have a problem, just whistle.",
+      keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
+    },
+  },
 ];
 
 export const accentStyles: Record<
@@ -341,6 +417,13 @@ export const accentStyles: Record<
     soft: 'bg-[color-mix(in_srgb,var(--color-siren)_14%,transparent)]',
     tint: 'text-[var(--color-siren-deep)]',
     ring: 'ring-[var(--color-siren)]',
+  },
+  pulse: {
+    bg: 'bg-[var(--color-pulse)]',
+    ink: 'text-[var(--color-pulse)]',
+    soft: 'bg-[color-mix(in_srgb,var(--color-pulse)_14%,transparent)]',
+    tint: 'text-[var(--color-pulse-deep)]',
+    ring: 'ring-[var(--color-pulse)]',
   },
 };
 

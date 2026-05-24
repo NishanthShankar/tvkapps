@@ -22,6 +22,9 @@
      feel different at a glance. */
   --color-siren: #e11d48;
   --color-siren-deep: #9f1239;
+  /* medical teal - DocInOut (PHC + hospital doctor oversight). */
+  --color-pulse: #0d9488;
+  --color-pulse-deep: #0f766e;
 
   /* fonts */
   --font-display: "Fraunces", ui-serif, Georgia, serif;

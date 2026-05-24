@@ -1,0 +1,636 @@
+---
+export const prerender = true;
+
+import Base from '../../layouts/Base.astro';
+import { apps, getApp } from '../../data/apps';
+import VoteWidget from '../../components/VoteWidget.astro';
+
+const app = getApp('docinout')!;
+const others = apps.filter((a) => a.slug !== app.slug);
+
+const dayTimeline = [
+  {
+    time: '9:00 AM',
+    label: 'Expected check-in',
+    body: 'Shift start as per the duty roster. The doctor app prompts a selfie + GPS fix at the PHC.',
+    tone: 'ink' as const,
+  },
+  {
+    time: '9:15 AM',
+    label: 'Auto-flag: no check-in',
+    body: 'No selfie, no GPS fix. The AI escalates to the DMS dashboard - the doctor is marked absent for the shift.',
+    tone: 'rust' as const,
+  },
+  {
+    time: '9:32 AM',
+    label: 'Patient whistle filed',
+    body: 'A patient who turned up at the assigned time whistles a missed appointment. Tied to this exact shift.',
+    tone: 'amber' as const,
+  },
+  {
+    time: '9:38 AM',
+    label: 'Backup doctor assigned',
+    body: 'DMS assigns Dr. K. Suresh to cover. Patients in the queue are SMS-notified.',
+    tone: 'pulse' as const,
+  },
+  {
+    time: '11:42 AM',
+    label: 'Cluster anomaly',
+    body: 'AI notices this is the 4th unscheduled absence at PHC Vellore South in 10 days. Flagged for DDHS review.',
+    tone: 'amber' as const,
+  },
+  {
+    time: 'Nightly',
+    label: 'Public profile updated',
+    body: 'Dr. R. Anitha\'s public page shows today as "Absent, unsanctioned". 22/30 attendance count updates to 21/30.',
+    tone: 'ink' as const,
+  },
+];
+
+const audiences = [
+  {
+    role: 'Doctor',
+    tamil: 'மருத்துவர்',
+    bullets: [
+      'Check in at shift start, check out at close',
+      'Pre-file sanctioned leave in advance',
+      'See own attendance + whistle history',
+    ],
+    accent: 'pulse' as const,
+  },
+  {
+    role: 'Patient',
+    tamil: 'நோயாளி',
+    bullets: [
+      "Look up any government doctor's live status",
+      'Whistle missed appointments, bribery, abuse',
+      "See public attendance history per doctor",
+    ],
+    accent: 'ink' as const,
+  },
+  {
+    role: 'Administration',
+    tamil: 'நிர்வாகம்',
+    bullets: [
+      'AI-ranked whistle queue, by severity',
+      'Live anomaly dashboard - late, absent, clusters',
+      'One-tap escalation to DMO / Health Secretary',
+    ],
+    accent: 'rust' as const,
+  },
+];
+
+const anomalies = [
+  {
+    code: 'A.01',
+    label: 'Late on > 5 of last 7 days',
+    body: 'Per-facility threshold. The AI ignores doctors with sanctioned leave or known on-call duty.',
+    chip: 'Flag',
+    tone: 'amber',
+  },
+  {
+    code: 'A.02',
+    label: 'Absent without leave',
+    body: 'No check-in 30 min past shift start, no sanctioned leave on file. Auto-escalates to the DMS.',
+    chip: 'Escalate',
+    tone: 'rust',
+  },
+  {
+    code: 'A.03',
+    label: 'Bribery cluster',
+    body: '3+ bribery whistles at the same facility within 48 hours. Auto-escalates to vigilance.',
+    chip: 'Critical',
+    tone: 'rust',
+  },
+  {
+    code: 'A.04',
+    label: 'Repeat-doctor complaint',
+    body: 'Multiple patients whistle the same doctor in a short window. The AI surfaces the pattern.',
+    chip: 'Investigate',
+    tone: 'amber',
+  },
+];
+
+const whistleTypes = [
+  {
+    title: 'Missed appointment',
+    body: 'Patient turned up at the assigned time, doctor not at the facility. Verified against the check-in log.',
+    chip: 'Routine',
+    icon: 'M12 6v6l4 2',
+  },
+  {
+    title: 'Demanded bribe',
+    body: 'Doctor or staff demanded cash for a service that should be free at a government facility.',
+    chip: 'Critical',
+    icon: 'M12 2v20M5 9l7-7 7 7',
+  },
+  {
+    title: 'Abuse or harassment',
+    body: 'Verbal abuse, shouting, intimidation, or sexual harassment by the doctor or staff.',
+    chip: 'Critical',
+    icon: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
+  },
+  {
+    title: 'Refusal to treat',
+    body: 'Doctor refused to attend to a patient inside duty hours. Verified against the queue log.',
+    chip: 'Investigate',
+    icon: 'M12 8v4M12 16h.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0z',
+  },
+];
+
+const adminQueue = [
+  {
+    id: 'W-22 481',
+    facility: 'PHC Madurai East',
+    doctor: 'Dr. M. Bharath',
+    kind: 'Bribery',
+    when: '9:14 AM',
+    severity: 'critical',
+  },
+  {
+    id: 'W-22 480',
+    facility: 'GH Tirunelveli',
+    doctor: 'Dr. S. Ramya',
+    kind: 'Abuse',
+    when: '9:11 AM',
+    severity: 'critical',
+  },
+  {
+    id: 'W-22 475',
+    facility: 'PHC Vellore South',
+    doctor: 'Dr. R. Anitha',
+    kind: 'Missed appointment',
+    when: '9:32 AM',
+    severity: 'high',
+  },
+  {
+    id: 'W-22 471',
+    facility: 'PHC Erode Rural',
+    doctor: 'Dr. P. Kavitha',
+    kind: 'Refusal to treat',
+    when: 'Yesterday',
+    severity: 'high',
+  },
+  {
+    id: 'W-22 462',
+    facility: 'GH Salem',
+    doctor: 'Dr. V. Karthik',
+    kind: 'Late by 47 min',
+    when: '2 d ago',
+    severity: 'medium',
+  },
+];
+
+const severityColor = (s: string) => {
+  if (s === 'critical') return 'var(--color-rust)';
+  if (s === 'high') return 'rgb(217, 119, 6)';
+  return 'var(--color-pulse)';
+};
+
+const ldJson = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: app.name,
+  alternateName: app.tamilName,
+  description: app.shortDescription,
+  applicationCategory: app.category,
+  operatingSystem: 'Android, iOS, Web',
+  inLanguage: ['ta', 'en'],
+};
+
+const faqJson = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: app.faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<Base
+  title={app.meta.title}
+  description={app.meta.description}
+  keywords={app.meta.keywords}
+  type="article"
+>
+  <!-- HERO -->
+  <section class="relative overflow-hidden">
+    <div aria-hidden="true" class="absolute -top-40 -right-40 h-[640px] w-[640px] rounded-full blur-3xl opacity-25"
+      style="background: radial-gradient(closest-side, var(--color-pulse), transparent 70%);"></div>
+    <div aria-hidden="true" class="absolute -bottom-40 -left-40 h-[440px] w-[440px] rounded-full blur-3xl opacity-15"
+      style="background: radial-gradient(closest-side, var(--color-rust), transparent 70%);"></div>
+
+    <div class="container-x relative pt-20 pb-24 md:pt-28 md:pb-32">
+      <nav class="text-xs text-[var(--color-ink)]/55 mb-12">
+        <a href="/" class="hover:text-[var(--color-ink)]">tvkapps</a>
+        <span class="mx-2 opacity-50">/</span>
+        <a href="/#suite" class="hover:text-[var(--color-ink)]">apps</a>
+        <span class="mx-2 opacity-50">/</span>
+        <span class="text-[var(--color-ink)]/80">DocInOut</span>
+      </nav>
+
+      <div class="grid grid-cols-12 gap-6 lg:gap-8 items-end">
+        <div class="col-span-12 lg:col-span-8">
+          <span class="eyebrow text-[var(--color-pulse-deep)]">{app.category} &nbsp;/&nbsp; App 05</span>
+          <div class="mt-4 flex items-end gap-3 sm:gap-5 flex-wrap">
+            <h1 class="font-display text-[48px] sm:text-[80px] md:text-[112px] lg:text-[128px] leading-[0.92] tracking-[-0.025em]">
+              Doc<span class="italic font-[450]" style="color: var(--color-pulse-deep);">InOut</span>.
+            </h1>
+            <span class="font-tamil text-xl sm:text-2xl md:text-3xl text-[var(--color-ink)]/55 pb-2 sm:pb-4">{app.tamilName}</span>
+          </div>
+          <p class="mt-6 font-display text-xl sm:text-2xl md:text-4xl italic font-[450] max-w-2xl"
+            style="color: var(--color-pulse-deep);">
+            {app.tagline}
+          </p>
+          <p class="mt-3 text-[12px] sm:text-[13px] font-mono uppercase tracking-[0.2em] text-[var(--color-rust)]">
+            &mdash;&nbsp; If you have a problem, just whistle.
+          </p>
+        </div>
+        <div class="col-span-12 lg:col-span-4 flex flex-wrap gap-3 lg:justify-end items-center">
+          <a href="#download" class="btn text-[var(--color-cream)]" style="background: var(--color-pulse);">
+            Get the app
+          </a>
+          <a href="/" class="btn btn-ghost">All apps</a>
+          <VoteWidget slug={app.slug} accent="pulse" variant="light" />
+        </div>
+      </div>
+
+      <p class="mt-10 md:mt-12 max-w-3xl text-[16px] sm:text-[18px] md:text-[20px] leading-[1.55] text-[var(--color-ink)]/75">
+        {app.longDescription}
+      </p>
+
+      <!-- stats strip -->
+      <div class="mt-16 md:mt-20 grid grid-cols-3 border-t border-[var(--color-line)]">
+        {app.stats.map((s) => (
+          <div class="border-r last:border-r-0 border-[var(--color-line)] py-8 md:py-12 px-4 sm:px-6 first:pl-0">
+            <p class="font-display text-2xl sm:text-3xl md:text-5xl lg:text-6xl tracking-[-0.02em] leading-none" style="color: var(--color-pulse-deep);">{s.value}</p>
+            <p class="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--color-ink)]/55 mt-3 md:mt-5 leading-tight">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE AUDIENCES -->
+  <section class="bg-[var(--color-cream-2)] py-24 md:py-32">
+    <div class="container-x">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-14">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow text-[var(--color-pulse-deep)]">Three audiences</span>
+          <h2 class="mt-3 font-display text-[40px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
+            One app.<br/>
+            <span class="italic font-[450]">Three views.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md leading-relaxed">
+            Same database, three lenses. Doctors see their own duty roster. Patients see every doctor's public profile.
+            The administration sees the queue of whistles, ranked by AI, and a live anomaly dashboard.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--color-line)] rounded-2xl overflow-hidden border border-[var(--color-line)]">
+        {audiences.map((a) => (
+          <article class={`p-6 md:p-9 ${a.accent === 'ink' ? 'bg-[var(--color-ink)] text-[var(--color-cream)]' : 'bg-[var(--color-cream)]'}`}>
+            <div class="flex items-center justify-between gap-3 mb-7 md:mb-8 flex-wrap">
+              <span class="font-mono text-[11px]"
+                style={`color: ${a.accent === 'rust' ? 'var(--color-rust)' : a.accent === 'pulse' ? 'var(--color-pulse-deep)' : 'var(--color-pulse)'};`}>
+                {a.role.toUpperCase()}
+              </span>
+              <span class={`font-tamil text-sm ${a.accent === 'ink' ? 'text-[var(--color-cream)]/50' : 'text-[var(--color-ink)]/50'}`}>{a.tamil}</span>
+            </div>
+            <h3 class={`font-display text-3xl tracking-tight ${a.accent === 'ink' ? 'text-[var(--color-cream)]' : ''}`}>
+              {a.role}
+            </h3>
+            <ul class={`mt-6 space-y-2.5 text-[13.5px] leading-relaxed ${a.accent === 'ink' ? 'text-[var(--color-cream)]/75' : 'text-[var(--color-ink)]/70'}`}>
+              {a.bullets.map((b) => (
+                <li class="flex items-start gap-2">
+                  <svg class="mt-0.5 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke={a.accent === 'rust' ? 'var(--color-rust)' : 'var(--color-pulse)'}
+                    stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+                  <span class="min-w-0 flex-1">{b}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- A DAY IN A PHC TIMELINE -->
+  <section class="bg-[var(--color-cream)] py-24 md:py-32 relative overflow-hidden">
+    <div class="container-x">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-14">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow text-[var(--color-pulse-deep)]">A day in a PHC</span>
+          <h2 class="mt-3 font-display text-[40px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
+            Doctor doesn't show.<br/>
+            <span class="italic font-[450]">The whole system notices.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md leading-relaxed">
+            One PHC. One scheduled shift. One absent doctor. Watch the loop close - 47 minutes from missed check-in to
+            backup posted, with the AI doing the heavy lifting.
+          </p>
+          <div class="mt-6 inline-flex items-center gap-2 rounded-full bg-[color-mix(in_srgb,var(--color-pulse)_12%,transparent)] border border-[color-mix(in_srgb,var(--color-pulse)_28%,transparent)] px-3 py-1.5 text-xs">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--color-pulse)" stroke-width="2"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="10"/></svg>
+            <span style="color: var(--color-pulse-deep);" class="font-medium">PHC Vellore South &middot; Dr. R. Anitha</span>
+          </div>
+        </div>
+      </div>
+
+      <ol class="relative pl-6 sm:pl-8 md:pl-12 border-l-2 border-[var(--color-line)] space-y-7 md:space-y-8">
+        {dayTimeline.map((e) => (
+          <li class="relative">
+            <span
+              class="absolute -left-[34px] sm:-left-[42px] md:-left-[58px] top-1.5 grid place-items-center h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-[var(--color-cream)] border-2"
+              style={`border-color: ${e.tone === 'pulse' ? 'var(--color-pulse)' : e.tone === 'rust' ? 'var(--color-rust)' : e.tone === 'amber' ? 'rgb(217,119,6)' : 'var(--color-line)'};`}
+            >
+              <span
+                class="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full"
+                style={`background: ${e.tone === 'pulse' ? 'var(--color-pulse)' : e.tone === 'rust' ? 'var(--color-rust)' : e.tone === 'amber' ? 'rgb(217,119,6)' : 'rgba(14,14,14,0.4)'};`}
+              ></span>
+            </span>
+            <div class="flex flex-col md:flex-row md:items-baseline md:gap-6">
+              <span class="font-mono text-xs sm:text-sm text-[var(--color-ink)]/55 md:w-24 shrink-0">{e.time}</span>
+              <div class="flex-1">
+                <p class="font-display text-xl sm:text-2xl tracking-tight"
+                  style={`color: ${e.tone === 'pulse' ? 'var(--color-pulse-deep)' : e.tone === 'rust' ? 'var(--color-rust-deep)' : 'inherit'};`}>
+                  {e.label}
+                </p>
+                <p class="mt-2 text-[14px] sm:text-[15px] text-[var(--color-ink)]/70 leading-relaxed max-w-2xl">{e.body}</p>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ADMIN DASHBOARD + AI - the heart of the page -->
+  <section class="bg-[var(--color-ink)] text-[var(--color-cream)] py-24 md:py-32 relative overflow-hidden">
+    <div aria-hidden="true" class="absolute -top-32 left-1/2 -translate-x-1/2 h-[500px] w-[900px] rounded-full blur-3xl opacity-15"
+      style="background: radial-gradient(closest-side, var(--color-pulse), transparent 70%);"></div>
+
+    <div class="container-x relative">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-14 md:mb-16">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow" style="color: color-mix(in srgb, var(--color-pulse) 90%, white);">Inside the dashboard</span>
+          <h2 class="mt-3 font-display text-[40px] sm:text-[56px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
+            AI eyes<br/>
+            <span class="italic font-[450] text-[var(--color-rust)]">that don't blink.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-cream)]/70 max-w-md leading-relaxed">
+            The administration's dashboard is half traditional whistle queue, half AI watchtower. Critical complaints float
+            to the top automatically, anomaly patterns surface before a human reviewer would notice them, and every
+            escalation is one tap.
+          </p>
+        </div>
+      </div>
+
+      <!-- AI capabilities row -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--color-cream)]/12 rounded-2xl overflow-hidden mb-10">
+        {anomalies.map((a) => (
+          <article class="bg-[var(--color-ink)] p-6 md:p-7">
+            <div class="flex items-center justify-between mb-6">
+              <span class="font-mono text-[11px]"
+                style={`color: ${a.tone === 'rust' ? 'var(--color-rust)' : a.tone === 'amber' ? 'rgb(217,119,6)' : 'var(--color-pulse)'};`}>
+                {a.code}
+              </span>
+              <span class="text-[10px] uppercase tracking-wider text-[var(--color-cream)]/55 font-mono">{a.chip}</span>
+            </div>
+            <h3 class="font-display text-xl tracking-tight">{a.label}</h3>
+            <p class="mt-2 text-[13.5px] text-[var(--color-cream)]/65 leading-relaxed">{a.body}</p>
+          </article>
+        ))}
+      </div>
+
+      <!-- AI-ranked whistle queue mockup -->
+      <div class="rounded-2xl bg-[var(--color-cream)]/6 border border-[var(--color-cream)]/12 overflow-hidden">
+        <div class="px-5 py-3.5 border-b border-[var(--color-cream)]/12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <p class="text-[10px] uppercase tracking-wider text-[var(--color-cream)]/50">Whistle queue &middot; AI-ranked by severity</p>
+            <p class="font-display text-base mt-0.5">Health Department &middot; live</p>
+          </div>
+          <div class="flex items-center gap-3 text-[11px] font-mono flex-wrap">
+            <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-[var(--color-rust)]"></span>2 critical</span>
+            <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-amber-500"></span>2 high</span>
+            <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full" style="background: var(--color-pulse);"></span>1 medium</span>
+          </div>
+        </div>
+        <ul class="divide-y divide-[var(--color-cream)]/10">
+          {adminQueue.map((row) => (
+            <li class="px-5 py-3.5">
+              <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-2 min-w-0 flex-1">
+                  <span class="h-2 w-2 rounded-full shrink-0" style={`background: ${severityColor(row.severity)};`}></span>
+                  <span class="font-mono text-[11px] text-[var(--color-cream)]/55 shrink-0">{row.id}</span>
+                  <span class="font-medium text-[12.5px] truncate">{row.facility}</span>
+                </div>
+                <span class="font-mono text-[10.5px] text-[var(--color-cream)]/45 shrink-0">{row.when}</span>
+              </div>
+              <p class="mt-1 ml-[18px] text-[11.5px] text-[var(--color-cream)]/65">
+                <span class="uppercase tracking-wider font-semibold" style={`color: ${severityColor(row.severity)};`}>{row.kind}</span>
+                <span class="text-[var(--color-cream)]/45"> &middot; </span>
+                {row.doctor}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- the "how AI helps" explainer -->
+      <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="flex items-start gap-3">
+          <svg class="mt-0.5 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-pulse)" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          <div class="min-w-0 flex-1">
+            <p class="font-medium text-[14.5px]">Patterns no human reviewer catches</p>
+            <p class="text-[13px] text-[var(--color-cream)]/65 mt-1">Three patients on the same doctor in two days. A facility cluster nobody noticed. Surfaced immediately.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <svg class="mt-0.5 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-pulse)" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+          <div class="min-w-0 flex-1">
+            <p class="font-medium text-[14.5px]">Severity ranking, not chronology</p>
+            <p class="text-[13px] text-[var(--color-cream)]/65 mt-1">A 4-day-old bribery whistle outranks a 4-minute-old late check-in. The DMS sees what matters first.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <svg class="mt-0.5 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-pulse)" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          <div class="min-w-0 flex-1">
+            <p class="font-medium text-[14.5px]">Sanctioned leave is respected</p>
+            <p class="text-[13px] text-[var(--color-cream)]/65 mt-1">Pre-filed leave, official visits, emergencies - all excluded from anomaly detection. No false flags.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHISTLE TYPES -->
+  <section class="bg-[var(--color-cream)] py-24 md:py-32">
+    <div class="container-x">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-14">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow text-[var(--color-pulse-deep)]">From the patient's side</span>
+          <h2 class="mt-3 font-display text-[40px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
+            Four kinds of whistles,<br/>
+            <span class="italic font-[450]">one place to send them.</span>
+          </h2>
+          <p class="mt-4 text-[12px] sm:text-[13px] font-mono uppercase tracking-[0.2em]" style="color: var(--color-pulse-deep);">
+            &mdash;&nbsp; If you have a problem, just whistle.
+          </p>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md leading-relaxed">
+            Any patient (or a family member, or anyone with the doctor's link) can whistle - anonymously by default.
+            Every whistle carries the facility, the shift, and a timestamp.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--color-line)] rounded-2xl overflow-hidden border border-[var(--color-line)]">
+        {whistleTypes.map((c, i) => (
+          <article class="bg-[var(--color-cream)] p-7">
+            <div class="flex items-center justify-between mb-8">
+              <div class="grid place-items-center h-10 w-10 rounded-xl bg-[color-mix(in_srgb,var(--color-pulse)_14%,transparent)]" style="color: var(--color-pulse-deep);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d={c.icon}/>
+                </svg>
+              </div>
+              <span class="text-[10px] uppercase tracking-wider font-mono"
+                style={`color: ${c.chip === 'Critical' ? 'var(--color-rust)' : c.chip === 'Investigate' ? 'rgb(217,119,6)' : 'var(--color-pulse)'};`}>
+                {c.chip}
+              </span>
+            </div>
+            <h3 class="font-display text-xl tracking-tight">{c.title}</h3>
+            <p class="mt-2 text-[13.5px] text-[var(--color-ink)]/65 leading-relaxed">{c.body}</p>
+            <p class="mt-5 text-[11px] font-mono text-[var(--color-ink)]/45">C.0{i + 1}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="bg-[var(--color-cream-2)] py-24 md:py-32">
+    <div class="container-x">
+      <div class="mb-12">
+        <span class="eyebrow text-[var(--color-pulse-deep)]">What it does</span>
+        <h2 class="mt-3 font-display text-[40px] md:text-[56px] leading-[1.02] tracking-[-0.02em] max-w-2xl">
+          Six features.<br/>
+          <span class="italic font-[450]">No bloat.</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[var(--color-line)] rounded-2xl overflow-hidden border border-[var(--color-line)]">
+        {app.features.map((f, i) => (
+          <article class="bg-[var(--color-cream)] p-8 md:p-10">
+            <div class="flex items-center gap-2 mb-6">
+              <span class="font-mono text-[11px]" style="color: var(--color-pulse-deep);">F.0{i + 1}</span>
+              <span class="h-px flex-1 bg-[var(--color-line)]"></span>
+            </div>
+            <h3 class="font-display text-2xl tracking-tight">{f.title}</h3>
+            <p class="mt-3 text-[15px] text-[var(--color-ink)]/70 leading-relaxed">{f.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-24 md:py-32 bg-[var(--color-cream)]">
+    <div class="container-x">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10">
+        <div class="col-span-12 md:col-span-4">
+          <span class="eyebrow text-[var(--color-pulse-deep)]">FAQ</span>
+          <h2 class="mt-3 font-display text-[36px] md:text-[52px] leading-[1.02] tracking-[-0.02em]">
+            Honest answers,<br/>
+            <span class="italic font-[450]" style="color: var(--color-pulse-deep);">up front.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-8">
+          <div class="divide-y divide-[var(--color-line)] border-y border-[var(--color-line)]">
+            {app.faq.map((item) => (
+              <details class="group py-5">
+                <summary class="flex cursor-pointer list-none items-start justify-between gap-6">
+                  <span class="font-display text-xl tracking-tight">{item.q}</span>
+                  <span class="shrink-0 rounded-full border border-[var(--color-line)] h-7 w-7 grid place-items-center transition group-open:rotate-45">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                  </span>
+                </summary>
+                <p class="mt-3 max-w-2xl text-[15px] text-[var(--color-ink)]/70 leading-relaxed">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OTHER APPS -->
+  <section class="bg-[var(--color-cream-2)] py-24 md:py-32">
+    <div class="container-x">
+      <span class="eyebrow text-[var(--color-ink)]/55">Continue exploring</span>
+      <h2 class="mt-3 font-display text-[36px] md:text-[48px] leading-[1.02] tracking-[-0.02em] max-w-xl">
+        The other apps in the suite.
+      </h2>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {others.map((o) => (
+          <a href={`/apps/${o.slug}`} class="group rounded-[var(--radius-card)] border border-[var(--color-line)] bg-[var(--color-cream)] p-7 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-30px_rgba(14,14,14,0.18)] transition">
+            <div class="flex items-center justify-between">
+              <span class={`h-2 w-2 rounded-full ${o.accent === 'rust' ? 'bg-[var(--color-rust)]' : o.accent === 'leaf' ? 'bg-[var(--color-leaf)]' : o.accent === 'gold' ? 'bg-[var(--color-gold)]' : o.accent === 'siren' ? 'bg-[var(--color-siren)]' : 'bg-[var(--color-pulse)]'}`}></span>
+              <span class="font-tamil text-sm text-[var(--color-ink)]/50">{o.tamilName}</span>
+            </div>
+            <h3 class="mt-6 font-display text-2xl tracking-tight">{o.name}</h3>
+            <p class="mt-2 text-[14px] text-[var(--color-ink)]/65">{o.tagline}</p>
+            <div class="mt-5 flex items-center gap-2 text-sm font-medium">
+              <span class="opacity-70 group-hover:opacity-100 transition">Read more</span>
+              <svg class="transition group-hover:translate-x-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download" class="relative py-24 md:py-32 bg-[var(--color-cream)]">
+    <div class="container-x">
+      <div class="rounded-[28px] p-7 sm:p-10 md:p-16 grain relative overflow-hidden"
+        style="background: linear-gradient(135deg, var(--color-pulse) 0%, var(--color-pulse-deep) 100%); color: var(--color-cream);">
+        <div aria-hidden="true" class="absolute -bottom-32 -left-20 h-[420px] w-[420px] rounded-full blur-3xl opacity-25"
+          style="background: radial-gradient(closest-side, var(--color-rust), transparent 70%);"></div>
+        <div class="relative grid grid-cols-12 gap-y-8 md:gap-10 items-end">
+          <div class="col-span-12 md:col-span-7">
+            <span class="eyebrow text-[var(--color-cream)]/80">Get DocInOut</span>
+            <h2 class="mt-4 font-display text-[40px] sm:text-[56px] md:text-[64px] lg:text-[72px] leading-[1.0] tracking-[-0.02em]">
+              1,950 PHCs.<br/>One AI watching.<br/>Every shift logged.
+            </h2>
+          </div>
+          <div class="col-span-12 md:col-span-5">
+            <form class="rounded-2xl bg-[var(--color-cream)]/12 backdrop-blur border border-[var(--color-cream)]/20 p-3 flex items-center gap-2">
+              <input type="email" required placeholder="you@example.com"
+                class="flex-1 bg-transparent px-3 py-2.5 text-[15px] text-[var(--color-cream)] placeholder:text-[var(--color-cream)]/55 focus:outline-none"/>
+              <button type="submit" class="btn bg-[var(--color-cream)] text-[var(--color-pulse-deep)] hover:bg-white">
+                Notify me
+              </button>
+            </form>
+            <p class="mt-3 text-[11px] text-[var(--color-cream)]/65">
+              Doctor app and Health Department dashboard ship together.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(ldJson)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqJson)} />
+</Base>
