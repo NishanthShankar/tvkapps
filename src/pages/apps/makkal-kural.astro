@@ -3,6 +3,7 @@ export const prerender = true;
 
 import Base from '../../layouts/Base.astro';
 import { apps, getApp } from '../../data/apps';
+import VoteWidget from '../../components/VoteWidget.astro';
 
 const app = getApp('makkal-kural')!;
 const others = apps.filter((a) => a.slug !== app.slug);
@@ -167,13 +168,14 @@ const faqJson = {
             &mdash;&nbsp; If you have a problem, just whistle.
           </p>
         </div>
-        <div class="col-span-12 lg:col-span-4 flex flex-wrap gap-3 lg:justify-end">
+        <div class="col-span-12 lg:col-span-4 flex flex-wrap gap-3 lg:justify-end items-center">
           <a href="#download" class="btn bg-[var(--color-rust)] text-[var(--color-cream)] hover:bg-[var(--color-rust-deep)]">
             Get the app
           </a>
           <a href="/" class="btn border border-[var(--color-cream)]/25 text-[var(--color-cream)] hover:bg-[var(--color-cream)]/10">
             All apps
           </a>
+          <VoteWidget slug={app.slug} accent="rust" variant="dark" />
         </div>
       </div>
 

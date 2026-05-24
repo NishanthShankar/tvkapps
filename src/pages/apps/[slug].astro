@@ -3,6 +3,7 @@ export const prerender = true;
 
 import Base from '../../layouts/Base.astro';
 import { apps, getApp, accentStyles } from '../../data/apps';
+import VoteWidget from '../../components/VoteWidget.astro';
 
 export function getStaticPaths() {
   const dedicated = new Set(['makkal-kural', 'inout', 'whistle']);
@@ -89,11 +90,12 @@ const others = apps.filter((a) => a.slug !== app.slug);
             {app.tagline}
           </p>
         </div>
-        <div class="col-span-12 lg:col-span-4 flex flex-wrap gap-3 lg:justify-end">
+        <div class="col-span-12 lg:col-span-4 flex flex-wrap gap-3 lg:justify-end items-center">
           <a href="#download" class="btn text-[var(--color-cream)]" style={`background: ${accentVar};`}>
             Download
           </a>
           <a href="/" class="btn btn-ghost">All apps</a>
+          <VoteWidget slug={app.slug} accent={app.accent} variant="light" />
         </div>
       </div>
 
