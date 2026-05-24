@@ -22,7 +22,18 @@ This frames any citizen-initiated report, complaint, or grievance as a **whistle
 - Makkal Kural - `rust` (warm red)
 - InOut - `leaf` (forest green)
 - Thittam - `gold` (warm yellow)
-- Whistle - `siren` (deep navy/indigo) - with `rust` as a secondary accent for the SOS button itself
+- Whistle - `siren` (alarm red - rose-600 #e11d48) - signifies danger / emergency. Distinct from rust by leaning cooler/more saturated. SOS button uses `rust` for layered red.
+
+### Identity verification (Makkal Kural + Whistle)
+
+Both apps that require ID verification follow the same "AI-read, deleted instantly, never stored" pattern:
+
+- ID image is read by an on-device AI
+- The match completes locally; the document is deleted from memory the moment the match is confirmed
+- The image never reaches our servers
+- We keep only a one-way hash to prevent re-registration (used for dedup, never reversible)
+
+This phrasing should appear prominently on any page that mentions ID verification. The Whistle subpage has a "Privacy by design" callout block under the verification steps; the Makkal Kural subpage has an inline "AI-read · deleted instantly · never stored" stamp on the voter-ID section. Carry the same principle into any future app that adds ID verification.
 
 ### Visual treatment
 

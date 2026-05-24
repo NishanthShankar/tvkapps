@@ -17,8 +17,11 @@
   --color-leaf-deep: #143f29;
   --color-gold: #c99700;
   --color-gold-deep: #8a6700;
-  --color-siren: #2b3fb0;
-  --color-siren-deep: #1a2778;
+  /* alarm red - Whistle (women safety) primary. Distinct from rust by leaning
+     into a cooler, more saturated red (rose-600 / rose-800) so the two reds
+     feel different at a glance. */
+  --color-siren: #e11d48;
+  --color-siren-deep: #9f1239;
 
   /* fonts */
   --font-display: "Fraunces", ui-serif, Georgia, serif;

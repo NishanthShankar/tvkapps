@@ -105,6 +105,10 @@ export const apps: AppRecord[] = [
         a: 'Yes - anonymous is the default. Verified handles get a higher trust weight on aggregated rankings, but anonymous posts count too.',
       },
       {
+        q: 'How is my voter ID handled at signup?',
+        a: "An on-device AI auto-reads your voter ID, matches it to confirm you're registered in the constituency you claim, and deletes the image the moment the match is confirmed. The ID image never touches our servers. We keep only a one-way hash linking your account to a verified constituency - never the EPIC number, never the photo. Maximum security, by design.",
+      },
+      {
         q: 'How do you stop fake reviews and frivolous whistles?',
         a: 'One verified mobile number per identity. New accounts are weighted down until they age. An anomaly detector flags rings and bots, and we publish the false-positive rate openly.',
       },
@@ -278,7 +282,7 @@ export const apps: AppRecord[] = [
       },
       {
         q: 'Why do I need a photo ID to sign up?',
-        a: "To stop men creating fake accounts to test response time or drain patrol resources. At signup, a live face video is matched against a government photo ID (Aadhaar, PAN, TN citizenship card, or school/college ID). The ID image is hashed against the face match and discarded - we don't store the document itself.",
+        a: "To stop men creating fake accounts to test response time or drain patrol resources. At signup, an on-device AI auto-reads your government photo ID (Aadhaar, PAN, TN citizenship card, or school/college ID) and matches it to your live face video. The ID image is deleted the moment the match completes - it never reaches our servers. We keep only a one-way hash to stop you from re-registering. Maximum security, by design.",
       },
       {
         q: 'Who can see the patrol vehicle locations?',

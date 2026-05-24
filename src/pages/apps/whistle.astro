@@ -76,8 +76,8 @@ const verificationSteps = [
   },
   {
     n: '03',
-    title: 'Match + discard',
-    body: 'The ID image is matched against the face video. Only the match hash is kept - the document itself is discarded.',
+    title: 'AI reads + deletes',
+    body: 'An on-device AI auto-reads the ID and matches it to your face video in seconds. The image is deleted the instant the match is confirmed - it never reaches our servers. Only an irreversible hash is kept to stop re-registration.',
   },
 ];
 
@@ -528,6 +528,27 @@ const faqJson = {
         {['Aadhaar', 'PAN', 'TN Citizenship Card', 'School / College ID'].map((id) => (
           <span class="rounded-full bg-[var(--color-cream-2)] border border-[var(--color-line)] px-3 py-1.5 font-medium">{id}</span>
         ))}
+      </div>
+
+      <!-- ID-never-stored callout: maximum-security guarantee -->
+      <div class="mt-10 rounded-2xl border border-[var(--color-line)] bg-[var(--color-ink)] text-[var(--color-cream)] p-6 md:p-8 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-5 md:gap-8 items-start relative overflow-hidden">
+        <div aria-hidden="true" class="absolute -top-12 -right-12 h-40 w-40 rounded-full blur-3xl opacity-25"
+          style="background: radial-gradient(closest-side, var(--color-siren), transparent 70%);"></div>
+        <div class="relative grid place-items-center h-12 w-12 rounded-full bg-[color-mix(in_srgb,var(--color-siren)_20%,transparent)] text-[var(--color-siren)] shrink-0">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <div class="relative">
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-siren)]">Privacy by design</p>
+          <h3 class="mt-2 font-display text-xl md:text-2xl tracking-tight">Your ID never reaches our servers.</h3>
+          <p class="mt-2 text-[14px] text-[var(--color-cream)]/70 leading-relaxed max-w-2xl">
+            An on-device AI reads your photo ID, performs the face match, and deletes the image the instant the match
+            is confirmed - all without the document leaving your phone. The only thing that persists is an irreversible
+            one-way hash, used solely to stop the same ID being reused for another account.
+          </p>
+        </div>
       </div>
     </div>
   </section>
