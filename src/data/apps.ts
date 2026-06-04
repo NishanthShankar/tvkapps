@@ -41,21 +41,21 @@ export const apps: AppRecord[] = [
     shortDescription:
       "Two tabs for the way you actually deal with government - Whistles to file when something is broken, Reviews to rate when something is done. Resolved whistles flow into reviews automatically. If you have a problem, just whistle.",
     longDescription:
-      "Makkal Kural has two tabs and one purpose. Whistle when a service fails - we use your approximate location to find the constituency and read your text to tag the department, then route the whistle to the right office and track it through to resolution. When it gets resolved, you leave a review - and the whole arc lands on the public timeline. Each whistle is shown on the home feed of only the people in its scope (home, street, ward, constituency, district, or state) so timelines stay relevant - and when the government needs public consensus before acting, only voters inside that scope can upvote or downvote. If you have a problem, just whistle.",
+      "Makkal Kural has two tabs and one purpose. Whistle when a service fails - the app uses your rough location to find your constituency, reads what you wrote to find the right department, sends the whistle to the right office, and tracks it until it's fixed. Once it's fixed, you leave a review - and the whole story stays there for everyone to see. Each whistle shows up on the feed of only the people it affects (home, street, ward, constituency, district, or state), so your feed stays relevant - and when the government wants to know what people think before acting, only voters in that area can upvote or downvote. If you have a problem, just whistle.",
     accent: 'rust',
     layout: 'hero',
     features: [
       {
         title: 'Two tabs: Whistles and Reviews',
-        body: 'Whistle when a counter visit fails. Leave a review when it succeeds. Resolved whistles roll into the public Reviews feed automatically - no double-entry.',
+        body: 'Whistle when a counter visit goes wrong. Leave a review when it goes right. Fixed whistles roll into the public Reviews feed on their own - you never enter it twice.',
       },
       {
         title: 'Location finds your constituency',
-        body: 'Coarse network geolocation maps you to one of Tamil Nadu’s 234 assembly constituencies. No precise GPS. No street-level tracking. You can override the pick manually.',
+        body: 'A rough location from your network places you in one of Tamil Nadu’s 234 assembly constituencies. No exact GPS. No street-level tracking. You can change it yourself.',
       },
       {
-        title: 'Text finds the department',
-        body: 'Just write what happened. An on-device Tamil + English classifier tags the right department, office, and service - so you never scroll a list of 240 departments.',
+        title: 'Your words find the department',
+        body: 'Just write what happened, in Tamil or English. The app reads it and picks the right department, office, and service - so you never scroll a list of 240 departments.',
       },
       {
         title: 'Scope-aware visibility',
@@ -67,13 +67,13 @@ export const apps: AppRecord[] = [
       },
       {
         title: 'Web, Android, iOS - one identity',
-        body: 'Same identity across three surfaces. Reviews and resolved-request scorecards aggregated by office, department, and constituency. Open data, refreshed nightly.',
+        body: 'One login across web, Android, and iOS. Reviews and fixed-request scorecards added up by office, department, and constituency. Free for anyone to download, refreshed nightly.',
       },
     ],
     stats: [
       { value: '234', label: 'Constituencies covered' },
-      { value: '92%', label: 'Classifier accuracy' },
-      { value: '<5s', label: 'Avg. tag time per post' },
+      { value: '92%', label: 'Sorted to the right office' },
+      { value: '<5s', label: 'Avg. time to sort a post' },
     ],
     faq: [
       {
@@ -82,41 +82,41 @@ export const apps: AppRecord[] = [
       },
       {
         q: "Why can't I see all issues on my home feed?",
-        a: "Each issue is shown on the home feed of only the people in its scope - so a streetlight on someone else's street stays on their feed, not yours. You can still open any issue if you have a link or the ID. The goal is timeline hygiene, not secrecy.",
+        a: "Each issue shows up on the feed of only the people it affects - so a streetlight on someone else's street stays on their feed, not yours. You can still open any issue if you have a link or the ID. The goal is to keep your feed relevant, not to hide anything.",
       },
       {
         q: 'How is the scope of an issue decided?',
-        a: 'The same Tamil + English classifier that picks the department also picks the smallest reasonable scope (home, street, ward, constituency, district, state). If the confidence is below the threshold, the requester picks the scope from a shortlist before the issue goes live.',
+        a: 'The same reading that picks the department also picks the smallest sensible area (home, street, ward, constituency, district, state). If the app isn’t sure, you pick the area from a short list before the issue goes live.',
       },
       {
         q: 'Who can upvote and downvote a whistle?',
-        a: "Voting is restricted to people inside the whistle's scope - confirmed via voter ID at signup. A constituency-level whistle can be voted on only by voters registered in that constituency. Everyone else sees the running totals but can't move them. This stops vote-brigading by people outside the issue's actual community.",
+        a: "Only people inside the whistle's area can vote - confirmed by voter ID at signup. A constituency-level whistle can be voted on only by voters registered in that constituency. Everyone else sees the running totals but can't move them. This stops people outside the affected area from flooding the vote.",
       },
       {
         q: 'How does location find my constituency without GPS?',
-        a: 'We use coarse network geolocation accurate to roughly 2 km. That’s enough to identify one of Tamil Nadu’s 234 assembly constituencies, not enough to know your street. You can also pick the constituency manually.',
+        a: 'We use a rough location from your network, accurate to about 2 km. That’s enough to tell which of Tamil Nadu’s 234 assembly constituencies you’re in, not enough to know your street. You can also pick the constituency yourself.',
       },
       {
-        q: 'How does the department classifier work?',
-        a: 'A small Indic NLP model runs on-device for short posts. Longer posts go to a hosted Tamil + English model, never linked to your identity, location, or post history during inference.',
+        q: 'How does the app know the right department?',
+        a: 'Short posts are read right on your phone. Longer ones are read on our server by a Tamil + English system that never sees your name, your location, or your past posts while it works.',
       },
       {
         q: 'Can I post anonymously?',
-        a: 'Yes - anonymous is the default. Verified handles get a higher trust weight on aggregated rankings, but anonymous posts count too.',
+        a: 'Yes - anonymous is the default. Verified accounts count for a little more in the combined rankings, but anonymous posts count too.',
       },
       {
         q: 'How is my voter ID handled at signup?',
-        a: "An on-device AI auto-reads your voter ID, matches it to confirm you're registered in the constituency you claim, and deletes the image the moment the match is confirmed. The ID image never touches our servers. We keep only a one-way hash linking your account to a verified constituency - never the EPIC number, never the photo. Maximum security, by design.",
+        a: "An AI on your phone reads your voter ID, checks that you're registered in the constituency you claim, and deletes the image the moment it matches. The image never reaches our servers. All we keep is a scrambled code that links your account to a verified constituency - never your voter ID number, never the photo. It can't be turned back into your ID. Secure by design.",
       },
       {
-        q: 'How do you stop fake reviews and frivolous whistles?',
-        a: 'One verified mobile number per identity. New accounts are weighted down until they age. An anomaly detector flags rings and bots, and we publish the false-positive rate openly.',
+        q: 'How do you stop fake reviews and pointless whistles?',
+        a: 'One verified mobile number per account. New accounts count for less until they’ve been around a while. The app flags suspicious rings and bots, and we publish how often it gets that wrong.',
       },
     ],
     meta: {
       title: 'Makkal Kural - Requests and reviews for Tamil Nadu government offices',
       description:
-        'Two-tab citizen platform: file a request when a service fails, leave a review when it’s done. Approximate location finds your constituency, text finds the department. Web, Android, iOS.',
+        'Two-tab citizen app: whistle when a service fails, leave a review when it’s done. Your rough location finds your constituency, your words find the department. Web, Android, iOS.',
       keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
     },
   },
@@ -135,7 +135,7 @@ export const apps: AppRecord[] = [
     features: [
       {
         title: 'One tap to open. One tap to close.',
-        body: 'Shopkeepers check in at the start of every shift and check out at close. The timestamp, a selfie, and a GPS fix at the shop location land on the public log immediately - no editing, no backdating.',
+        body: 'Shopkeepers check in at the start of every shift and check out at close. The time, a selfie, and a GPS check at the shop show up on the public log right away - no edits, no backdating.',
       },
       {
         title: 'The 10 PM list',
@@ -147,7 +147,7 @@ export const apps: AppRecord[] = [
       },
       {
         title: 'Officials see what citizens see, plus more',
-        body: 'Inspectors get a constituency map of all shops with live status, whistle volume, and a one-tap escalation to the local TASMAC office.',
+        body: 'Inspectors get a constituency map of every shop with live status, how many whistles each has, and one tap to send it to the local TASMAC office.',
       },
     ],
     stats: [
@@ -162,15 +162,15 @@ export const apps: AppRecord[] = [
       },
       {
         q: 'Can shopkeepers fake check-ins?',
-        a: 'Each check-in pairs a timestamp with a GPS fix at the registered shop location and a face match against the shopkeeper on file. Backdated entries are rejected. If GPS is unavailable, the shop is marked "unverified-open" - which is itself a flag for the inspector.',
+        a: 'Each check-in needs the time, a GPS check at the registered shop, and a face match against the shopkeeper on file. Backdated entries are rejected. If GPS isn\'t working, the shop is marked "open but unverified" - which is itself a flag for the inspector.',
       },
       {
         q: 'How are whistles verified?',
         a: "Anonymous whistles land in the inspector's queue with the shop, shift, and timestamp. The inspector decides whether to act. Whistle outcomes (acted on / dismissed) are public, so patterns of dismissal show up over time.",
       },
       {
-        q: 'Is the public log open data?',
-        a: 'Yes. Daily open/close timestamps, late-close flags, and aggregate whistle counts per shop are available as a public dataset, refreshed nightly. Names of staff, customers, and whistleblowers are never published.',
+        q: 'Can anyone download the data?',
+        a: 'Yes. Daily open and close times, late-close flags, and the whistle count per shop are free for anyone to download, refreshed nightly. Names of staff, customers, and whistleblowers are never published.',
       },
     ],
     meta: {
@@ -211,18 +211,18 @@ export const apps: AppRecord[] = [
       },
     ],
     stats: [
-      { value: '240+', label: 'Schemes indexed' },
+      { value: '240+', label: 'Schemes covered' },
       { value: '54s', label: 'Average match time' },
-      { value: '4.6x', label: 'Apply-completion vs. baseline' },
+      { value: '4.6x', label: 'More applications finished' },
     ],
     faq: [
       {
         q: 'Do you store my answers?',
-        a: 'Only with explicit consent for renewal reminders. Default is no storage - matches happen on-device.',
+        a: 'Only if you ask us to, for renewal reminders. By default we store nothing - the matching happens right on your phone.',
       },
       {
         q: 'How are central schemes covered?',
-        a: 'We index Government of India schemes via the open MyScheme dataset and re-run the eligibility logic locally.',
+        a: 'We pull Government of India schemes from the public MyScheme list and check what you qualify for on your phone.',
       },
     ],
     meta: {
@@ -241,7 +241,7 @@ export const apps: AppRecord[] = [
     shortDescription:
       'A one-tap SOS for women. Alerts emergency contacts, the police, and the nearest Singa Pen patrol vehicle - and starts whistling at max volume to scare off the perpetrator. ID-verified accounts only.',
     longDescription:
-      "Whistle is the panic button Tamil Nadu's women have been waiting for. A homescreen shortcut, one tap - emergency contacts get a message with your live location, the local police are notified, and the nearest Singa Pen patrol vehicle gets a route to you. The phone simultaneously starts whistling at maximum volume to startle the perpetrator and draw bystander attention. Singa Pen patrol vehicles stream their GPS to an internal oversight dashboard - not the public - where anomaly detection flags idle vehicles, off-route patrolling, or active responses. Every account is gated behind live face verification matched against a government photo ID at signup, so the patrol never gets drained by fakes. If you have a problem, just whistle.",
+      "Whistle is the panic button Tamil Nadu's women have been waiting for. A shortcut on your home screen, one tap - the people you've saved get a message with your live location, the local police are told, and the nearest Singa Pen patrol vehicle gets directions to you. At the same time the phone starts whistling at full volume to scare off whoever is bothering you and pull people nearby in. Singa Pen patrol vehicles share their GPS with a private control room - not the public - which flags anything off: a vehicle sitting idle, off its route, or on its way to a call. Every account is checked with a live face match against a government photo ID at signup, so fake accounts can't waste the patrol's time. If you have a problem, just whistle.",
     accent: 'siren',
     layout: 'split',
     features: [
@@ -259,11 +259,11 @@ export const apps: AppRecord[] = [
       },
       {
         title: 'Live face + photo ID verified',
-        body: 'At signup, a live face video is matched against a government photo ID (Aadhaar, PAN, TN citizenship card, or school/college ID). Keeps the network honest and the patrol from being drained by fakes.',
+        body: 'At signup, a live face video is matched against a government photo ID (Aadhaar, PAN, TN citizenship card, or school/college ID). Keeps fakes out and the patrol free for real calls.',
       },
       {
         title: 'Admin oversight, not public surveillance',
-        body: 'Patrol vehicles share their live GPS with the Singa Pen oversight dashboard only - never the public. Anomaly detection flags idle, off-route, or actively-responding vehicles automatically.',
+        body: 'Patrol vehicles share their live GPS with the Singa Pen control room only - never the public. It flags vehicles that are idle, off-route, or on a call automatically.',
       },
       {
         title: 'Women safely escorted, counted',
@@ -282,11 +282,11 @@ export const apps: AppRecord[] = [
       },
       {
         q: 'Why do I need a photo ID to sign up?',
-        a: "To stop men creating fake accounts to test response time or drain patrol resources. At signup, an on-device AI auto-reads your government photo ID (Aadhaar, PAN, TN citizenship card, or school/college ID) and matches it to your live face video. The ID image is deleted the moment the match completes - it never reaches our servers. We keep only a one-way hash to stop you from re-registering. Maximum security, by design.",
+        a: "To stop men creating fake accounts to test response times or waste the patrol's time. At signup, an AI on your phone reads your government photo ID (Aadhaar, PAN, TN citizenship card, or school/college ID) and matches it to your live face video. The image is deleted the moment it matches - it never reaches our servers. All we keep is a scrambled code that can't be turned back into your ID, just to stop the same person signing up twice. Secure by design.",
       },
       {
         q: 'Who can see the patrol vehicle locations?',
-        a: "Only the Singa Pen oversight dashboard. Patrol-vehicle GPS streams to the administration for anomaly detection (idle vehicle, off-route, actively responding) but is never public. The public sees only an aggregate 'patrols active' count per constituency.",
+        a: "Only the Singa Pen control room. Patrol GPS goes to the administration so it can flag anything off (idle, off-route, on a call), but it's never public. The public sees only a 'patrols active' count per constituency.",
       },
       {
         q: 'Will the loud whistle drain my battery?',
@@ -298,7 +298,7 @@ export const apps: AppRecord[] = [
       },
       {
         q: 'What stops the data from being misused?',
-        a: 'Patrol-vehicle location stays inside the Singa Pen oversight system. Account creation uses the same identity layer as voter ID. The source code for alert routing, anomaly detection, and dashboards is published on GitHub.',
+        a: 'Patrol locations stay inside the Singa Pen system. Signing up uses the same ID checks as voter ID. The code behind the alerts, the flagging, and the dashboards is public on GitHub.',
       },
     ],
     meta: {
@@ -315,72 +315,72 @@ export const apps: AppRecord[] = [
     category: 'PHC + hospital oversight',
     tagline: 'For the doctors who show up.',
     shortDescription:
-      "A public attendance clock for every PHC and government hospital doctor in Tamil Nadu. Doctors check in/out, patients whistle missed appointments, abuse, or bribery, and an AI dashboard flags anomalies for the Health Department in real time.",
+      "A public attendance clock for every PHC and government hospital doctor in Tamil Nadu. Doctors check in and out, patients whistle missed appointments, abuse, or bribery, and an AI dashboard flags anything off for the health department in real time.",
     longDescription:
-      "DocInOut puts the same public clock InOut runs on TASMAC shops on every government doctor at a PHC or hospital. Doctors check in at shift start - selfie + GPS at the registered facility - and check out at close. Patients can whistle a missed appointment, a demanded bribe, abuse, or any other failure of care; the whistle is tied to the specific shift and routed straight to the DMS. An AI dashboard surfaces the patterns a human reviewer would miss: doctors who chronically run late, facilities clustering complaints, off-pattern absences. Critical whistles (bribery, abuse) float to the top automatically. If you have a problem, just whistle.",
+      "DocInOut puts the same public clock InOut runs on TASMAC shops on every government doctor at a PHC or hospital. Doctors check in at the start of a shift - a selfie and a GPS check at the hospital - and check out at close. Patients can whistle a missed appointment, a demanded bribe, abuse, or any other failure of care; the whistle is tied to that exact shift and sent straight to the district health office. An AI dashboard catches patterns a person would miss: doctors who are always late, hospitals piling up complaints, unusual absences. The most serious whistles (bribery, abuse) jump to the top on their own. If you have a problem, just whistle.",
     accent: 'pulse',
     layout: 'split',
     features: [
       {
         title: 'One tap to start the shift',
-        body: 'Doctors check in at shift start with a selfie + GPS fix at the registered PHC or hospital. Check-out closes the shift. No backdating, no edits.',
+        body: 'Doctors check in at the start of a shift with a selfie and a GPS check at the registered PHC or hospital. Check-out closes the shift. No backdating, no edits.',
       },
       {
         title: 'The "missed appointment" whistle',
-        body: "Patient turns up at the assigned time, doctor isn't there - whistle it. Tied to the specific shift, the facility, and routed straight to the DMS for follow-up.",
+        body: "Patient turns up at the assigned time, doctor isn't there - whistle it. Tied to the exact shift and hospital, and sent straight to the district health office for follow-up.",
       },
       {
-        title: 'AI anomaly detection',
-        body: 'Late check-ins, early departures, off-pattern absences, complaint clusters at a facility, repeat-offender doctors - all surface on the Health Department dashboard automatically.',
+        title: 'The app spots the patterns',
+        body: 'Late check-ins, early exits, unusual absences, complaints piling up at one hospital, repeat-offender doctors - all show up on the health department dashboard automatically.',
       },
       {
-        title: 'Critical-whistle highlighting',
-        body: 'The AI ranks every whistle by severity. Bribery, sexual abuse, life-threatening neglect float to the top of the queue with auto-escalation to the District Medical Officer.',
+        title: 'The serious ones rise to the top',
+        body: 'The app sorts every whistle by how serious it is. Bribery, sexual abuse, life-threatening neglect jump to the top and go straight to the District Medical Officer.',
       },
       {
         title: 'A public page for every doctor',
-        body: "Facility, specialisation, today's shift status, the last 30 days of attendance, whistle count. Open data, refreshed nightly. Doctors who consistently show up look good. Those who don't, don't.",
+        body: "Hospital, specialisation, today's shift status, the last 30 days of attendance, whistle count. Free for anyone to download, refreshed nightly. Doctors who consistently show up look good. Those who don't, don't.",
       },
       {
         title: 'Direct line to the administration',
-        body: 'No middle layer. The whistle queue lands in the DMS dashboard, anomalies land in the DDHS dashboard, escalations go to the Health Secretary. Every action is timestamped.',
+        body: 'No middle layer. Whistles land in the district health office, unusual patterns go to the state health office, and the most serious cases go right to the top. Every action is timestamped.',
       },
     ],
     stats: [
       { value: '1,950+', label: 'PHCs + hospital posts' },
-      { value: '<6 min', label: 'Median whistle ack time' },
-      { value: 'Live', label: 'AI anomaly dashboard' },
+      { value: '<6 min', label: 'Avg. time to answer a whistle' },
+      { value: 'Live', label: 'AI dashboard, always on' },
     ],
     faq: [
       {
         q: 'How is a doctor’s attendance verified?',
-        a: 'Each check-in pairs a timestamp with a GPS fix at the registered facility and a face match against the doctor on file. Backdated entries are rejected. If GPS is unavailable, the doctor is marked "unverified-present" - which is itself a flag for the DMS.',
+        a: 'Each check-in needs the time, a GPS check at the hospital, and a face match against the doctor on file. Backdated entries are rejected. If GPS isn\'t working, the doctor is marked "present but unverified" - which is itself a flag for the district health office.',
       },
       {
         q: 'What can patients whistle about?',
-        a: 'Missed appointment (doctor not there at the scheduled time), demanded bribe, abuse or harassment, refusal to treat, or any quality-of-care concern. Every whistle is tied to the shop (facility), the shift, and a timestamp.',
+        a: 'Missed appointment (doctor not there at the scheduled time), demanded bribe, abuse or harassment, refusal to treat, or any other concern about your care. Every whistle is tied to the hospital, the shift, and the time.',
       },
       {
         q: 'Who sees the AI dashboard?',
-        a: "The DMS dashboard for routine whistles and same-day attendance, the DDHS / Health Department dashboard for trend anomalies and repeat offenders, the Health Secretary for state-wide rollups. Patrol-vehicle-style location data is never public; only the per-facility aggregate is.",
+        a: "The district health office sees routine whistles and that day's attendance, the state health office sees longer-term patterns and repeat offenders, and the top of the health department sees the statewide picture. Personal location data is never public; only the per-hospital totals are.",
       },
       {
         q: 'What does the AI actually detect?',
-        a: "Late check-ins crossing a per-facility threshold, absences without sanctioned leave, complaint clusters at a single facility, repeat-doctor complaints from different patients in a short window, and statistically unusual patterns - the kinds of things a human reviewer would only see after dozens of reports.",
+        a: "Doctors who cross the late limit set for their hospital, absences without approved leave, complaints piling up at one hospital, the same doctor reported by different patients in a short window, and other unusual patterns - the kind of thing a person would only spot after dozens of reports.",
       },
       {
         q: 'Are doctors named publicly?',
-        a: "Yes. Every government doctor has a public profile page - the same way a TASMAC shop does in InOut. Posted whistles show department, facility, and the doctor's name; the patient's name is never shown.",
+        a: "Yes. Every government doctor has a public profile page - the same way a TASMAC shop does in InOut. Posted whistles show the department, the hospital, and the doctor's name; the patient's name is never shown.",
       },
       {
         q: 'What if a doctor has a legitimate reason to be absent?',
-        a: 'Sanctioned leave, official visits, emergencies - all entered in advance through the doctor app or by the facility in-charge, and shown on the public profile. AI anomaly detection ignores any time marked under approved leave.',
+        a: 'Approved leave, official visits, emergencies - all entered in advance through the doctor app or by the person in charge of the hospital, and shown on the public profile. The app ignores any time marked as approved leave.',
       },
     ],
     meta: {
       title: 'DocInOut - PHC and hospital doctor accountability app for Tamil Nadu',
       description:
-        "A public attendance clock for every government doctor at a PHC or hospital. Doctor check-in/out, patient whistles for missed appointments and abuse, AI anomaly dashboard for the Health Department. If you have a problem, just whistle.",
+        "A public attendance clock for every government doctor at a PHC or hospital. Doctors check in and out, patients whistle missed appointments and abuse, and an AI dashboard flags problems for the health department. If you have a problem, just whistle.",
       keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
     },
   },

@@ -12,22 +12,22 @@ const recipients = [
   {
     n: '01',
     title: 'Emergency contacts',
-    body: 'SMS + WhatsApp message with your live location to every contact on file. They can see you on a map and ping back.',
+    body: 'An SMS and WhatsApp message with your live location goes to everyone you have saved. They can see you on a map and message back.',
     detail: 'Up to 5 contacts',
     tone: 'cream' as const,
   },
   {
     n: '02',
     title: 'Local police',
-    body: 'The nearest police station for your current location is notified with route, shift on duty, and a callback line.',
-    detail: 'Routed by current GPS',
+    body: 'The closest police station to where you are gets an alert with directions to you, who is on duty, and a number to call you back.',
+    detail: 'Found by your GPS',
     tone: 'cream' as const,
   },
   {
     n: '03',
     title: 'Nearest Singa Pen patrol',
-    body: 'The patrol app inside the closest Singa Pen vehicle gets the alert with route. They confirm en route within seconds.',
-    detail: 'Median arrival <4 min',
+    body: 'The closest Singa Pen vehicle gets the alert on its app, with directions to you. The team confirms they are on the way within seconds.',
+    detail: 'Usually there in <4 min',
     tone: 'siren' as const,
   },
 ];
@@ -36,28 +36,28 @@ const anomalies = [
   {
     code: 'A.01',
     label: 'Vehicle idle > 25 min',
-    body: 'Patrol parked beyond standard tea-break window during active hours.',
+    body: 'The patrol has been parked longer than a normal break during patrol hours.',
     chip: 'Flag',
     tone: 'amber',
   },
   {
     code: 'A.02',
     label: 'Off-route',
-    body: 'Vehicle outside assigned patrol perimeter by more than 1.5 km.',
+    body: 'The vehicle has strayed more than 1.5 km outside its assigned patrol area.',
     chip: 'Investigate',
     tone: 'rust',
   },
   {
     code: 'A.03',
     label: 'Responding to alert',
-    body: 'Vehicle is en route to a Whistle alarm. Shown live until cleared.',
+    body: 'The vehicle is on its way to a Whistle alarm. Shown live until it is handled.',
     chip: 'Live',
     tone: 'leaf',
   },
   {
     code: 'A.04',
     label: 'Officer signal lost',
-    body: "Patrol app heartbeat stopped while vehicle still moving. Could mean officer is on foot.",
+    body: "The patrol's signal dropped while the vehicle was still moving. The officer may be on foot.",
     chip: 'Verify',
     tone: 'amber',
   },
@@ -67,17 +67,17 @@ const verificationSteps = [
   {
     n: '01',
     title: 'Live face video',
-    body: 'A short head-turn video to prove a real person, in real time, in front of the camera.',
+    body: 'A short video of you turning your head, so we know a real person is in front of the camera right then.',
   },
   {
     n: '02',
     title: 'Photo ID',
-    body: 'Upload one of: Aadhaar, PAN, the TN Citizenship Card (when issued), or a current school / college ID.',
+    body: 'Take a picture of any one: Aadhaar, PAN, the TN Citizenship Card (when issued), or a current school or college ID.',
   },
   {
     n: '03',
     title: 'AI reads + deletes',
-    body: 'An on-device AI auto-reads the ID and matches it to your face video in seconds. The image is deleted the instant the match is confirmed - it never reaches our servers. Only an irreversible hash is kept to stop re-registration.',
+    body: 'An AI on your phone reads your ID, checks it against your face video, then deletes the image the moment it matches - it never reaches our servers. All we keep is a scrambled code that can\'t be turned back into your ID, just to stop the same ID being used twice.',
   },
 ];
 
@@ -185,8 +185,8 @@ const faqJson = {
         </div>
         <div class="col-span-12 md:col-span-5">
           <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md leading-relaxed">
-            A homescreen shortcut. Pressed in panic or after a long uneasy walk. The moment your thumb lifts, three
-            separate alerts go out in parallel - and the phone starts whistling at full volume.
+            A shortcut on your home screen. Press it in a panic, or after a long uneasy walk. The moment you lift your thumb, three
+            alerts go out at once - and the phone starts whistling at full volume.
           </p>
         </div>
       </div>
@@ -248,9 +248,9 @@ const faqJson = {
         <div>
           <h3 class="font-display text-2xl tracking-tight">The phone whistles too.</h3>
           <p class="mt-2 text-[14px] text-[var(--color-ink)]/70 leading-relaxed max-w-3xl">
-            On press, the phone speaker starts playing a high-frequency whistle at maximum volume - to startle the perpetrator,
-            and to pull bystanders in. It stops only when you cancel with your PIN, or when a Singa Pen officer marks you safe.
-            Optional, but on by default.
+            When you press it, the phone plays a loud whistle sound at full volume - to scare off whoever is bothering you,
+            and to make people nearby look over. It only stops when you cancel it with your PIN, or when a Singa Pen officer marks you safe.
+            You can turn it off, but it is on to start with.
           </p>
         </div>
       </div>
@@ -271,9 +271,9 @@ const faqJson = {
         </div>
         <div class="col-span-12 md:col-span-5">
           <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md leading-relaxed">
-            A dedicated women's patrol force, announced by the Tamil Nadu government. Every patrol vehicle runs the
-            Whistle patrol app. When a Whistle alarm fires, the nearest vehicle gets the alert and a turn-by-turn route.
-            Median arrival, statewide, is under four minutes.
+            A women's patrol force set up by the Tamil Nadu government. Every patrol vehicle has the
+            Whistle patrol app. When a Whistle alarm goes off, the closest vehicle gets the alert and step-by-step directions to you.
+            Across the state, they usually reach you in under four minutes.
           </p>
         </div>
       </div>
@@ -318,7 +318,7 @@ const faqJson = {
                 </div>
               </div>
               <button class="mt-4 w-full rounded-full bg-[var(--color-rust)] text-[var(--color-cream)] py-3 text-[13px] font-semibold">
-                Accept &amp; start route
+                Accept &amp; start driving
               </button>
             </div>
           </div>
@@ -401,7 +401,7 @@ const faqJson = {
                 <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full" style="background: var(--color-siren);"></span><span>3 patrols</span></span>
                 <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-[var(--color-rust)]"></span><span>1 active alert</span></span>
               </div>
-              <span class="font-mono text-[11px] text-[var(--color-cream)]/55">visible to administration only</span>
+              <span class="font-mono text-[11px] text-[var(--color-cream)]/55">only the Singa Pen control room sees this, never the public</span>
             </div>
           </div>
         </article>
@@ -417,7 +417,7 @@ const faqJson = {
     <div class="container-x relative">
       <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-14 md:mb-16">
         <div class="col-span-12 md:col-span-7">
-          <span class="eyebrow" style="color: color-mix(in srgb, var(--color-siren) 80%, white);">Inside the oversight</span>
+          <span class="eyebrow" style="color: color-mix(in srgb, var(--color-siren) 80%, white);">Keeping watch on the patrols</span>
           <h2 class="mt-3 font-display text-[36px] sm:text-[56px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
             Anomalies surface.<br/>
             <span class="italic font-[450] text-[var(--color-rust)]">Action follows.</span>
@@ -425,9 +425,9 @@ const faqJson = {
         </div>
         <div class="col-span-12 md:col-span-5">
           <p class="text-[15px] text-[var(--color-cream)]/70 max-w-md leading-relaxed">
-            The administration sees a live grid of every Singa Pen vehicle on duty - and an anomaly detector that flags
-            patrol behaviour that doesn't match the schedule. Idle vehicles, off-route patrolling, lost officer signals,
-            active responses - all visible at a glance.
+            The Singa Pen control room sees a live grid of every vehicle on duty - and the system watches for anything off,
+            flagging any patrol that isn't following its schedule. Parked vehicles, patrols that have wandered off their area, dropped officer signals,
+            patrols out on a call - all clear at a glance.
           </p>
         </div>
       </div>
@@ -488,8 +488,8 @@ const faqJson = {
       </div>
 
       <p class="mt-6 text-[12.5px] text-[var(--color-cream)]/55 max-w-3xl">
-        Patrol-vehicle GPS streams to this dashboard only - never to the public. The aggregate count of active patrols
-        per constituency is the only public-facing number.
+        Each patrol vehicle's GPS only the Singa Pen control room sees, never the public. The one number the public can see
+        is the total count of patrols on duty in each constituency.
       </p>
     </div>
   </section>
@@ -507,8 +507,8 @@ const faqJson = {
         </div>
         <div class="col-span-12 md:col-span-5">
           <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md leading-relaxed">
-            Platforms like this get attacked the moment they launch - men creating fake accounts to test response time
-            or simply drain patrol resources. So before you can press the button, you go through one ID gate.
+            Apps like this get abused the moment they launch - men making fake accounts to test response time
+            or just to waste the patrol's time. So before you can press the button, you verify your ID once.
           </p>
         </div>
       </div>
@@ -544,9 +544,9 @@ const faqJson = {
           <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-siren)]">Privacy by design</p>
           <h3 class="mt-2 font-display text-xl md:text-2xl tracking-tight">Your ID never reaches our servers.</h3>
           <p class="mt-2 text-[14px] text-[var(--color-cream)]/70 leading-relaxed max-w-2xl">
-            An on-device AI reads your photo ID, performs the face match, and deletes the image the instant the match
-            is confirmed - all without the document leaving your phone. The only thing that persists is an irreversible
-            one-way hash, used solely to stop the same ID being reused for another account.
+            An AI on your phone reads your ID, checks it against your face video, then deletes the image the moment it matches
+            - it never reaches our servers. All we keep is a scrambled code that can't be turned back into your ID,
+            just to stop the same ID being used twice.
           </p>
         </div>
       </div>
@@ -659,7 +659,7 @@ const faqJson = {
               </button>
             </form>
             <p class="mt-3 text-[11px] text-[var(--color-cream)]/65">
-              First builds with the Singa Pen oversight side go live with the force&rsquo;s rollout.
+              The first versions, with the Singa Pen control room side, go live as the force rolls out.
             </p>
           </div>
         </div>

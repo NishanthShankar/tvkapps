@@ -12,37 +12,37 @@ const dayTimeline = [
   {
     time: '12:00 PM',
     label: 'Checked in',
-    body: "Shopkeeper marks the shop open. Selfie + GPS fix at the registered location. Public log updated instantly.",
+    body: "Shopkeeper marks the shop open, with a selfie and a GPS check at the registered shop. The public log updates right away.",
     tone: 'leaf' as const,
   },
   {
     time: '4:30 PM',
     label: 'Whistle filed',
-    body: "A citizen on the shop page whistles an underage sale. The whistle goes to the constituency inspector's queue, tied to this shift.",
+    body: "A citizen on the shop page whistles an underage sale. The whistle goes straight to the constituency inspector's list, linked to this shift.",
     tone: 'amber' as const,
   },
   {
     time: '7:15 PM',
     label: 'Inspector action',
-    body: 'Inspector responds: visited shop, warning issued. Outcome posted publicly so citizens see the action.',
+    body: 'The inspector acts: visits the shop and issues a warning. The result is posted in public so citizens can see what was done.',
     tone: 'amber' as const,
   },
   {
     time: '10:00 PM',
     label: 'Mandatory close',
-    body: 'Government-declared closing hour. Shopkeeper has 15 minutes to check out.',
+    body: 'The closing hour set by the government. The shopkeeper has 15 minutes to check out.',
     tone: 'ink' as const,
   },
   {
     time: '10:15 PM',
     label: 'Flagged: still open',
-    body: 'No check-out recorded. Shop appears on the "still open" list for the constituency inspector.',
+    body: 'No check-out yet. The shop shows up on the "still open" list for the constituency inspector.',
     tone: 'rust' as const,
   },
   {
     time: '10:42 PM',
-    label: 'Inspector escalation',
-    body: 'Inspector calls the shop manager and the local TASMAC office. Shop confirms closed at 10:44 PM; flag cleared.',
+    label: 'Inspector follows up',
+    body: 'The inspector calls the shop manager and the local TASMAC office. The shop confirms it closed at 10:44 PM, and the flag is cleared.',
     tone: 'leaf' as const,
   },
 ];
@@ -52,9 +52,9 @@ const audiences = [
     role: 'Shopkeeper',
     tamil: 'கடைக்காரர்',
     bullets: [
-      'Check in at opening, check out at closing',
-      "See today's shifts + active whistles",
-      'Receive inspector notifications',
+      'Check in when you open, check out when you close',
+      "See today's shifts and any open whistles",
+      'Get alerts from the inspector',
     ],
     accent: 'leaf' as const,
   },
@@ -62,9 +62,9 @@ const audiences = [
     role: 'Citizen',
     tamil: 'பொதுமக்கள்',
     bullets: [
-      'See any shop\'s live status + last 30 days',
+      'See any shop\'s status now and over the last 30 days',
       'Report bribes, underage sales, staff abuse',
-      'Watch the public ledger for a constituency',
+      'Follow the public record for a constituency',
     ],
     accent: 'ink' as const,
   },
@@ -72,9 +72,9 @@ const audiences = [
     role: 'Inspector',
     tamil: 'அதிகாரி',
     bullets: [
-      'Constituency map with live shop status',
-      '"Still open" list past closing hour',
-      'Whistle queue per shop, per shift',
+      'A constituency map showing each shop\'s status now',
+      '"Still open" list once closing hour has passed',
+      'Whistles sorted by shop and by shift',
     ],
     accent: 'rust' as const,
   },
@@ -83,25 +83,25 @@ const audiences = [
 const complaintTypes = [
   {
     title: 'Bribery',
-    body: 'Demanded extra to stay open past hours or to favour a customer in a queue.',
+    body: 'Asked for extra money to stay open past hours, or to let one customer jump the queue.',
     chip: 'High priority',
     icon: 'M12 2v20M5 9l7-7 7 7M5 15l7 7 7-7',
   },
   {
     title: 'Underage sale',
-    body: 'Alcohol sold to someone clearly under 21. Verified against the receipt/timestamp.',
+    body: 'Alcohol sold to someone clearly under 21. Checked against the receipt and the time it was sold.',
     chip: 'Critical',
     icon: 'M12 8v4M12 16h.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0z',
   },
   {
     title: 'Staff abuse',
-    body: 'Misbehaviour with a customer - shouting, intimidation, harassment.',
+    body: 'Bad behaviour towards a customer - shouting, threats, harassment.',
     chip: 'Investigate',
     icon: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
   },
   {
     title: 'Stock manipulation',
-    body: 'Premium SKUs hidden, or bundled forcibly with slow-movers.',
+    body: 'Popular brands hidden, or forced on you bundled with ones nobody wants.',
     chip: 'Verify',
     icon: 'M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z',
   },
@@ -112,7 +112,7 @@ const constituencyShops = [
   { num: '#3402', name: 'Shenoy Nagar', status: 'open', detail: 'On schedule', updated: '10:18 PM' },
   { num: '#3411', name: '11th Main Rd', status: 'closed', detail: 'Closed 9:58 PM', updated: '9:58 PM' },
   { num: '#3422', name: 'Padi Junction', status: 'closed', detail: 'Closed 10:02 PM', updated: '10:02 PM' },
-  { num: '#3409', name: 'TVS Avenue', status: 'unverified', detail: 'GPS lost · check in 12:11', updated: '10:21 PM' },
+  { num: '#3409', name: 'TVS Avenue', status: 'unverified', detail: 'No GPS · checked in 12:11', updated: '10:21 PM' },
 ];
 
 const statusColor = (s: string) => {
@@ -233,8 +233,8 @@ const faqJson = {
         </div>
         <div class="col-span-12 md:col-span-5">
           <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md">
-            Same database, three lenses. Shopkeepers see only their shop. Citizens see every shop publicly. Inspectors
-            see their constituency in full, plus the queue of whistles to act on.
+            One set of records, three ways to see it. Shopkeepers see only their shop. Citizens see every shop on a public
+            page. Inspectors see their whole constituency, plus the list of whistles waiting for action.
           </p>
         </div>
       </div>
@@ -279,7 +279,7 @@ const faqJson = {
         </div>
         <div class="col-span-12 md:col-span-5">
           <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md">
-            One shop. One day. Six events. The same loop runs across 4,800+ TASMAC shops every day - and the public
+            One shop. One day. Six moments. The same thing happens across 4,800+ TASMAC shops every day - and the public
             sees every step of it.
           </p>
           <div class="mt-6 inline-flex items-center gap-2 rounded-full bg-[color-mix(in_srgb,var(--color-leaf)_12%,transparent)] border border-[color-mix(in_srgb,var(--color-leaf)_28%,transparent)] px-3 py-1.5 text-xs">
@@ -324,14 +324,14 @@ const faqJson = {
         <div class="col-span-12 md:col-span-7">
           <span class="eyebrow text-[var(--color-leaf)]">What people see</span>
           <h2 class="mt-3 font-display text-[40px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
-            Two interfaces,<br/>
-            <span class="italic font-[450]">one source of truth.</span>
+            Two views,<br/>
+            <span class="italic font-[450]">one set of records.</span>
           </h2>
         </div>
         <div class="col-span-12 md:col-span-5">
           <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md">
-            The Shop Page is open to anyone with the link - search engines included. The Inspector view is the same
-            data, plus tools to act on it.
+            The shop page is open to anyone with the link, and shows up in search. The inspector view shows the same
+            records, plus the tools to act on them.
           </p>
         </div>
       </div>
@@ -341,12 +341,12 @@ const faqJson = {
         <article class="rounded-[24px] bg-[var(--color-cream)] border border-[var(--color-line)] p-7 md:p-9">
           <div class="flex items-center justify-between mb-6">
             <span class="rounded-full bg-[var(--color-cream-2)] border border-[var(--color-line)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">Citizen view</span>
-            <span class="font-mono text-[11px] text-[var(--color-ink)]/45">public · indexed</span>
+            <span class="font-mono text-[11px] text-[var(--color-ink)]/45">public page</span>
           </div>
           <h3 class="font-display text-2xl tracking-tight">Shop page</h3>
           <p class="mt-2 text-[14px] text-[var(--color-ink)]/65 leading-relaxed">
-            Search any TASMAC shop on the web. Get a live page with today's status, 30-day history, and a button to
-            report an issue.
+            Look up any TASMAC shop on the web. You get an up-to-date page with today's status, the last 30 days, and a button to
+            report a problem.
           </p>
 
           <!-- mini shop card -->
@@ -391,7 +391,7 @@ const faqJson = {
           </div>
 
           <p class="mt-4 text-[12px] text-[var(--color-ink)]/55">
-            URL pattern: <span class="font-mono">inout.app/s/3417</span> &middot; indexable by search engines.
+            Every shop gets its own web page that shows up in search.
           </p>
         </article>
 
@@ -402,11 +402,11 @@ const faqJson = {
           <div class="relative">
             <div class="flex items-center justify-between mb-6">
               <span class="rounded-full bg-[var(--color-cream)]/10 border border-[var(--color-cream)]/20 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">Inspector view</span>
-              <span class="font-mono text-[11px] text-[var(--color-cream)]/50">authenticated</span>
+              <span class="font-mono text-[11px] text-[var(--color-cream)]/50">officers only</span>
             </div>
             <h3 class="font-display text-2xl tracking-tight">Constituency dashboard</h3>
             <p class="mt-2 text-[14px] text-[var(--color-cream)]/65 leading-relaxed">
-              Every shop in your constituency, live. Filter by status, jump to the offending shop, escalate in one tap.
+              Every shop in your constituency, up to date. Filter by status, jump to the shop in question, and send it on in one tap.
             </p>
 
             <!-- constituency stats -->
@@ -446,7 +446,7 @@ const faqJson = {
             </div>
 
             <p class="mt-4 text-[12px] text-[var(--color-cream)]/55">
-              One-tap escalation to the local TASMAC office &middot; SLAs tracked per shop.
+              One tap sends it to the local TASMAC office, and each shop is tracked so nothing gets dropped.
             </p>
           </div>
         </article>
@@ -470,8 +470,8 @@ const faqJson = {
         </div>
         <div class="col-span-12 md:col-span-5">
           <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md">
-            Anyone with the shop's link can whistle - anonymously by default. The whistle lands in the constituency
-            inspector's queue with the shift and timestamp pre-attached.
+            Anyone with the shop's link can whistle, and you stay anonymous unless you choose otherwise. The whistle lands on the constituency
+            inspector's list with the shift and the time already attached.
           </p>
         </div>
       </div>
@@ -500,21 +500,21 @@ const faqJson = {
           <svg class="mt-0.5 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-leaf)" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
           <div class="min-w-0 flex-1">
             <p class="font-medium text-[14.5px]">Anonymous by default</p>
-            <p class="text-[13px] text-[var(--color-ink)]/65 mt-1">Verified handles available for higher trust weight - never required.</p>
+            <p class="text-[13px] text-[var(--color-ink)]/65 mt-1">You can verify yourself for more weight, but you never have to.</p>
           </div>
         </div>
         <div class="flex items-start gap-3">
           <svg class="mt-0.5 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-leaf)" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
           <div class="min-w-0 flex-1">
             <p class="font-medium text-[14.5px]">Outcomes are public</p>
-            <p class="text-[13px] text-[var(--color-ink)]/65 mt-1">Dismissal patterns show up on the inspector's public record.</p>
+            <p class="text-[13px] text-[var(--color-ink)]/65 mt-1">If an inspector keeps brushing whistles aside, it shows on their public record.</p>
           </div>
         </div>
         <div class="flex items-start gap-3">
           <svg class="mt-0.5 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-leaf)" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
           <div class="min-w-0 flex-1">
             <p class="font-medium text-[14.5px]">Tied to a specific shift</p>
-            <p class="text-[13px] text-[var(--color-ink)]/65 mt-1">Every whistle carries the shop, shift, and timestamp - no "we don't know who was on duty".</p>
+            <p class="text-[13px] text-[var(--color-ink)]/65 mt-1">Every whistle carries the shop, the shift, and the time - so no one can say "we don't know who was on duty".</p>
           </div>
         </div>
       </div>
@@ -627,7 +627,7 @@ const faqJson = {
               </button>
             </form>
             <p class="mt-3 text-[11px] text-[var(--color-cream)]/65">
-              Shopkeeper Android app and citizen web go live together. Inspector dashboard a fortnight later.
+              The shopkeeper Android app and the citizen website launch together. The inspector dashboard follows a fortnight later.
             </p>
           </div>
         </div>
