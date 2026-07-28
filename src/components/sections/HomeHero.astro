@@ -1,4 +1,13 @@
 ---
+const suite = [
+  { anchor: 'makkal-kural', name: 'Makkal Kural', tamil: 'மக்கள் குரல்', category: 'Requests & reviews', accent: 'var(--color-rust)' },
+  { anchor: 'inout', name: 'InOut', tamil: 'உள்ளே வெளியே', category: 'TASMAC oversight', accent: 'var(--color-leaf)' },
+  { anchor: 'docinout', name: 'DocInOut', tamil: 'டாக் வருகை', category: 'PHC + hospital oversight', accent: 'var(--color-pulse)' },
+  { anchor: 'thittam', name: 'Thittam', tamil: 'திட்டம்', category: 'Welfare access', accent: 'var(--color-gold)' },
+  { anchor: 'whistle', name: 'Whistle', tamil: 'விசில்', category: 'Women safety', accent: 'var(--color-siren)' },
+  { anchor: 'tn-eet', name: 'TN-EET', tamil: 'நுழைவுத் தேர்வு', category: 'Fair admissions', accent: 'var(--color-quill)' },
+  { anchor: 'tut4neet', name: 'Tut4Neet', tamil: 'நீட் பயிற்சி', category: 'NEET prep', accent: 'var(--color-iris)' },
+];
 ---
 <section class="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-24">
   <!-- decorative type column on the right edge -->
@@ -24,9 +33,9 @@
 
     <div class="mt-8 flex flex-col md:flex-row md:items-end md:justify-between gap-8 reveal">
       <p class="max-w-xl text-[17px] md:text-[19px] leading-[1.55] text-[var(--color-ink)]/75">
-        A suite of five apps - and a sixth on the way - that re-imagines how 80 million Tamil Nadu citizens
+        A suite of seven apps that re-imagines how 80 million Tamil Nadu citizens
         file requests, review government offices, watch TASMAC shops in real time, hold PHC doctors accountable, find every welfare scheme they're
-        entitled to, and call for help in a heartbeat. Tamil-first. Open source. No queues.
+        entitled to, call for help in a heartbeat, and study for the biggest exam of their lives without coaching-centre prices. Tamil-first. Open source. No queues.
         <span class="block mt-3 text-[var(--color-rust)] font-display italic">If you have a problem, just whistle.</span>
       </p>
 
@@ -39,6 +48,31 @@
       </div>
     </div>
 
+    <!-- suite index - the table of contents for the whole site -->
+    <div id="suite" class="mt-16 md:mt-20 reveal scroll-mt-24">
+      <div class="flex items-baseline justify-between mb-3">
+        <span class="eyebrow text-[var(--color-ink)]/60">The suite</span>
+        <span class="font-mono text-[11px] tracking-wide text-[var(--color-ink)]/45">07 apps &nbsp;·&nbsp; one suite</span>
+      </div>
+      <ol class="border-t border-[var(--color-line)]">
+        {suite.map((s, i) => (
+          <li class="border-b border-[var(--color-line)]">
+            <a href={`#${s.anchor}`} class="suite-row group grid grid-cols-[2.25rem_1fr_auto] md:grid-cols-[3.5rem_1.1fr_1fr_auto] items-baseline gap-x-4 py-4 md:py-5" style={`--acc: ${s.accent}`}>
+              <span class="font-mono text-xs text-[var(--color-ink)]/40 transition-colors group-hover:text-[var(--acc)]">0{i + 1}</span>
+              <span class="flex min-w-0 items-baseline gap-3">
+                <span class="suite-name font-display text-[22px] sm:text-2xl md:text-[28px] tracking-tight leading-tight">{s.name}</span>
+                <span class="hidden sm:inline font-tamil text-sm text-[var(--color-ink)]/45 truncate">{s.tamil}</span>
+              </span>
+              <span class="hidden md:block text-sm text-[var(--color-ink)]/55">{s.category}</span>
+              <span class="flex items-center gap-2.5 justify-self-end">
+                <span class="h-2 w-2 rounded-full" style="background: var(--acc);"></span>
+                <svg class="opacity-0 -translate-x-1 transition group-hover:opacity-100 group-hover:translate-x-0 text-[var(--acc)]" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
   </div>
 
   <!-- marquee strip -->
@@ -51,9 +85,22 @@
           <span>PHC accountability</span><span style="color: var(--color-pulse);">/</span>
           <span>Welfare access</span><span class="text-[var(--color-gold)]">/</span>
           <span>Women safety</span><span style="color: var(--color-siren);">/</span>
-          <span>Education <span class="text-[var(--color-ink)]/30">(soon)</span></span><span class="text-[var(--color-ink)]/30">/</span>
+          <span>Fair admissions</span><span style="color: var(--color-quill);">/</span>
+          <span>NEET prep</span><span style="color: var(--color-iris);">/</span>
         </div>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .suite-name {
+    transition:
+      color 0.25s ease,
+      transform 0.3s var(--ease-out-quart);
+  }
+  .suite-row:hover .suite-name {
+    color: var(--acc);
+    transform: translateX(5px);
+  }
+</style>

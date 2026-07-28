@@ -15,6 +15,8 @@ This frames any citizen-initiated report, complaint, or grievance as a **whistle
 - **Makkal Kural**: Posts on the Requests tab are called **whistles**. The tab name in the UI is "Whistles". The "Reviews" tab stays as Reviews (reviews are not whistles - whistles are about problems).
 - **InOut**: When a citizen flags a TASMAC shop for bribery, underage sale, staff abuse, or stock manipulation, they are **whistling**. Shopkeeper check-ins/check-outs are NOT whistles (those are operational logs).
 - **Thittam**: No whistle concept (welfare scheme discovery is not problem-reporting).
+- **TN-EET**: When a student or parent reports a college hinting at a donation for a seat, they are **whistling** (feature "Whistle on a seat-for-sale"). Exam registration, scores, and counselling are NOT whistles. IMPORTANT: TN-EET copy is deliberately NOT a stance on NEET - it is framed as "ready either way": the replacement if NEET is set aside, the supplement (colleges earmark 1-2 seats per course for TN-EET rank holders) if NEET stays. Keep all copy neutral on the ban question.
+- **Tut4Neet**: No whistle concept (NEET prep is not problem-reporting). Sister app to TN-EET: Tut4Neet helps students clear NEET as it exists today; keep the same neutrality on the ban question. Core pillars that must survive any copy edit: AI teacher corrects papers + plans what to study next; family/guardian loop (plain-language summary to linked parents/siblings/guardians after every corrected paper, Tamil or English); leaderboards/streaks kept healthy (weekly resets, anonymous handles); subsidised price because the human requirement is tiny (humans only for doubt-clearing and flagged answers).
 - **Whistle (the app)**: The literal embodiment of the brand mantra. A one-tap SOS for women - alerts emergency contacts, the police, and the nearest Singa Pen patrol vehicle, and starts the phone whistling at maximum volume. Identity-verified accounts only (live face match against a government photo ID). Admin side has live patrol oversight + anomaly detection.
 - **Future apps**: Anytime a citizen reports a problem, the verb is *whistle* and the artifact is *a whistle*.
 
@@ -24,6 +26,8 @@ This frames any citizen-initiated report, complaint, or grievance as a **whistle
 - Thittam - `gold` (warm yellow)
 - Whistle - `siren` (alarm red - rose-600 #e11d48) - signifies danger / emergency. Distinct from rust by leaning cooler/more saturated. SOS button uses `rust` for layered red.
 - DocInOut - `pulse` (medical teal - teal-600 #0d9488) - PHC + hospital doctor oversight. Healthcare context, distinct from the other accents.
+- TN-EET - `quill` (scholar blue - blue-800 #1e40af) - fair admissions / entrance exam. Fountain-pen-on-answer-sheet blue, distinct from pulse teal.
+- Tut4Neet - `iris` (study violet - violet-700 #6d28d9) - AI-taught NEET tuition. The one violet in the palette, clearly apart from quill's blue.
 
 ### Identity verification (Makkal Kural + Whistle)
 
@@ -58,7 +62,7 @@ This phrasing should appear prominently on any page that mentions ID verificatio
 
 ## Routing notes
 
-- `src/pages/apps/[slug].astro` filters out `makkal-kural`, `inout`, `whistle`, and `docinout` from getStaticPaths because they have dedicated routes. Add any other dedicated page to the filter list there.
+- `src/pages/apps/[slug].astro` filters out `makkal-kural`, `inout`, `whistle`, `docinout`, `tn-eet`, and `tut4neet` from getStaticPaths because they have dedicated routes. Add any other dedicated page to the filter list there.
 
 ## Voting (Upstash Redis)
 

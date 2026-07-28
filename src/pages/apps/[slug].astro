@@ -6,7 +6,7 @@ import { apps, getApp, accentStyles } from '../../data/apps';
 import VoteWidget from '../../components/VoteWidget.astro';
 
 export function getStaticPaths() {
-  const dedicated = new Set(['makkal-kural', 'inout', 'whistle', 'docinout']);
+  const dedicated = new Set(['makkal-kural', 'inout', 'whistle', 'docinout', 'tn-eet', 'tut4neet']);
   return apps
     .filter((a) => !dedicated.has(a.slug))
     .map((a) => ({ params: { slug: a.slug } }));
@@ -189,7 +189,7 @@ const others = apps.filter((a) => a.slug !== app.slug);
         {others.map((o) => (
           <a href={`/apps/${o.slug}`} class="group rounded-[var(--radius-card)] border border-[var(--color-line)] bg-[var(--color-cream)] p-8 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-30px_rgba(14,14,14,0.18)] transition">
             <div class="flex items-center justify-between">
-              <span class={`h-2 w-2 rounded-full ${o.accent === 'rust' ? 'bg-[var(--color-rust)]' : o.accent === 'leaf' ? 'bg-[var(--color-leaf)]' : o.accent === 'gold' ? 'bg-[var(--color-gold)]' : o.accent === 'siren' ? 'bg-[var(--color-siren)]' : 'bg-[var(--color-pulse)]'}`}></span>
+              <span class={`h-2 w-2 rounded-full ${o.accent === 'rust' ? 'bg-[var(--color-rust)]' : o.accent === 'leaf' ? 'bg-[var(--color-leaf)]' : o.accent === 'gold' ? 'bg-[var(--color-gold)]' : o.accent === 'siren' ? 'bg-[var(--color-siren)]' : o.accent === 'pulse' ? 'bg-[var(--color-pulse)]' : o.accent === 'quill' ? 'bg-[var(--color-quill)]' : 'bg-[var(--color-iris)]'}`}></span>
               <span class="font-tamil text-sm text-[var(--color-ink)]/50">{o.tamilName}</span>
             </div>
             <h3 class="mt-6 font-display text-3xl tracking-tight">{o.name}</h3>

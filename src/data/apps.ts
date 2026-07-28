@@ -1,4 +1,4 @@
-export type AccentKey = 'rust' | 'leaf' | 'gold' | 'siren' | 'pulse';
+export type AccentKey = 'rust' | 'leaf' | 'gold' | 'siren' | 'pulse' | 'quill' | 'iris';
 export type LayoutKey = 'hero' | 'split' | 'flow';
 
 export interface AppFeature {
@@ -384,6 +384,162 @@ export const apps: AppRecord[] = [
       keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
     },
   },
+  {
+    slug: 'tn-eet',
+    name: 'TN-EET',
+    tamilName: 'நுழைவுத் தேர்வு',
+    category: 'Fair admissions',
+    tagline: 'Ready either way.',
+    shortDescription:
+      "Tamil Nadu's own entrance exam for professional courses. If NEET is ever set aside, TN-EET is the replacement that keeps admissions merit-based. If NEET stays, TN-EET is the supplement that earmarks seats for Tamil Nadu students. One exam, ready either way.",
+    longDescription:
+      "TN-EET is not a stance on NEET - that question belongs to courts and legislatures. It's the system that works whichever way it settles. If NEET is ever set aside, admissions can't be allowed to slide back to the old days of donations and seats quietly set aside for money - and 12th marks alone can't carry the weight across different boards and different years. TN-EET steps in as the replacement: one transparent exam built on the Tamil Nadu syllabus, with the reservation system running on top exactly as written. And if NEET stays, TN-EET works as the supplement: colleges earmark a few seats per course for TN-EET rank holders, giving Tamil Nadu students a fair shot without banning anything. Either way, every rank and every seat allocation is published for anyone to check.",
+    accent: 'quill',
+    layout: 'split',
+    features: [
+      {
+        title: 'Two modes, one exam',
+        body: 'Replacement mode runs full admissions and counselling if NEET is set aside. Supplement mode earmarks a few seats per course for TN-EET rank holders while NEET continues. Same exam, same rank list - the mode is a policy switch, not a rebuild.',
+      },
+      {
+        title: 'No seats for sale',
+        body: "Every rank, every seat, every allocation is published the day counselling closes. When the whole list is public, there's no quiet corner left to sell a seat from - no donations, no management-quota backdoors.",
+      },
+      {
+        title: 'Reservation, untouched',
+        body: "Tamil Nadu's existing reservation system runs on top of the rank list exactly as written - applied in code and published with every allocation, so anyone can check that every seat went where the law says it should.",
+      },
+      {
+        title: 'Built on the TN syllabus',
+        body: 'Questions come from what Tamil Nadu students actually studied - the state board syllabus - in Tamil and English. Students from other boards can sit it too; the syllabus map is public.',
+      },
+      {
+        title: 'Free official prep',
+        body: 'The full question bank, past papers, and unlimited mock tests live in the app, free. The exam should test what you learned, not what your family could pay a coaching centre.',
+      },
+      {
+        title: 'Whistle on a seat-for-sale',
+        body: 'If any college hints at a donation for a seat, whistle it from the app. The whistle lands with the admissions regulator, tied to that college and course. If you have a problem, just whistle.',
+      },
+    ],
+    stats: [
+      { value: '2', label: 'Modes - replacement or supplement' },
+      { value: '100%', label: 'Ranks and allocations published' },
+      { value: '₹0', label: 'Official prep - papers, mocks, question bank' },
+    ],
+    faq: [
+      {
+        q: 'Is TN-EET a campaign against NEET?',
+        a: "No. TN-EET doesn't take a side on whether NEET should stay or go - that's a question for courts and legislatures. It's built so Tamil Nadu is ready either way: as the replacement if NEET is set aside, as the supplement if it stays.",
+      },
+      {
+        q: 'If NEET went away, why not just admit on 12th marks?',
+        a: "Because that's how it used to work, and it drifted into donations and seats quietly set aside for those who could pay. Marks from different boards and different years also don't compare cleanly. A single common entrance exam - the way JEE works for engineering - keeps the list comparable and leaves no room for a price tag on a seat.",
+      },
+      {
+        q: 'How does supplement mode work while NEET is running?',
+        a: 'Colleges earmark a small number of seats per course - one or two to start - for TN-EET rank holders. Every other seat is filled exactly as it is today. Tamil Nadu students get a fair shot at those seats without changing anything about NEET itself.',
+      },
+      {
+        q: 'What happens to reservation?',
+        a: "Nothing - and that's the point. The reservation system Tamil Nadu already has runs on top of the TN-EET rank list, exactly as written. The difference is that it's applied in code and published with every allocation, so anyone can verify every seat.",
+      },
+      {
+        q: 'Is the exam only in Tamil?',
+        a: 'Tamil and English - same paper, same difficulty. You pick your language when you register, and can switch per question in the exam hall.',
+      },
+      {
+        q: 'What does it cost to prepare?',
+        a: 'The official question bank, past papers, and unlimited mock tests are free in the app. Nobody should need a coaching centre to have a fair shot at a seat.',
+      },
+    ],
+    meta: {
+      title: 'TN-EET - Tamil Nadu entrance exam, ready either way',
+      description:
+        "Tamil Nadu's own entrance exam: the replacement if NEET is set aside, the supplement if it stays. Transparent ranks, reservation intact, free official prep, no seats for sale.",
+      keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
+    },
+  },
+  {
+    slug: 'tut4neet',
+    name: 'Tut4Neet',
+    tamilName: 'நீட் பயிற்சி',
+    category: 'NEET prep',
+    tagline: 'A teacher in every pocket.',
+    shortDescription:
+      'Home tuition for NEET, taught by an AI teacher. Model papers corrected in under a minute, a study plan that adapts to every result, leaderboards that keep the fire lit, and a plain-language summary to the family after every paper - at a fraction of coaching-centre prices, because the human requirement is tiny.',
+    longDescription:
+      "Tut4Neet turns any phone or laptop into a NEET coaching centre - starting with biology, where 360 of NEET's 720 marks live. Sit a model paper under real exam timing. The AI teacher corrects it in under a minute: every answer graded NEET-style, every mistake explained, every weak topic added to your map. Then it tells you exactly what to study next and rebuilds your day-by-day plan up to exam day. A plain-language summary of every corrected paper goes to the parents, older siblings, or guardians the student links - so the family can review the AI's read and guide with the full picture. District and state leaderboards, streaks, and badges keep the competition healthy and the habit daily. And because the AI does the correcting, the planning, and the tracking - human teachers step in only for doubt-clearing - the price stays a fraction of what coaching centres charge.",
+    accent: 'iris',
+    layout: 'split',
+    features: [
+      {
+        title: 'Model papers on tap',
+        body: 'Full NEET-pattern papers - biology first - timed like the real exam, on your phone or laptop. New papers every week, past years included, and papers download for offline practice.',
+      },
+      {
+        title: 'An AI teacher corrects every paper',
+        body: 'Under a minute after you submit, every answer is graded NEET-style (+4 / -1), every wrong answer explained, and the reasoning behind the right one laid out like a teacher at your shoulder.',
+      },
+      {
+        title: 'Knows what you should study next',
+        body: "Every paper updates your weak-topic map. The AI picks tomorrow's chapters, mixes revision in at the right intervals, and rebuilds your day-by-day plan to exam day. Miss a week? It re-plans instead of guilt-tripping.",
+      },
+      {
+        title: 'The family sees the progress',
+        body: "After every corrected paper, a plain-language summary goes to the parents, older siblings, or guardians the student links - score, trend, weak topics, and what the AI suggested next. In Tamil or English, so the family can review the AI's results and guide the child with the full picture.",
+      },
+      {
+        title: 'Leaderboards, streaks, badges',
+        body: 'Weekly mock leaderboards for your district and the state, streaks for daily practice, badges for chapters mastered. Healthy competition, with anonymous handles for anyone who wants to compete quietly.',
+      },
+      {
+        title: 'Subsidised, because humans are barely needed',
+        body: "The AI does the correcting, planning, and tracking. Human teachers step in only for doubt-clearing sessions. That's why it costs a fraction of a coaching centre - and can be subsidised further for families who can't pay even that.",
+      },
+    ],
+    stats: [
+      { value: '1/10th', label: 'The price of a typical coaching centre' },
+      { value: '<60s', label: 'For the AI teacher to correct a full paper' },
+      { value: '360/720', label: 'NEET marks that come from biology alone' },
+    ],
+    faq: [
+      {
+        q: 'How can it be this cheap?',
+        a: "Almost everything a coaching centre pays people to do - correcting papers, tracking progress, deciding what each student studies next - the AI teacher does here. Human teachers appear only where they're irreplaceable: doubt-clearing sessions. Tiny costs mean a tiny price, and a subsidised one for families who can't pay even that.",
+      },
+      {
+        q: 'Does the AI really correct like a teacher?',
+        a: "It grades every answer NEET-style (+4 for right, -1 for wrong), explains why the right answer is right, spots the pattern behind your mistakes, and updates your weak-topic map. When it isn't sure about an answer, it flags the question for a human teacher instead of guessing.",
+      },
+      {
+        q: 'What do parents and guardians see?',
+        a: "Whatever the student links: parents, older brothers or sisters, any guardian. After every corrected paper they get a plain-language summary - score, the trend over recent papers, the weak topics, and what the AI suggested next - in Tamil or English. The family reviews the AI's read and guides the child with the best of their knowledge, instead of waiting for a report card.",
+      },
+      {
+        q: 'Is it only biology?',
+        a: "Biology first - it carries 360 of NEET's 720 marks and is where depth pays off most. Physics and chemistry papers are next on the roadmap.",
+      },
+      {
+        q: 'What do I need to use it?',
+        a: "Any Android phone (Android 8 and up) or any laptop browser. Papers download for offline practice and corrections sync when you're back online. Tamil and English, like everything under tvk/apps.",
+      },
+      {
+        q: 'How does the leaderboard stay healthy?',
+        a: 'Boards reset weekly, anonymous handles are allowed, and streaks reward showing up rather than only topping the chart. The point is a nudge to practise daily - not a pressure cooker.',
+      },
+      {
+        q: 'How does this relate to TN-EET?',
+        a: "They're sister apps. NEET exists today and lakhs of students need to clear it - Tut4Neet is for them. TN-EET is the state's own exam infrastructure, ready as a replacement or a supplement. Whichever future arrives, the study habit built here carries over.",
+      },
+    ],
+    meta: {
+      title: 'Tut4Neet - AI-taught NEET tuition from home',
+      description:
+        'Home NEET tuition with an AI teacher: model papers corrected in under a minute, adaptive study plans, family progress summaries, leaderboards and streaks - biology first, at a fraction of coaching-centre prices.',
+      keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
+    },
+  },
 ];
 
 export const accentStyles: Record<
@@ -424,6 +580,20 @@ export const accentStyles: Record<
     soft: 'bg-[color-mix(in_srgb,var(--color-pulse)_14%,transparent)]',
     tint: 'text-[var(--color-pulse-deep)]',
     ring: 'ring-[var(--color-pulse)]',
+  },
+  quill: {
+    bg: 'bg-[var(--color-quill)]',
+    ink: 'text-[var(--color-quill)]',
+    soft: 'bg-[color-mix(in_srgb,var(--color-quill)_12%,transparent)]',
+    tint: 'text-[var(--color-quill-deep)]',
+    ring: 'ring-[var(--color-quill)]',
+  },
+  iris: {
+    bg: 'bg-[var(--color-iris)]',
+    ink: 'text-[var(--color-iris)]',
+    soft: 'bg-[color-mix(in_srgb,var(--color-iris)_12%,transparent)]',
+    tint: 'text-[var(--color-iris-deep)]',
+    ring: 'ring-[var(--color-iris)]',
   },
 };
 

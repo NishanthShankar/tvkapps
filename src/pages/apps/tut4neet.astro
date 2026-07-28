@@ -1,0 +1,515 @@
+---
+export const prerender = true;
+
+import Base from '../../layouts/Base.astro';
+import { apps, getApp } from '../../data/apps';
+import VoteWidget from '../../components/VoteWidget.astro';
+
+const app = getApp('tut4neet')!;
+const others = apps.filter((a) => a.slug !== app.slug);
+
+const loop = [
+  {
+    n: '01',
+    title: 'Sit a model paper',
+    body: 'Full NEET pattern, real exam timing, on any phone or laptop. Papers download for offline practice.',
+  },
+  {
+    n: '02',
+    title: 'The AI teacher corrects it',
+    body: 'Under a minute. Every answer graded +4 / -1, every mistake explained, anything uncertain flagged to a human teacher.',
+  },
+  {
+    n: '03',
+    title: 'Your weak-topic map updates',
+    body: 'The mistakes feed a living map of what you know and what keeps slipping - per chapter, per concept.',
+  },
+  {
+    n: '04',
+    title: "Tomorrow's plan rebuilds",
+    body: 'The AI picks what to study next, mixes in revision at the right intervals, and the family gets the summary.',
+  },
+];
+
+const aiDoes = [
+  { t: 'Grades NEET-style', b: '+4 right, -1 wrong, blank is blank. The same arithmetic the real exam uses.' },
+  { t: 'Explains every mistake', b: 'Not just the right option - why yours was wrong, and the concept the question was really testing.' },
+  { t: 'Spots the pattern', b: 'Three genetics slips in two papers is not bad luck. It goes on the map and into the plan.' },
+  { t: 'Knows when to hand over', b: "Unsure about an answer or a doubt it can't settle? It flags a human teacher instead of guessing." },
+];
+
+const ldJson = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: app.name,
+  alternateName: app.tamilName,
+  description: app.shortDescription,
+  applicationCategory: app.category,
+  operatingSystem: 'Android, Web',
+  inLanguage: ['ta', 'en'],
+};
+
+const faqJson = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: app.faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<Base
+  title={app.meta.title}
+  description={app.meta.description}
+  keywords={app.meta.keywords}
+  type="article"
+>
+  <!-- HERO -->
+  <section class="relative overflow-hidden pt-20 pb-24 md:pt-28 md:pb-32">
+    <div aria-hidden="true" class="absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full blur-3xl opacity-[0.15]"
+      style="background: radial-gradient(closest-side, var(--color-iris), transparent 70%);"></div>
+
+    <div class="container-x relative">
+      <nav class="text-xs text-[var(--color-ink)]/55 mb-10">
+        <a href="/" class="hover:text-[var(--color-ink)]">tvkapps</a>
+        <span class="mx-2 opacity-50">/</span>
+        <a href="/#suite" class="hover:text-[var(--color-ink)]">apps</a>
+        <span class="mx-2 opacity-50">/</span>
+        <span class="text-[var(--color-ink)]/80">{app.name}</span>
+      </nav>
+
+      <div class="grid grid-cols-12 gap-6 lg:gap-8 items-end">
+        <div class="col-span-12 lg:col-span-8">
+          <span class="eyebrow text-[var(--color-iris)]">{app.category} &nbsp;/&nbsp; App 07</span>
+          <div class="mt-4 flex items-end gap-3 sm:gap-5 flex-wrap">
+            <h1 class="font-display text-[48px] sm:text-[72px] md:text-[96px] lg:text-[112px] leading-[0.95] tracking-[-0.025em]">
+              {app.name}
+            </h1>
+            <span class="font-tamil text-xl sm:text-2xl md:text-3xl text-[var(--color-ink)]/55 pb-2 sm:pb-3">{app.tamilName}</span>
+          </div>
+          <p class="mt-6 font-display text-xl sm:text-2xl md:text-3xl italic font-[450] max-w-2xl text-[var(--color-iris-deep)]">
+            {app.tagline}
+          </p>
+          <p class="mt-4 text-[15px] md:text-[16px] text-[var(--color-ink)]/65 max-w-xl leading-relaxed">
+            Home tuition for NEET - biology first - taught by an AI teacher that corrects, explains,
+            and plans. The family stays in the loop after every paper. A fraction of coaching-centre
+            prices, because the human requirement is tiny.
+          </p>
+        </div>
+        <div class="col-span-12 lg:col-span-4 flex flex-wrap gap-3 lg:justify-end items-center">
+          <a href="#download" class="btn bg-[var(--color-iris)] text-[var(--color-cream)] hover:bg-[var(--color-iris-deep)]">
+            Download
+          </a>
+          <a href="/" class="btn btn-ghost">All apps</a>
+          <VoteWidget slug={app.slug} accent="iris" variant="light" />
+        </div>
+      </div>
+
+      <p class="mt-10 max-w-3xl text-[16px] sm:text-[18px] md:text-[20px] leading-[1.55] text-[var(--color-ink)]/75">
+        {app.longDescription}
+      </p>
+
+      <!-- stats strip -->
+      <div class="mt-14 md:mt-18 grid grid-cols-3 border-t border-[var(--color-line)]">
+        {app.stats.map((s) => (
+          <div class="border-r last:border-r-0 border-[var(--color-line)] py-8 md:py-12 px-4 sm:px-6 first:pl-0">
+            <p class="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl tracking-[-0.02em] leading-none text-[var(--color-iris)]">{s.value}</p>
+            <p class="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--color-ink)]/55 mt-3 md:mt-5 leading-tight">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- THE DAILY LOOP -->
+  <section class="bg-[var(--color-ink)] text-[var(--color-cream)] py-24 md:py-32 relative overflow-hidden grain">
+    <div aria-hidden="true" class="absolute -top-32 left-1/2 -translate-x-1/2 h-[500px] w-[900px] rounded-full blur-3xl opacity-10"
+      style="background: radial-gradient(closest-side, var(--color-iris), transparent 70%);"></div>
+
+    <div class="container-x relative">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-14 md:mb-16">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow" style="color: color-mix(in srgb, var(--color-iris) 55%, white);">The daily loop</span>
+          <h2 class="mt-3 font-display text-[36px] sm:text-[56px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
+            Paper. Correction.<br/>
+            <span class="italic font-[450]" style="color: color-mix(in srgb, var(--color-iris) 55%, white);">Plan. Repeat.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-cream)]/70 max-w-md leading-relaxed">
+            NEET is won by iteration, not heroics. Tut4Neet compresses the whole tuition-centre week -
+            test, correction, feedback, next assignment - into a loop you can run every single day from home.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--color-cream)]/12 rounded-2xl overflow-hidden">
+        {loop.map((s, i) => (
+          <article class="bg-[var(--color-ink)] p-6 md:p-7 relative">
+            <div class="flex items-center justify-between mb-6">
+              <span class="font-mono text-[11px]" style="color: color-mix(in srgb, var(--color-iris) 55%, white);">L.{s.n}</span>
+              {i < loop.length - 1 && (
+                <svg class="text-[var(--color-cream)]/30" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              )}
+              {i === loop.length - 1 && (
+                <svg class="text-[var(--color-cream)]/30" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 4v8h8"/></svg>
+              )}
+            </div>
+            <h3 class="font-display text-xl tracking-tight">{s.title}</h3>
+            <p class="mt-2 text-[13.5px] text-[var(--color-cream)]/65 leading-relaxed">{s.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- THE AI TEACHER -->
+  <section class="bg-[var(--color-cream)] py-24 md:py-32 relative overflow-hidden">
+    <div class="container-x relative">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-14 md:mb-16">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow text-[var(--color-iris)]">The teacher</span>
+          <h2 class="mt-3 font-display text-[36px] sm:text-[56px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
+            Corrects like a teacher.<br/>
+            <span class="italic font-[450] text-[var(--color-iris-deep)]">Never gets tired.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md leading-relaxed">
+            At a coaching centre, a corrected paper comes back in a week - if the batch isn't too big.
+            Here it comes back before you've finished your tea, with the kind of margin notes a good
+            teacher would leave.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-8 items-start">
+        <!-- corrected paper mockup -->
+        <article class="rounded-[28px] bg-white border border-[var(--color-line)] shadow-[0_30px_60px_-30px_rgba(14,14,14,0.18)] p-6 md:p-8">
+          <div class="flex items-center justify-between gap-3 flex-wrap">
+            <span class="rounded-full bg-[var(--color-iris)] text-[var(--color-cream)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">Corrected</span>
+            <span class="font-mono text-[11px] text-[var(--color-ink)]/45">Mock 14 · Biology · 42s</span>
+          </div>
+
+          <div class="mt-5 flex items-end justify-between gap-4 flex-wrap">
+            <div>
+              <p class="text-[10px] uppercase tracking-wider text-[var(--color-ink)]/45">Score</p>
+              <p class="font-display text-5xl leading-none mt-1">332<span class="text-xl text-[var(--color-ink)]/40">/360</span></p>
+            </div>
+            <div class="text-right">
+              <p class="text-[10px] uppercase tracking-wider text-[var(--color-ink)]/45">Trend</p>
+              <p class="font-mono text-[13px] text-[var(--color-leaf)] mt-1">298 → 316 → 332</p>
+            </div>
+          </div>
+
+          <div class="mt-6 space-y-2.5">
+            <div class="rounded-xl bg-[var(--color-cream)] p-4">
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-[13px] font-medium">Q42 · Genetics · Ch. 5</span>
+                <span class="font-mono text-[12px] text-[var(--color-rust)]">-1</span>
+              </div>
+              <p class="mt-2 text-[12.5px] text-[var(--color-ink)]/65 leading-relaxed">
+                <span class="font-semibold text-[var(--color-iris-deep)]">AI teacher:</span>
+                You picked codominance - this cross shows incomplete dominance. The tell: the F1 phenotype is a
+                blend, not both traits at once. Third genetics slip in two papers - it's going on your map.
+              </p>
+            </div>
+            <div class="rounded-xl bg-[var(--color-cream)] p-4">
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-[13px] font-medium">Q56 · Ecology · Ch. 13</span>
+                <span class="font-mono text-[12px] text-amber-700">flagged</span>
+              </div>
+              <p class="mt-2 text-[12.5px] text-[var(--color-ink)]/65 leading-relaxed">
+                <span class="font-semibold text-[var(--color-iris-deep)]">AI teacher:</span>
+                Your working is defensible and the key looks ambiguous. Sent to a human teacher - you'll hear back today.
+              </p>
+            </div>
+            <div class="rounded-xl bg-[var(--color-cream)] p-4 flex items-center justify-between gap-3">
+              <span class="text-[13px] font-medium">Q17 · Human physiology</span>
+              <span class="font-mono text-[12px] text-[var(--color-leaf)]">+4</span>
+            </div>
+          </div>
+
+          <div class="mt-5 rounded-xl bg-[var(--color-ink)] text-[var(--color-cream)] px-5 py-4 flex items-center justify-between gap-3">
+            <span class="min-w-0 flex-1">
+              <span class="block text-[10px] uppercase tracking-wider text-[var(--color-cream)]/55">Study next</span>
+              <span class="block text-[13.5px] font-medium mt-0.5">Genetics · Molecular basis of inheritance - 2 days, then re-test</span>
+            </span>
+            <svg class="shrink-0" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </div>
+        </article>
+
+        <!-- what the AI does -->
+        <div>
+          <ul class="space-y-3">
+            {aiDoes.map((d, i) => (
+              <li>
+                <article class="rounded-2xl border border-[var(--color-line)] bg-[var(--color-cream-2)] p-5 md:p-6">
+                  <div class="flex items-baseline justify-between gap-3 mb-2">
+                    <span class="font-mono text-[11px] text-[var(--color-iris)]">T.0{i + 1}</span>
+                  </div>
+                  <h3 class="font-display text-xl tracking-tight">{d.t}</h3>
+                  <p class="mt-1.5 text-[13.5px] text-[var(--color-ink)]/70 leading-relaxed">{d.b}</p>
+                </article>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- cost callout -->
+      <div class="mt-12 rounded-2xl border border-[var(--color-line)] bg-[var(--color-ink)] text-[var(--color-cream)] p-6 md:p-8 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-5 md:gap-8 items-start relative overflow-hidden">
+        <div aria-hidden="true" class="absolute -top-12 -right-12 h-40 w-40 rounded-full blur-3xl opacity-25"
+          style="background: radial-gradient(closest-side, var(--color-iris), transparent 70%);"></div>
+        <div class="relative grid place-items-center h-12 w-12 rounded-full bg-[color-mix(in_srgb,var(--color-iris)_25%,transparent)] shrink-0"
+          style="color: color-mix(in srgb, var(--color-iris) 50%, white);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <div class="relative">
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em]" style="color: color-mix(in srgb, var(--color-iris) 55%, white);">Why it costs so little</p>
+          <h3 class="mt-2 font-display text-xl md:text-2xl tracking-tight">The human requirement is tiny. The price shows it.</h3>
+          <p class="mt-2 text-[14px] text-[var(--color-cream)]/70 leading-relaxed max-w-2xl">
+            Correcting, tracking, and planning - the hours coaching centres bill for - the AI does here.
+            Human teachers step in only for doubt-clearing and flagged questions. That keeps the price at a
+            fraction of a coaching centre's, with further subsidies for families who can't pay even that.
+            Good preparation shouldn't depend on what a family earns.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AROUND THE STUDENT: FAMILY + LEADERBOARD -->
+  <section class="bg-[var(--color-cream-2)] py-24 md:py-32">
+    <div class="container-x">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-14 md:mb-16">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow text-[var(--color-iris)]">Around the student</span>
+          <h2 class="mt-3 font-display text-[36px] sm:text-[56px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
+            Nobody studies<br/>
+            <span class="italic font-[450] text-[var(--color-iris-deep)]">alone.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md leading-relaxed">
+            Two circles keep a student going: the family at home and the friends they're racing.
+            Tut4Neet gives both a real role - the family gets the full picture after every paper,
+            and the leaderboard keeps the competition warm without turning cruel.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+        <!-- guardian summary mockup -->
+        <article class="rounded-[28px] bg-[var(--color-cream)] border border-[var(--color-line)] p-6 md:p-8">
+          <div class="flex items-center justify-between gap-3 mb-5 flex-wrap">
+            <span class="rounded-full bg-[var(--color-iris)] text-[var(--color-cream)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">Family summary</span>
+            <span class="font-mono text-[11px] text-[var(--color-ink)]/45">sent after every paper</span>
+          </div>
+
+          <div class="rounded-2xl bg-white border border-[var(--color-line)] p-5">
+            <div class="flex items-center gap-3 pb-3 border-b border-[var(--color-line)]">
+              <span class="grid h-9 w-9 place-items-center rounded-full bg-[color-mix(in_srgb,var(--color-iris)_14%,transparent)] text-[var(--color-iris-deep)] font-display text-sm shrink-0">க</span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-[13px] font-semibold">கார்த்திக் · Mock 14</span>
+                <span class="block text-[11px] text-[var(--color-ink)]/50">To: Amma, Anna · today 6:12 PM</span>
+              </span>
+            </div>
+            <div class="pt-3 space-y-2 text-[13px] leading-relaxed text-[var(--color-ink)]/75">
+              <p><span class="font-semibold text-[var(--color-ink)]">332/360 in biology</span> - his third rise in a row (298 → 316 → 332).</p>
+              <p>Still slipping in <span class="font-semibold text-[var(--color-ink)]">Genetics</span>. The AI has planned 2 days of Ch. 5 revision - a quiet desk after dinner this week would help.</p>
+              <p>21 days of daily practice without a break. Worth a word of praise.</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2 text-[10.5px] text-[var(--color-ink)]/50 flex-wrap">
+              <span class="rounded-full bg-[var(--color-cream-2)] px-2.5 py-1">தமிழில் அனுப்பப்பட்டது</span>
+              <span class="rounded-full bg-[var(--color-cream-2)] px-2.5 py-1">Also in English</span>
+            </div>
+          </div>
+
+          <p class="mt-4 text-[12.5px] text-[var(--color-ink)]/55">
+            The student chooses who's linked - parents, older brothers or sisters, any guardian. They review
+            the AI's read and guide with the best of their knowledge, instead of waiting for a term report card.
+          </p>
+        </article>
+
+        <!-- leaderboard mockup -->
+        <article class="rounded-[28px] bg-[var(--color-ink)] text-[var(--color-cream)] p-6 md:p-8 relative overflow-hidden">
+          <div aria-hidden="true" class="absolute inset-0 opacity-30"
+            style="background: radial-gradient(circle at 75% 20%, color-mix(in srgb, var(--color-iris) 35%, transparent), transparent 60%);"></div>
+          <div class="relative">
+            <div class="flex items-center justify-between gap-3 mb-5 flex-wrap">
+              <span class="rounded-full bg-[var(--color-cream)]/10 border border-[var(--color-cream)]/20 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">Leaderboard</span>
+              <span class="font-mono text-[11px] text-[var(--color-cream)]/55">Madurai district · week 28</span>
+            </div>
+
+            <ul class="space-y-1.5">
+              {[
+                { r: 1, n: 'Priya R', d: 'Madurai East', s: 348, me: false },
+                { r: 2, n: 'You', d: '21-day streak', s: 332, me: true },
+                { r: 3, n: 'kadal_kanni', d: 'anonymous handle', s: 329, me: false },
+                { r: 4, n: 'Mohammed A', d: 'Melur', s: 321, me: false },
+                { r: 5, n: 'thendral_06', d: 'anonymous handle', s: 317, me: false },
+              ].map((row) => (
+                <li class={`flex items-center justify-between gap-3 rounded-xl px-4 py-3 ${row.me ? 'bg-[color-mix(in_srgb,var(--color-iris)_30%,transparent)] border border-[var(--color-cream)]/15' : 'bg-[var(--color-cream)]/6'}`}>
+                  <span class="flex items-center gap-3 min-w-0 flex-1">
+                    <span class="font-mono text-[11px] text-[var(--color-cream)]/50 shrink-0">{row.r}</span>
+                    <span class="min-w-0">
+                      <span class={`block text-[13px] truncate ${row.me ? 'font-semibold' : 'font-medium'}`}>{row.n}</span>
+                      <span class="block text-[10.5px] text-[var(--color-cream)]/50 truncate">{row.d}</span>
+                    </span>
+                  </span>
+                  <span class="font-mono text-[13px] shrink-0">{row.s}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div class="mt-5 flex items-center gap-2 flex-wrap text-[10.5px]">
+              <span class="rounded-full bg-[var(--color-cream)]/10 px-2.5 py-1">Resets weekly</span>
+              <span class="rounded-full bg-[var(--color-cream)]/10 px-2.5 py-1">Anonymous handles allowed</span>
+              <span class="rounded-full bg-[var(--color-cream)]/10 px-2.5 py-1">Streaks reward showing up</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SISTER APP BAND -->
+  <section class="bg-[var(--color-cream)] py-14 md:py-16">
+    <div class="container-x">
+      <a href="/apps/tn-eet" class="group block rounded-2xl border border-[var(--color-line)] bg-[var(--color-cream-2)] px-7 md:px-9 py-6 md:py-7">
+        <div class="flex flex-col md:flex-row md:items-center gap-3 md:gap-8">
+          <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-quill)] shrink-0">Sister app</span>
+          <p class="font-display text-lg md:text-xl tracking-tight min-w-0 flex-1">
+            Tut4Neet gets you through NEET as it exists today. <span class="text-[var(--color-quill)]">TN-EET</span> keeps
+            Tamil Nadu ready either way. Whichever future arrives, the habit carries over.
+          </p>
+          <span class="flex items-center gap-2 text-sm font-medium text-[var(--color-quill)] shrink-0">
+            About TN-EET
+            <svg class="transition group-hover:translate-x-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="bg-[var(--color-cream-2)] py-24 md:py-32">
+    <div class="container-x">
+      <div class="mb-12">
+        <span class="eyebrow text-[var(--color-iris)]">What it does</span>
+        <h2 class="mt-3 font-display text-[40px] md:text-[56px] leading-[1.02] tracking-[-0.02em] max-w-2xl">
+          Six features.<br/>
+          <span class="italic font-[450]">A whole tuition centre in your pocket.</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[var(--color-line)] rounded-2xl overflow-hidden border border-[var(--color-line)]">
+        {app.features.map((f, i) => (
+          <article class="bg-[var(--color-cream)] p-8 md:p-10">
+            <div class="flex items-center gap-2 mb-6">
+              <span class="font-mono text-[11px] text-[var(--color-iris)]">F.0{i + 1}</span>
+              <span class="h-px flex-1 bg-[var(--color-line)]"></span>
+            </div>
+            <h3 class="font-display text-2xl tracking-tight">{f.title}</h3>
+            <p class="mt-3 text-[15px] text-[var(--color-ink)]/70 leading-relaxed">{f.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-24 md:py-32 bg-[var(--color-cream)]">
+    <div class="container-x">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10">
+        <div class="col-span-12 md:col-span-4">
+          <span class="eyebrow text-[var(--color-iris)]">FAQ</span>
+          <h2 class="mt-3 font-display text-[36px] md:text-[52px] leading-[1.02] tracking-[-0.02em]">
+            Honest answers,<br/>
+            <span class="italic font-[450] text-[var(--color-iris-deep)]">up front.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-8">
+          <div class="divide-y divide-[var(--color-line)] border-y border-[var(--color-line)]">
+            {app.faq.map((item) => (
+              <details class="group py-5">
+                <summary class="flex cursor-pointer list-none items-start justify-between gap-6">
+                  <span class="font-display text-xl tracking-tight">{item.q}</span>
+                  <span class="shrink-0 rounded-full border border-[var(--color-line)] h-7 w-7 grid place-items-center transition group-open:rotate-45">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                  </span>
+                </summary>
+                <p class="mt-3 max-w-2xl text-[15px] text-[var(--color-ink)]/70 leading-relaxed">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OTHER APPS -->
+  <section class="bg-[var(--color-cream-2)] py-24 md:py-32">
+    <div class="container-x">
+      <span class="eyebrow text-[var(--color-ink)]/55">Continue exploring</span>
+      <h2 class="mt-3 font-display text-[36px] md:text-[48px] leading-[1.02] tracking-[-0.02em] max-w-xl">
+        The other apps in the suite.
+      </h2>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {others.map((o) => (
+          <a href={`/apps/${o.slug}`} class="group rounded-[var(--radius-card)] border border-[var(--color-line)] bg-[var(--color-cream)] p-8 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-30px_rgba(14,14,14,0.18)] transition">
+            <div class="flex items-center justify-between">
+              <span class={`h-2 w-2 rounded-full ${o.accent === 'rust' ? 'bg-[var(--color-rust)]' : o.accent === 'leaf' ? 'bg-[var(--color-leaf)]' : o.accent === 'gold' ? 'bg-[var(--color-gold)]' : o.accent === 'siren' ? 'bg-[var(--color-siren)]' : o.accent === 'pulse' ? 'bg-[var(--color-pulse)]' : o.accent === 'quill' ? 'bg-[var(--color-quill)]' : 'bg-[var(--color-iris)]'}`}></span>
+              <span class="font-tamil text-sm text-[var(--color-ink)]/50">{o.tamilName}</span>
+            </div>
+            <h3 class="mt-6 font-display text-3xl tracking-tight">{o.name}</h3>
+            <p class="mt-2 text-[15px] text-[var(--color-ink)]/65 max-w-md">{o.tagline}</p>
+            <div class="mt-6 flex items-center gap-2 text-sm font-medium">
+              <span class="opacity-70 group-hover:opacity-100 transition">Read more</span>
+              <svg class="transition group-hover:translate-x-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download" class="relative py-24 md:py-32 bg-[var(--color-cream)]">
+    <div class="container-x">
+      <div class="rounded-[28px] p-7 sm:p-10 md:p-16 grain relative overflow-hidden"
+        style="background: linear-gradient(135deg, var(--color-iris) 0%, var(--color-iris-deep) 100%); color: var(--color-cream);">
+        <div aria-hidden="true" class="absolute -bottom-32 -left-20 h-[420px] w-[420px] rounded-full blur-3xl opacity-20"
+          style="background: radial-gradient(closest-side, var(--color-cream), transparent 70%);"></div>
+        <div class="relative grid grid-cols-12 gap-y-8 md:gap-10 items-end">
+          <div class="col-span-12 md:col-span-7">
+            <span class="eyebrow text-[var(--color-cream)]/80">Get Tut4Neet</span>
+            <h2 class="mt-4 font-display text-[40px] sm:text-[56px] md:text-[64px] lg:text-[72px] leading-[1.0] tracking-[-0.02em]">
+              A paper a day.<br/>A teacher always on.
+            </h2>
+          </div>
+          <div class="col-span-12 md:col-span-5">
+            <form class="rounded-2xl bg-[var(--color-cream)]/12 backdrop-blur border border-[var(--color-cream)]/20 p-3 flex items-center gap-2">
+              <input type="email" required placeholder="you@example.com"
+                class="flex-1 bg-transparent px-3 py-2.5 text-[15px] text-[var(--color-cream)] placeholder:text-[var(--color-cream)]/55 focus:outline-none"/>
+              <button type="submit" class="btn bg-[var(--color-cream)] text-[var(--color-iris-deep)] hover:bg-white">
+                Notify me
+              </button>
+            </form>
+            <p class="mt-3 text-[11px] text-[var(--color-cream)]/65">
+              Biology papers and the AI teacher ship first. Physics and chemistry follow.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(ldJson)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqJson)} />
+</Base>

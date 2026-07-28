@@ -1,0 +1,114 @@
+---
+import { getApp } from '../../data/apps';
+import VoteWidget from '../VoteWidget.astro';
+const app = getApp('tn-eet')!;
+---
+<section id="tn-eet" class="relative overflow-hidden bg-[var(--color-cream)] py-20 md:py-28 lg:py-36">
+  <!-- scholar blue wash -->
+  <div aria-hidden="true" class="absolute -top-40 -left-40 h-[560px] w-[560px] rounded-full blur-3xl opacity-[0.14]"
+    style="background: radial-gradient(closest-side, var(--color-quill), transparent 70%);"></div>
+
+  <div class="container-x relative">
+    <!-- top label row -->
+    <div class="grid grid-cols-12 gap-y-2 md:gap-6 mb-12 md:mb-16">
+      <div class="col-span-12 md:col-span-6 flex items-center gap-3">
+        <span class="eyebrow text-[var(--color-quill)]">App 06 &nbsp;/&nbsp; {app.category}</span>
+      </div>
+      <div class="col-span-12 md:col-span-6 md:text-right">
+        <span class="font-tamil text-lg text-[var(--color-ink)]/55">{app.tamilName}</span>
+      </div>
+    </div>
+
+    <div class="max-w-3xl reveal">
+      <h2 class="font-display text-[36px] sm:text-[56px] md:text-[72px] lg:text-[80px] leading-[1.0] tracking-[-0.02em]">
+        {app.name}.<br/>
+        <span class="italic font-[450] text-[var(--color-quill)]">{app.tagline}</span>
+      </h2>
+      <p class="mt-8 text-[17px] leading-[1.6] text-[var(--color-ink)]/75 max-w-2xl">
+        Tamil Nadu's own entrance exam for professional courses. Not a stance on NEET - a system
+        built to work whichever way that question settles.
+      </p>
+    </div>
+
+    <!-- the fork: two scenarios, one exam -->
+    <div class="mt-14 md:mt-16 reveal">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+        <!-- scenario A: replacement -->
+        <article class="rounded-[var(--radius-card)] border border-[var(--color-line)] bg-[var(--color-cream-2)] p-7 md:p-9 relative overflow-hidden">
+          <div class="flex items-center justify-between gap-3 flex-wrap">
+            <span class="rounded-full bg-[color-mix(in_srgb,var(--color-quill)_12%,transparent)] text-[var(--color-quill-deep)] px-3 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.14em]">
+              If NEET is set aside
+            </span>
+            <span class="font-mono text-[11px] text-[var(--color-ink)]/40">Mode A</span>
+          </div>
+          <h3 class="mt-6 font-display text-3xl md:text-4xl tracking-tight">The replacement.</h3>
+          <p class="mt-3 text-[15px] text-[var(--color-ink)]/70 leading-relaxed">
+            A full entrance exam with counselling, so admissions never slide back to the old days of
+            donations and seats set aside for money. Marks from different boards and years don't compare
+            cleanly on their own - one common exam keeps the list honest, the way JEE does for engineering.
+          </p>
+        </article>
+
+        <!-- scenario B: supplement -->
+        <article class="rounded-[var(--radius-card)] border border-[var(--color-line)] bg-[var(--color-cream-2)] p-7 md:p-9 relative overflow-hidden">
+          <div class="flex items-center justify-between gap-3 flex-wrap">
+            <span class="rounded-full bg-[color-mix(in_srgb,var(--color-quill)_12%,transparent)] text-[var(--color-quill-deep)] px-3 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.14em]">
+              If NEET stays
+            </span>
+            <span class="font-mono text-[11px] text-[var(--color-ink)]/40">Mode B</span>
+          </div>
+          <h3 class="mt-6 font-display text-3xl md:text-4xl tracking-tight">The supplement.</h3>
+          <p class="mt-3 text-[15px] text-[var(--color-ink)]/70 leading-relaxed">
+            Colleges earmark one or two seats per course for TN-EET rank holders. Tamil Nadu students get
+            a fair shot at those seats, and nothing about NEET changes - a far easier step than banning anything.
+          </p>
+        </article>
+      </div>
+
+      <!-- convergence bar -->
+      <div class="mt-4 lg:mt-6 rounded-[var(--radius-card)] bg-[var(--color-quill)] text-[var(--color-cream)] px-7 md:px-9 py-6 md:py-7 flex flex-col md:flex-row md:items-center gap-3 md:gap-6">
+        <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-cream)]/70 shrink-0">Either way</span>
+        <p class="font-display text-xl md:text-2xl tracking-tight">
+          One exam. One public rank list. Reservation intact. No seats for sale.
+        </p>
+      </div>
+    </div>
+
+    <!-- features + numbers -->
+    <div class="mt-20 md:mt-24 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-y-12 lg:gap-12 items-start">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6 reveal">
+        {app.features.map((f, i) => (
+          <li class="border-t border-[var(--color-line)] pt-4">
+            <span class="text-[var(--color-quill)] font-mono text-xs">F.0{i + 1}</span>
+            <p class="font-medium text-[16px] mt-1.5">{f.title}</p>
+            <p class="mt-1 text-[14px] text-[var(--color-ink)]/65 leading-relaxed">{f.body}</p>
+          </li>
+        ))}
+      </ul>
+
+      <div class="rounded-[var(--radius-card)] bg-[var(--color-ink)] text-[var(--color-cream)] p-8 relative overflow-hidden reveal">
+        <div aria-hidden="true" class="absolute -bottom-20 -right-20 h-60 w-60 rounded-full blur-3xl opacity-40"
+          style="background: radial-gradient(closest-side, var(--color-quill), transparent 70%);"></div>
+        <div class="relative">
+          <p class="eyebrow" style="color: color-mix(in srgb, var(--color-quill) 55%, white);">By the numbers</p>
+          <div class="mt-6 space-y-5">
+            {app.stats.map((s) => (
+              <div class="flex items-baseline justify-between gap-4 border-b border-[var(--color-cream)]/15 pb-3 last:border-0">
+                <span class="text-xs uppercase tracking-wider text-[var(--color-cream)]/55 min-w-0 flex-1">{s.label}</span>
+                <span class="font-display text-2xl shrink-0">{s.value}</span>
+              </div>
+            ))}
+          </div>
+          <a href={`/apps/${app.slug}`} class="mt-8 inline-flex items-center gap-2 text-sm font-medium hover:text-[var(--color-cream)] transition"
+            style="color: color-mix(in srgb, var(--color-quill) 45%, white);">
+            Open the {app.name} page
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <div class="mt-6">
+            <VoteWidget slug={app.slug} accent="quill" variant="dark" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

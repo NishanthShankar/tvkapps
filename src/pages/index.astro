@@ -8,13 +8,15 @@ import InOutSection from '../components/sections/InOutSection.astro';
 import DocInOutSection from '../components/sections/DocInOutSection.astro';
 import ThittamSection from '../components/sections/ThittamSection.astro';
 import WhistleSection from '../components/sections/WhistleSection.astro';
+import TNEETSection from '../components/sections/TNEETSection.astro';
+import Tut4NeetSection from '../components/sections/Tut4NeetSection.astro';
 import Principles from '../components/sections/Principles.astro';
 import ClosingCTA from '../components/sections/ClosingCTA.astro';
 import { apps } from '../data/apps';
 
 const title = 'tvkapps - A suite of citizen apps for Tamil Nadu';
 const description =
-  "A Tamil-first, open-source suite of apps for Tamil Nadu citizens: requests and reviews for government offices, public oversight of TASMAC shops, welfare scheme discovery, and one-tap women safety. If you have a problem, just whistle.";
+  "A Tamil-first, open-source suite of apps for Tamil Nadu citizens: requests and reviews for government offices, public oversight of TASMAC shops, welfare scheme discovery, one-tap women safety, a fair state entrance exam, and AI-taught NEET tuition from home. If you have a problem, just whistle.";
 
 const ldJson = {
   '@context': 'https://schema.org',
@@ -40,13 +42,14 @@ const itemListJson = {
 };
 ---
 <Base title={title} description={description}>
-  <section id="suite" class="sr-only" aria-hidden="true"></section>
   <HomeHero />
   <MakkalKuralSection />
   <InOutSection />
   <DocInOutSection />
   <ThittamSection />
   <WhistleSection />
+  <TNEETSection />
+  <Tut4NeetSection />
   <Principles />
   <ClosingCTA />
 

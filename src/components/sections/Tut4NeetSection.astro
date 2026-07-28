@@ -1,0 +1,145 @@
+---
+import { getApp } from '../../data/apps';
+import VoteWidget from '../VoteWidget.astro';
+const app = getApp('tut4neet')!;
+---
+<section id="tut4neet" class="relative overflow-hidden py-20 md:py-28 lg:py-36"
+  style="background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-cream-2) 55%, var(--color-cream) 100%);">
+  <!-- study violet wash -->
+  <div aria-hidden="true" class="absolute -top-40 -right-40 h-[560px] w-[560px] rounded-full blur-3xl opacity-[0.14]"
+    style="background: radial-gradient(closest-side, var(--color-iris), transparent 70%);"></div>
+
+  <div class="container-x relative">
+    <!-- top label row -->
+    <div class="grid grid-cols-12 gap-y-2 md:gap-6 mb-12 md:mb-16">
+      <div class="col-span-12 md:col-span-6 flex items-center gap-3">
+        <span class="eyebrow text-[var(--color-iris)]">App 07 &nbsp;/&nbsp; {app.category}</span>
+      </div>
+      <div class="col-span-12 md:col-span-6 md:text-right">
+        <span class="font-tamil text-lg text-[var(--color-ink)]/55">{app.tamilName}</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-12 gap-y-10 md:gap-12 items-center">
+      <!-- left: editorial -->
+      <div class="col-span-12 lg:col-span-7 reveal">
+        <h2 class="font-display text-[36px] sm:text-[56px] md:text-[72px] lg:text-[80px] leading-[1.0] tracking-[-0.02em]">
+          {app.name}.<br/>
+          <span class="italic font-[450] text-[var(--color-iris)]">{app.tagline}</span>
+        </h2>
+
+        <p class="mt-8 max-w-xl text-[17px] leading-[1.6] text-[var(--color-ink)]/75">
+          NEET tuition from home, taught by an AI teacher. Sit a model paper, get it corrected in under a
+          minute, and know exactly what to study next - while the family gets a plain-language summary of
+          every result. Biology first. A fraction of coaching-centre prices, because the human requirement is tiny.
+        </p>
+
+        <ol class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6 max-w-2xl">
+          {app.features.map((f, i) => (
+            <li class="border-t border-[var(--color-line)] pt-4">
+              <span class="text-[var(--color-iris)] font-mono text-xs">F.0{i + 1}</span>
+              <p class="font-medium text-[16px] mt-1.5">{f.title}</p>
+              <p class="mt-1 text-[14px] text-[var(--color-ink)]/65 leading-relaxed">{f.body}</p>
+            </li>
+          ))}
+        </ol>
+
+        <div class="mt-10 flex flex-wrap gap-3 items-center">
+          <a href={`/apps/${app.slug}`} class="btn bg-[var(--color-iris)] text-[var(--color-cream)] hover:bg-[var(--color-iris-deep)]">
+            Open the {app.name} page
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#download" class="btn btn-ghost">Download</a>
+          <VoteWidget slug={app.slug} accent="iris" variant="light" />
+        </div>
+      </div>
+
+      <!-- right: corrected-paper card + mini leaderboard -->
+      <div class="col-span-12 lg:col-span-5 reveal">
+        <div class="relative mx-auto max-w-[400px] space-y-4">
+          <!-- corrected paper -->
+          <div class="rounded-[24px] bg-white border border-[var(--color-line)] shadow-[0_30px_60px_-30px_rgba(14,14,14,0.18)] overflow-hidden">
+            <div class="flex items-center justify-between gap-3 px-5 pt-5 flex-wrap">
+              <span class="rounded-full bg-[color-mix(in_srgb,var(--color-iris)_12%,transparent)] text-[var(--color-iris-deep)] px-2.5 py-1 text-[10px] uppercase tracking-wider font-semibold">
+                Mock 14 · Biology
+              </span>
+              <span class="font-mono text-[10.5px] text-[var(--color-ink)]/45">corrected in 42s</span>
+            </div>
+
+            <div class="px-5 mt-4 flex items-end justify-between gap-3">
+              <div>
+                <p class="text-[10px] uppercase tracking-wider text-[var(--color-ink)]/45">Score</p>
+                <p class="font-display text-4xl leading-none mt-1">332<span class="text-lg text-[var(--color-ink)]/40">/360</span></p>
+              </div>
+              <span class="text-[11px] font-mono text-[var(--color-leaf)] pb-1">▲ +16 vs Mock 13</span>
+            </div>
+
+            <div class="px-5 mt-4 space-y-2">
+              <div class="rounded-xl bg-[var(--color-cream)] p-3">
+                <div class="flex items-center justify-between gap-3">
+                  <span class="text-[12px] font-medium">Q42 · Genetics</span>
+                  <span class="font-mono text-[11px] text-[var(--color-rust)]">-1</span>
+                </div>
+                <p class="mt-1.5 text-[11px] text-[var(--color-ink)]/60 leading-relaxed">
+                  <span class="font-semibold text-[var(--color-iris-deep)]">AI teacher:</span>
+                  You read incomplete dominance as codominance. Revise Ch. 5 before Friday's paper.
+                </p>
+              </div>
+              <div class="rounded-xl bg-[var(--color-cream)] p-3 flex items-center justify-between gap-3">
+                <span class="text-[12px] font-medium">Q17 · Human physiology</span>
+                <span class="font-mono text-[11px] text-[var(--color-leaf)]">+4</span>
+              </div>
+            </div>
+
+            <div class="px-5 pt-4 pb-5">
+              <div class="rounded-xl bg-[var(--color-ink)] text-[var(--color-cream)] px-4 py-3 flex items-center justify-between gap-3">
+                <span class="min-w-0 flex-1">
+                  <span class="block text-[9.5px] uppercase tracking-wider text-[var(--color-cream)]/55">Study next</span>
+                  <span class="block text-[12.5px] font-medium mt-0.5 truncate">Genetics · Molecular basis (2 days)</span>
+                </span>
+                <svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </div>
+              <p class="mt-3 flex items-center gap-1.5 text-[10.5px] text-[var(--color-ink)]/55">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg>
+                Summary sent to Amma and Anna - in Tamil
+              </p>
+            </div>
+          </div>
+
+          <!-- mini leaderboard -->
+          <div class="rounded-[24px] bg-[var(--color-cream)] border border-[var(--color-line)] p-5">
+            <div class="flex items-center justify-between gap-3 mb-3">
+              <span class="text-[10px] uppercase tracking-wider text-[var(--color-ink)]/50">Madurai district · week 28</span>
+              <span class="font-mono text-[10.5px] text-[var(--color-iris-deep)]">21-day streak</span>
+            </div>
+            <ul class="space-y-1.5">
+              {[
+                { r: 1, n: 'Priya R', s: 348, me: false },
+                { r: 2, n: 'You', s: 332, me: true },
+                { r: 3, n: 'kadal_kanni', s: 329, me: false },
+              ].map((row) => (
+                <li class={`flex items-center justify-between gap-3 rounded-lg px-3 py-2 ${row.me ? 'bg-[color-mix(in_srgb,var(--color-iris)_10%,transparent)]' : ''}`}>
+                  <span class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="font-mono text-[11px] text-[var(--color-ink)]/40 shrink-0">{row.r}</span>
+                    <span class={`text-[12.5px] truncate ${row.me ? 'font-semibold text-[var(--color-iris-deep)]' : 'font-medium'}`}>{row.n}</span>
+                  </span>
+                  <span class="font-mono text-[11.5px] shrink-0">{row.s}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- stats strip -->
+    <div class="mt-20 md:mt-24 grid grid-cols-3 border-t border-[var(--color-line)]">
+      {app.stats.map((s) => (
+        <div class="border-r last:border-r-0 border-[var(--color-line)] py-8 md:py-12 px-4 sm:px-6 first:pl-0">
+          <p class="font-display text-2xl sm:text-4xl md:text-5xl tracking-[-0.02em] leading-none text-[var(--color-iris)]">{s.value}</p>
+          <p class="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--color-ink)]/55 mt-3 md:mt-5 leading-tight">{s.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

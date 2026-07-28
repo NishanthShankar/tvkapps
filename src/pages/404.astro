@@ -7,18 +7,37 @@ import Base from '../layouts/Base.astro';
   title="Page not found - tvkapps"
   description="The page you're looking for doesn't exist."
 >
-  <section class="relative overflow-hidden py-32 md:py-40">
-    <div aria-hidden="true" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full blur-3xl opacity-25"
+  <section class="relative overflow-hidden py-28 md:py-36">
+    <!-- ghost 404 numeral behind everything -->
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 grid place-items-center select-none">
+      <span class="font-display leading-none tracking-[-0.04em] text-[var(--color-ink)]/[0.045] text-[46vw] md:text-[34vw]">404</span>
+    </div>
+    <div aria-hidden="true" class="absolute -top-32 -right-24 h-[440px] w-[440px] rounded-full blur-3xl opacity-25"
       style="background: radial-gradient(closest-side, var(--color-rust), transparent 70%);"></div>
+
     <div class="container-x relative text-center max-w-2xl mx-auto">
-      <span class="eyebrow text-[var(--color-ink)]/55 inline-flex justify-center">Error 404</span>
-      <h1 class="mt-4 font-display text-[64px] sm:text-[96px] md:text-[140px] leading-[0.95] tracking-[-0.025em]">
-        Not <span class="italic font-[450] text-[var(--color-rust)]">found.</span>
+      <span class="eyebrow text-[var(--color-ink)]/55 inline-flex justify-center">Error 404 &nbsp;/&nbsp; page missing</span>
+
+      <h1 class="mt-5 font-display text-[52px] sm:text-[80px] md:text-[104px] leading-[0.98] tracking-[-0.025em]">
+        You found<br/>a problem.
+        <span class="block italic font-[450] text-[var(--color-rust)] mt-2">Just whistle.</span>
       </h1>
-      <p class="mt-6 text-[17px] text-[var(--color-ink)]/70">
-        The page you're looking for doesn't exist - or has moved. Try the home page or one of the apps.
+
+      <p class="mx-auto mt-8 max-w-md text-[17px] leading-[1.55] text-[var(--color-ink)]/70">
+        This page doesn't exist, or it moved without telling anyone. Tell us and we'll fix it - that's kind of our whole thing.
       </p>
+
       <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <a href="mailto:hello@tvkapps.example?subject=Broken%20link%20on%20tvkapps"
+          class="btn bg-[var(--color-rust)] text-[var(--color-cream)] hover:bg-[var(--color-rust-deep)] shadow-[0_10px_30px_-8px_rgba(214,41,62,0.45)]">
+          <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <rect x="3" y="10.5" width="4" height="3" rx="0.5"/>
+            <path d="M7 9 H14 A4 4 0 0 1 14 17 H7 Z"/>
+            <circle cx="11.5" cy="13" r="1.3" fill="var(--color-rust)"/>
+            <circle cx="17.5" cy="7.5" r="1.2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+          Whistle at us
+        </a>
         <a href="/" class="btn btn-ink">Back to home</a>
         <a href="/#suite" class="btn btn-ghost">See the apps</a>
       </div>

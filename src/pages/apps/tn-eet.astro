@@ -1,0 +1,457 @@
+---
+export const prerender = true;
+
+import Base from '../../layouts/Base.astro';
+import { apps, getApp } from '../../data/apps';
+import VoteWidget from '../../components/VoteWidget.astro';
+
+const app = getApp('tn-eet')!;
+const others = apps.filter((a) => a.slug !== app.slug);
+
+const whyExam = [
+  {
+    n: '01',
+    title: 'A seat should never have a price',
+    body: 'Before common entrance exams, admissions ran on 12th marks - and drifted into donations and seats quietly set aside for those who could pay. Any replacement has to make sure that door stays closed.',
+  },
+  {
+    n: '02',
+    title: "Marks alone can't carry it",
+    body: "A 96% from one board and one year isn't the same as a 96% from another. Without a common yardstick, the rank list stops being comparable - and stops being defensible.",
+  },
+  {
+    n: '03',
+    title: 'A common exam keeps the list honest',
+    body: 'Engineering already works this way: one exam, one rank list, counselling in the open. TN-EET brings the same structure to every seat it touches - built on the Tamil Nadu syllabus.',
+  },
+];
+
+const ldJson = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: app.name,
+  alternateName: app.tamilName,
+  description: app.shortDescription,
+  applicationCategory: app.category,
+  operatingSystem: 'Android, iOS, Web',
+  inLanguage: ['ta', 'en'],
+};
+
+const faqJson = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: app.faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<Base
+  title={app.meta.title}
+  description={app.meta.description}
+  keywords={app.meta.keywords}
+  type="article"
+>
+  <!-- HERO -->
+  <section class="relative overflow-hidden pt-20 pb-24 md:pt-28 md:pb-32">
+    <div aria-hidden="true" class="absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full blur-3xl opacity-[0.16]"
+      style="background: radial-gradient(closest-side, var(--color-quill), transparent 70%);"></div>
+
+    <div class="container-x relative">
+      <nav class="text-xs text-[var(--color-ink)]/55 mb-10">
+        <a href="/" class="hover:text-[var(--color-ink)]">tvkapps</a>
+        <span class="mx-2 opacity-50">/</span>
+        <a href="/#suite" class="hover:text-[var(--color-ink)]">apps</a>
+        <span class="mx-2 opacity-50">/</span>
+        <span class="text-[var(--color-ink)]/80">{app.name}</span>
+      </nav>
+
+      <div class="grid grid-cols-12 gap-6 lg:gap-8 items-end">
+        <div class="col-span-12 lg:col-span-8">
+          <span class="eyebrow text-[var(--color-quill)]">{app.category} &nbsp;/&nbsp; App 06</span>
+          <div class="mt-4 flex items-end gap-3 sm:gap-5 flex-wrap">
+            <h1 class="font-display text-[48px] sm:text-[72px] md:text-[96px] lg:text-[112px] leading-[0.95] tracking-[-0.025em]">
+              {app.name}
+            </h1>
+            <span class="font-tamil text-xl sm:text-2xl md:text-3xl text-[var(--color-ink)]/55 pb-2 sm:pb-3">{app.tamilName}</span>
+          </div>
+          <p class="mt-6 font-display text-xl sm:text-2xl md:text-3xl italic font-[450] max-w-2xl text-[var(--color-quill-deep)]">
+            {app.tagline}
+          </p>
+          <p class="mt-4 text-[15px] md:text-[16px] text-[var(--color-ink)]/65 max-w-xl leading-relaxed">
+            Tamil Nadu's own entrance exam for professional courses. Not a stance on NEET -
+            a system built to work whichever way that question settles.
+          </p>
+        </div>
+        <div class="col-span-12 lg:col-span-4 flex flex-wrap gap-3 lg:justify-end items-center">
+          <a href="#download" class="btn bg-[var(--color-quill)] text-[var(--color-cream)] hover:bg-[var(--color-quill-deep)]">
+            Download
+          </a>
+          <a href="/" class="btn btn-ghost">All apps</a>
+          <VoteWidget slug={app.slug} accent="quill" variant="light" />
+        </div>
+      </div>
+
+      <!-- the fork: the two futures, one exam -->
+      <div class="mt-14 md:mt-16">
+        <div class="relative grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+          <!-- "or" marker between the two cards on desktop -->
+          <div aria-hidden="true" class="hidden lg:grid absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 h-12 w-12 place-items-center rounded-full bg-[var(--color-cream)] border border-[var(--color-line)] font-display italic text-lg text-[var(--color-ink)]/60 shadow-[0_10px_30px_-12px_rgba(14,14,14,0.25)]">
+            or
+          </div>
+
+          <article class="rounded-[var(--radius-card)] border border-[var(--color-line)] bg-[var(--color-cream-2)] p-7 md:p-10">
+            <div class="flex items-center justify-between gap-3 flex-wrap">
+              <span class="rounded-full bg-[color-mix(in_srgb,var(--color-quill)_12%,transparent)] text-[var(--color-quill-deep)] px-3 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.14em]">
+                If NEET is set aside
+              </span>
+              <span class="font-mono text-[11px] text-[var(--color-ink)]/40">Mode A</span>
+            </div>
+            <h2 class="mt-6 font-display text-3xl md:text-4xl tracking-tight">The replacement.</h2>
+            <p class="mt-3 text-[15px] text-[var(--color-ink)]/70 leading-relaxed">
+              A full entrance exam with open counselling takes NEET's place, so admissions never slide back to
+              the old days of donations and blocked seats. The reservation system runs on top, exactly as written.
+            </p>
+            <ul class="mt-5 space-y-2 text-[13.5px] text-[var(--color-ink)]/70">
+              {['One statewide exam, Tamil and English', 'Counselling and every allocation in the open', 'Reservation applied exactly as the law says'].map((li) => (
+                <li class="flex items-start gap-2.5">
+                  <span class="mt-[7px] h-1.5 w-1.5 rounded-full bg-[var(--color-quill)] shrink-0"></span>
+                  <span class="min-w-0 flex-1">{li}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          <article class="rounded-[var(--radius-card)] border border-[var(--color-line)] bg-[var(--color-cream-2)] p-7 md:p-10">
+            <div class="flex items-center justify-between gap-3 flex-wrap">
+              <span class="rounded-full bg-[color-mix(in_srgb,var(--color-quill)_12%,transparent)] text-[var(--color-quill-deep)] px-3 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.14em]">
+                If NEET stays
+              </span>
+              <span class="font-mono text-[11px] text-[var(--color-ink)]/40">Mode B</span>
+            </div>
+            <h2 class="mt-6 font-display text-3xl md:text-4xl tracking-tight">The supplement.</h2>
+            <p class="mt-3 text-[15px] text-[var(--color-ink)]/70 leading-relaxed">
+              NEET keeps running exactly as it does today. Colleges earmark one or two seats per course for
+              TN-EET rank holders - a fair shot for Tamil Nadu students, with no ban required.
+            </p>
+            <ul class="mt-5 space-y-2 text-[13.5px] text-[var(--color-ink)]/70">
+              {['Nothing about NEET changes', '1-2 earmarked seats per course, per college', 'A far smaller step than banning anything'].map((li) => (
+                <li class="flex items-start gap-2.5">
+                  <span class="mt-[7px] h-1.5 w-1.5 rounded-full bg-[var(--color-quill)] shrink-0"></span>
+                  <span class="min-w-0 flex-1">{li}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        </div>
+
+        <!-- convergence -->
+        <div class="mt-4 lg:mt-6 rounded-[var(--radius-card)] bg-[var(--color-quill)] text-[var(--color-cream)] px-7 md:px-10 py-6 md:py-8 grain relative overflow-hidden">
+          <div class="relative flex flex-col md:flex-row md:items-center gap-3 md:gap-8">
+            <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-cream)]/70 shrink-0">Either way</span>
+            <p class="font-display text-xl md:text-3xl tracking-tight">
+              One exam. One public rank list.<br class="hidden md:block"/>
+              Reservation intact. No seats for sale.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- stats strip -->
+      <div class="mt-14 md:mt-18 grid grid-cols-3 border-t border-[var(--color-line)]">
+        {app.stats.map((s) => (
+          <div class="border-r last:border-r-0 border-[var(--color-line)] py-8 md:py-12 px-4 sm:px-6 first:pl-0">
+            <p class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-[-0.02em] leading-none text-[var(--color-quill)]">{s.value}</p>
+            <p class="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--color-ink)]/55 mt-3 md:mt-5 leading-tight">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY AN EXAM AT ALL -->
+  <section class="bg-[var(--color-ink)] text-[var(--color-cream)] py-24 md:py-32 relative overflow-hidden grain">
+    <div aria-hidden="true" class="absolute -top-32 left-1/2 -translate-x-1/2 h-[500px] w-[900px] rounded-full blur-3xl opacity-10"
+      style="background: radial-gradient(closest-side, var(--color-quill), transparent 70%);"></div>
+
+    <div class="container-x relative">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-14 md:mb-16">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow" style="color: color-mix(in srgb, var(--color-quill) 55%, white);">Why an exam at all</span>
+          <h2 class="mt-3 font-display text-[36px] sm:text-[56px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
+            The old ways<br/>
+            <span class="italic font-[450]" style="color: color-mix(in srgb, var(--color-quill) 55%, white);">stay old.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-cream)]/70 max-w-md leading-relaxed">
+            Whatever anyone thinks of NEET, the years before common entrance exams left a lesson:
+            without a shared yardstick and a public list, seats find a price. TN-EET exists so that
+            can never happen again - under any policy.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--color-cream)]/12 rounded-2xl overflow-hidden">
+        {whyExam.map((w) => (
+          <article class="bg-[var(--color-ink)] p-7 md:p-9">
+            <span class="font-mono text-[11px]" style="color: color-mix(in srgb, var(--color-quill) 55%, white);">W.{w.n}</span>
+            <h3 class="mt-5 font-display text-2xl tracking-tight">{w.title}</h3>
+            <p class="mt-2 text-[14px] text-[var(--color-cream)]/65 leading-relaxed">{w.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- THE TWO MODES, IN PRACTICE -->
+  <section class="bg-[var(--color-cream)] py-24 md:py-32">
+    <div class="container-x">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-end mb-14 md:mb-16">
+        <div class="col-span-12 md:col-span-7">
+          <span class="eyebrow text-[var(--color-quill)]">In practice</span>
+          <h2 class="mt-3 font-display text-[36px] sm:text-[56px] md:text-[64px] leading-[1.0] tracking-[-0.02em] max-w-3xl">
+            Same exam.<br/>
+            <span class="italic font-[450] text-[var(--color-quill-deep)]">Two ways to use it.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-5">
+          <p class="text-[15px] text-[var(--color-ink)]/70 max-w-md leading-relaxed">
+            The exam, the rank list, and the free prep are identical in both modes. The only thing
+            that changes is what the rank unlocks - full counselling, or earmarked seats.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+        <!-- Mode A mock: counselling -->
+        <article class="rounded-[28px] bg-[var(--color-cream-2)] border border-[var(--color-line)] p-6 md:p-8">
+          <div class="flex items-center justify-between gap-3 mb-5 flex-wrap">
+            <span class="rounded-full bg-[var(--color-quill)] text-[var(--color-cream)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">Mode A · Replacement</span>
+            <span class="font-mono text-[11px] text-[var(--color-ink)]/45">Counselling round 1</span>
+          </div>
+
+          <!-- rank card -->
+          <div class="rounded-2xl bg-[var(--color-ink)] text-[var(--color-cream)] p-5 relative overflow-hidden">
+            <div aria-hidden="true" class="absolute -top-12 -right-12 h-32 w-32 rounded-full blur-2xl opacity-40"
+              style="background: radial-gradient(closest-side, var(--color-quill), transparent 70%);"></div>
+            <div class="relative">
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-[11px] uppercase tracking-wider text-[var(--color-cream)]/60">TN-EET 2027 · Scorecard</span>
+                <span class="font-mono text-[10.5px] text-[var(--color-cream)]/50">Verified</span>
+              </div>
+              <div class="mt-4 flex items-end justify-between gap-4 flex-wrap">
+                <div>
+                  <p class="text-[10px] uppercase tracking-wider text-[var(--color-cream)]/55">State rank</p>
+                  <p class="font-display text-4xl mt-1">4,182</p>
+                </div>
+                <div>
+                  <p class="text-[10px] uppercase tracking-wider text-[var(--color-cream)]/55">Score</p>
+                  <p class="font-display text-4xl mt-1">612<span class="text-lg text-[var(--color-cream)]/50">/720</span></p>
+                </div>
+                <div>
+                  <p class="text-[10px] uppercase tracking-wider text-[var(--color-cream)]/55">Category rank</p>
+                  <p class="font-display text-4xl mt-1">1,076</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- choice list -->
+          <div class="mt-4 space-y-2">
+            {[
+              { c: 'Madras Medical College', s: 'Within reach', tone: 'ok' },
+              { c: 'Stanley Medical College', s: 'Within reach', tone: 'ok' },
+              { c: 'Madurai Medical College', s: 'Round 2 likely', tone: 'wait' },
+            ].map((row, i) => (
+              <div class="flex items-center justify-between gap-3 rounded-xl bg-[var(--color-cream)] border border-[var(--color-line)] px-4 py-3">
+                <span class="flex items-center gap-3 min-w-0 flex-1">
+                  <span class="font-mono text-[11px] text-[var(--color-ink)]/40 shrink-0">{i + 1}</span>
+                  <span class="text-[13px] font-medium truncate">{row.c}</span>
+                </span>
+                <span class={`text-[10.5px] font-mono shrink-0 ${row.tone === 'ok' ? 'text-[var(--color-leaf)]' : 'text-amber-700'}`}>{row.s}</span>
+              </div>
+            ))}
+          </div>
+          <p class="mt-4 text-[12.5px] text-[var(--color-ink)]/55">
+            Fill choices, watch each round land, and see the full allocation list published the day counselling closes.
+          </p>
+        </article>
+
+        <!-- Mode B mock: earmarked seats -->
+        <article class="rounded-[28px] bg-[var(--color-cream-2)] border border-[var(--color-line)] p-6 md:p-8">
+          <div class="flex items-center justify-between gap-3 mb-5 flex-wrap">
+            <span class="rounded-full border border-[var(--color-quill)] text-[var(--color-quill-deep)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">Mode B · Supplement</span>
+            <span class="font-mono text-[11px] text-[var(--color-ink)]/45">NEET unchanged</span>
+          </div>
+
+          <div class="rounded-2xl bg-[var(--color-cream)] border border-[var(--color-line)] p-5">
+            <p class="text-[11px] uppercase tracking-wider text-[var(--color-ink)]/45">Earmarked seats near you</p>
+            <div class="mt-3 space-y-2">
+              {[
+                { c: 'Govt. Kilpauk Medical College', course: 'MBBS', seats: 2 },
+                { c: 'Coimbatore Medical College', course: 'MBBS', seats: 1 },
+                { c: 'Govt. Vellore Medical College', course: 'BDS', seats: 2 },
+                { c: 'Thanjavur Medical College', course: 'MBBS', seats: 1 },
+              ].map((row) => (
+                <div class="flex items-center justify-between gap-3 rounded-xl bg-[var(--color-cream-2)] px-4 py-3">
+                  <span class="min-w-0 flex-1">
+                    <span class="block text-[13px] font-medium truncate">{row.c}</span>
+                    <span class="block text-[11px] text-[var(--color-ink)]/50">{row.course}</span>
+                  </span>
+                  <span class="shrink-0 rounded-full bg-[color-mix(in_srgb,var(--color-quill)_12%,transparent)] text-[var(--color-quill-deep)] px-2.5 py-1 text-[10.5px] font-mono">
+                    TN-EET seats: {row.seats}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <p class="mt-4 text-[12.5px] text-[var(--color-ink)]/55">
+            Every other seat in these colleges fills exactly as it does today. The earmarked ones go to
+            TN-EET rank holders - published, like everything else.
+          </p>
+        </article>
+      </div>
+
+      <!-- reservation-in-code callout -->
+      <div class="mt-12 rounded-2xl border border-[var(--color-line)] bg-[var(--color-ink)] text-[var(--color-cream)] p-6 md:p-8 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-5 md:gap-8 items-start relative overflow-hidden">
+        <div aria-hidden="true" class="absolute -top-12 -right-12 h-40 w-40 rounded-full blur-3xl opacity-25"
+          style="background: radial-gradient(closest-side, var(--color-quill), transparent 70%);"></div>
+        <div class="relative grid place-items-center h-12 w-12 rounded-full bg-[color-mix(in_srgb,var(--color-quill)_25%,transparent)] shrink-0"
+          style="color: color-mix(in srgb, var(--color-quill) 45%, white);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 12l2 2 4-4"/>
+            <path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7z"/>
+          </svg>
+        </div>
+        <div class="relative">
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em]" style="color: color-mix(in srgb, var(--color-quill) 55%, white);">Fairness by design</p>
+          <h3 class="mt-2 font-display text-xl md:text-2xl tracking-tight">Reservation applied in code, published in full.</h3>
+          <p class="mt-2 text-[14px] text-[var(--color-cream)]/70 leading-relaxed max-w-2xl">
+            Tamil Nadu's reservation system runs on top of the rank list exactly as the law says - the rules are
+            open source, every allocation is published, and anyone can re-run the maths to check that every seat
+            went where it should. Fair inside the colleges, checkable from outside.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="bg-[var(--color-cream-2)] py-24 md:py-32">
+    <div class="container-x">
+      <div class="mb-12">
+        <span class="eyebrow text-[var(--color-quill)]">What it does</span>
+        <h2 class="mt-3 font-display text-[40px] md:text-[56px] leading-[1.02] tracking-[-0.02em] max-w-2xl">
+          Six features.<br/>
+          <span class="italic font-[450]">Built so no one can buy a seat.</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[var(--color-line)] rounded-2xl overflow-hidden border border-[var(--color-line)]">
+        {app.features.map((f, i) => (
+          <article class="bg-[var(--color-cream)] p-8 md:p-10">
+            <div class="flex items-center gap-2 mb-6">
+              <span class="font-mono text-[11px] text-[var(--color-quill)]">F.0{i + 1}</span>
+              <span class="h-px flex-1 bg-[var(--color-line)]"></span>
+            </div>
+            <h3 class="font-display text-2xl tracking-tight">{f.title}</h3>
+            <p class="mt-3 text-[15px] text-[var(--color-ink)]/70 leading-relaxed">{f.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-24 md:py-32 bg-[var(--color-cream)]">
+    <div class="container-x">
+      <div class="grid grid-cols-12 gap-y-10 md:gap-10">
+        <div class="col-span-12 md:col-span-4">
+          <span class="eyebrow text-[var(--color-quill)]">FAQ</span>
+          <h2 class="mt-3 font-display text-[36px] md:text-[52px] leading-[1.02] tracking-[-0.02em]">
+            Honest answers,<br/>
+            <span class="italic font-[450] text-[var(--color-quill-deep)]">up front.</span>
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-8">
+          <div class="divide-y divide-[var(--color-line)] border-y border-[var(--color-line)]">
+            {app.faq.map((item) => (
+              <details class="group py-5">
+                <summary class="flex cursor-pointer list-none items-start justify-between gap-6">
+                  <span class="font-display text-xl tracking-tight">{item.q}</span>
+                  <span class="shrink-0 rounded-full border border-[var(--color-line)] h-7 w-7 grid place-items-center transition group-open:rotate-45">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                  </span>
+                </summary>
+                <p class="mt-3 max-w-2xl text-[15px] text-[var(--color-ink)]/70 leading-relaxed">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OTHER APPS -->
+  <section class="bg-[var(--color-cream-2)] py-24 md:py-32">
+    <div class="container-x">
+      <span class="eyebrow text-[var(--color-ink)]/55">Continue exploring</span>
+      <h2 class="mt-3 font-display text-[36px] md:text-[48px] leading-[1.02] tracking-[-0.02em] max-w-xl">
+        The other apps in the suite.
+      </h2>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {others.map((o) => (
+          <a href={`/apps/${o.slug}`} class="group rounded-[var(--radius-card)] border border-[var(--color-line)] bg-[var(--color-cream)] p-8 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-30px_rgba(14,14,14,0.18)] transition">
+            <div class="flex items-center justify-between">
+              <span class={`h-2 w-2 rounded-full ${o.accent === 'rust' ? 'bg-[var(--color-rust)]' : o.accent === 'leaf' ? 'bg-[var(--color-leaf)]' : o.accent === 'gold' ? 'bg-[var(--color-gold)]' : o.accent === 'siren' ? 'bg-[var(--color-siren)]' : o.accent === 'pulse' ? 'bg-[var(--color-pulse)]' : o.accent === 'quill' ? 'bg-[var(--color-quill)]' : 'bg-[var(--color-iris)]'}`}></span>
+              <span class="font-tamil text-sm text-[var(--color-ink)]/50">{o.tamilName}</span>
+            </div>
+            <h3 class="mt-6 font-display text-3xl tracking-tight">{o.name}</h3>
+            <p class="mt-2 text-[15px] text-[var(--color-ink)]/65 max-w-md">{o.tagline}</p>
+            <div class="mt-6 flex items-center gap-2 text-sm font-medium">
+              <span class="opacity-70 group-hover:opacity-100 transition">Read more</span>
+              <svg class="transition group-hover:translate-x-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download" class="relative py-24 md:py-32 bg-[var(--color-cream)]">
+    <div class="container-x">
+      <div class="rounded-[28px] p-7 sm:p-10 md:p-16 grain relative overflow-hidden"
+        style="background: linear-gradient(135deg, var(--color-quill) 0%, var(--color-quill-deep) 100%); color: var(--color-cream);">
+        <div aria-hidden="true" class="absolute -bottom-32 -left-20 h-[420px] w-[420px] rounded-full blur-3xl opacity-20"
+          style="background: radial-gradient(closest-side, var(--color-cream), transparent 70%);"></div>
+        <div class="relative grid grid-cols-12 gap-y-8 md:gap-10 items-end">
+          <div class="col-span-12 md:col-span-7">
+            <span class="eyebrow text-[var(--color-cream)]/80">Get TN-EET</span>
+            <h2 class="mt-4 font-display text-[40px] sm:text-[56px] md:text-[64px] lg:text-[72px] leading-[1.0] tracking-[-0.02em]">
+              One exam.<br/>Ready either way.
+            </h2>
+          </div>
+          <div class="col-span-12 md:col-span-5">
+            <form class="rounded-2xl bg-[var(--color-cream)]/12 backdrop-blur border border-[var(--color-cream)]/20 p-3 flex items-center gap-2">
+              <input type="email" required placeholder="you@example.com"
+                class="flex-1 bg-transparent px-3 py-2.5 text-[15px] text-[var(--color-cream)] placeholder:text-[var(--color-cream)]/55 focus:outline-none"/>
+              <button type="submit" class="btn bg-[var(--color-cream)] text-[var(--color-quill-deep)] hover:bg-white">
+                Notify me
+              </button>
+            </form>
+            <p class="mt-3 text-[11px] text-[var(--color-cream)]/65">
+              The prep app - question bank, past papers, mocks - ships first. Free from day one.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(ldJson)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqJson)} />
+</Base>
