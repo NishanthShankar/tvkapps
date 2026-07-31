@@ -1,12 +1,11 @@
 ---
 const suite = [
   { anchor: 'makkal-kural', name: 'Makkal Kural', tamil: 'மக்கள் குரல்', category: 'Requests & reviews', accent: 'var(--color-rust)' },
+  { anchor: 'whistle', name: 'Whistle', tamil: 'விசில்', category: 'Women safety', accent: 'var(--color-siren)' },
   { anchor: 'inout', name: 'InOut', tamil: 'உள்ளே வெளியே', category: 'TASMAC oversight', accent: 'var(--color-leaf)' },
   { anchor: 'docinout', name: 'DocInOut', tamil: 'டாக் வருகை', category: 'PHC + hospital oversight', accent: 'var(--color-pulse)' },
-  { anchor: 'thittam', name: 'Thittam', tamil: 'திட்டம்', category: 'Welfare access', accent: 'var(--color-gold)' },
-  { anchor: 'whistle', name: 'Whistle', tamil: 'விசில்', category: 'Women safety', accent: 'var(--color-siren)' },
-  { anchor: 'tn-eet', name: 'TN-EET', tamil: 'நுழைவுத் தேர்வு', category: 'Fair admissions', accent: 'var(--color-quill)' },
   { anchor: 'tut4neet', name: 'Tut4Neet', tamil: 'நீட் பயிற்சி', category: 'NEET prep', accent: 'var(--color-iris)' },
+  { anchor: 'tn-eet', name: 'TN-EET', tamil: 'நுழைவுத் தேர்வு', category: 'Fair admissions', accent: 'var(--color-quill)' },
 ];
 ---
 <section class="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-24">
@@ -33,9 +32,9 @@ const suite = [
 
     <div class="mt-8 flex flex-col md:flex-row md:items-end md:justify-between gap-8 reveal">
       <p class="max-w-xl text-[17px] md:text-[19px] leading-[1.55] text-[var(--color-ink)]/75">
-        A suite of seven apps that re-imagines how 80 million Tamil Nadu citizens
-        file requests, review government offices, watch TASMAC shops in real time, hold PHC doctors accountable, find every welfare scheme they're
-        entitled to, call for help in a heartbeat, and study for the biggest exam of their lives without coaching-centre prices. Tamil-first. Open source. No queues.
+        A suite of six apps that re-imagines how 80 million Tamil Nadu citizens
+        file requests, review government offices, call for help in a heartbeat, watch TASMAC shops in real time,
+        hold PHC doctors accountable, and study for the biggest exam of their lives without coaching-centre prices. Tamil-first. Secure by design. No queues.
         <span class="block mt-3 text-[var(--color-rust)] font-display italic">If you have a problem, just whistle.</span>
       </p>
 
@@ -52,7 +51,7 @@ const suite = [
     <div id="suite" class="mt-16 md:mt-20 reveal scroll-mt-24">
       <div class="flex items-baseline justify-between mb-3">
         <span class="eyebrow text-[var(--color-ink)]/60">The suite</span>
-        <span class="font-mono text-[11px] tracking-wide text-[var(--color-ink)]/45">07 apps &nbsp;·&nbsp; one suite</span>
+        <span class="font-mono text-[11px] tracking-wide text-[var(--color-ink)]/45">06 apps &nbsp;·&nbsp; one suite</span>
       </div>
       <ol class="border-t border-[var(--color-line)]">
         {suite.map((s, i) => (
@@ -81,12 +80,11 @@ const suite = [
       {Array.from({ length: 2 }).map(() => (
         <div class="flex shrink-0 gap-10 pr-10">
           <span>Requests &amp; reviews</span><span class="text-[var(--color-rust)]">/</span>
+          <span>Women safety</span><span style="color: var(--color-siren);">/</span>
           <span>TASMAC oversight</span><span class="text-[var(--color-leaf)]">/</span>
           <span>PHC accountability</span><span style="color: var(--color-pulse);">/</span>
-          <span>Welfare access</span><span class="text-[var(--color-gold)]">/</span>
-          <span>Women safety</span><span style="color: var(--color-siren);">/</span>
-          <span>Fair admissions</span><span style="color: var(--color-quill);">/</span>
           <span>NEET prep</span><span style="color: var(--color-iris);">/</span>
+          <span>Fair admissions</span><span style="color: var(--color-quill);">/</span>
         </div>
       ))}
     </div>

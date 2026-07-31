@@ -121,118 +121,6 @@ export const apps: AppRecord[] = [
     },
   },
   {
-    slug: 'inout',
-    name: 'InOut',
-    tamilName: 'உள்ளே வெளியே',
-    category: 'TASMAC oversight',
-    tagline: 'for TASMAC.',
-    shortDescription:
-      "A public clock for every TASMAC shop in Tamil Nadu. Shopkeepers check in and out, citizens see the log, and inspectors see who didn't close on time.",
-    longDescription:
-      "InOut puts a public clock on every TASMAC shop in Tamil Nadu. Shopkeepers check in at opening and check out at closing - the timestamps land on the shop's public page in real time. If a shop is still open past the declared closing hour, the inspecting officials for that constituency see it immediately and can follow up. From any shop's page, citizens can flag bribes, underage sales, or staff abuse for the same officials to act on.",
-    accent: 'leaf',
-    layout: 'split',
-    features: [
-      {
-        title: 'One tap to open. One tap to close.',
-        body: 'Shopkeepers check in at the start of every shift and check out at close. The time, a selfie, and a GPS check at the shop show up on the public log right away - no edits, no backdating.',
-      },
-      {
-        title: 'The 10 PM list',
-        body: "If a shop isn't marked closed within 15 minutes of the declared closing hour, it appears on the inspecting officer's \"still open\" list for that constituency. The flag clears only when the shop confirms close.",
-      },
-      {
-        title: 'A page for every shop',
-        body: "Every TASMAC shop has a public profile - today's shifts, the last 30 days of operations, whistle count, and a Whistle button to flag bribes, underage sales, or staff abuse.",
-      },
-      {
-        title: 'Officials see what citizens see, plus more',
-        body: 'Inspectors get a constituency map of every shop with live status, how many whistles each has, and one tap to send it to the local TASMAC office.',
-      },
-    ],
-    stats: [
-      { value: '4,800+', label: 'TASMAC shops covered' },
-      { value: '10 PM', label: 'Mandatory closing time' },
-      { value: '234', label: 'Constituencies under oversight' },
-    ],
-    faq: [
-      {
-        q: 'Why does TASMAC need this?',
-        a: "Closing-hour violations and late-night sales are routine, and citizen whistles often vanish in the chain between the customer, the shop, and the inspectorate. InOut closes the loop: every shift is timestamped, every late close is flagged automatically, and every whistle is tied to a specific shop and shift. If you have a problem, just whistle.",
-      },
-      {
-        q: 'Can shopkeepers fake check-ins?',
-        a: 'Each check-in needs the time, a GPS check at the registered shop, and a face match against the shopkeeper on file. Backdated entries are rejected. If GPS isn\'t working, the shop is marked "open but unverified" - which is itself a flag for the inspector.',
-      },
-      {
-        q: 'How are whistles verified?',
-        a: "Anonymous whistles land in the inspector's queue with the shop, shift, and timestamp. The inspector decides whether to act. Whistle outcomes (acted on / dismissed) are public, so patterns of dismissal show up over time.",
-      },
-      {
-        q: 'Can anyone download the data?',
-        a: 'Yes. Daily open and close times, late-close flags, and the whistle count per shop are free for anyone to download, refreshed nightly. Names of staff, customers, and whistleblowers are never published.',
-      },
-    ],
-    meta: {
-      title: 'InOut - public clock for Tamil Nadu TASMAC shops',
-      description:
-        "A check-in / check-out log for every TASMAC shop in Tamil Nadu. Public timestamps, automatic late-close flags, citizen whistles tied to each shop's shift. If you have a problem, just whistle.",
-      keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
-    },
-  },
-  {
-    slug: 'thittam',
-    name: 'Thittam',
-    tamilName: 'திட்டம்',
-    category: 'Welfare access',
-    tagline: 'Find the scheme that finds you.',
-    shortDescription:
-      'A welfare scheme finder that matches you against every central and state programme in under a minute.',
-    longDescription:
-      'Tamil Nadu runs hundreds of welfare programmes - and most eligible citizens never hear about them. Thittam asks a few honest questions about your household and shows the exact schemes you qualify for, with the apply-now link, document checklist, and a reminder if you stop midway.',
-    accent: 'gold',
-    layout: 'flow',
-    features: [
-      {
-        title: 'One questionnaire, every scheme',
-        body: 'Answer once. We match you against 240+ central and state programmes in real time.',
-      },
-      {
-        title: 'Document checklist, ready',
-        body: 'Tells you exactly which documents are needed, and lets you upload from your DigiLocker.',
-      },
-      {
-        title: 'Family view',
-        body: 'Add household members and see schemes that apply to each - widows, students, farmers, seniors.',
-      },
-      {
-        title: 'Renewal reminders',
-        body: 'Pensions, scholarships, ration - reminded before the deadline, not after.',
-      },
-    ],
-    stats: [
-      { value: '240+', label: 'Schemes covered' },
-      { value: '54s', label: 'Average match time' },
-      { value: '4.6x', label: 'More applications finished' },
-    ],
-    faq: [
-      {
-        q: 'Do you store my answers?',
-        a: 'Only if you ask us to, for renewal reminders. By default we store nothing - the matching happens right on your phone.',
-      },
-      {
-        q: 'How are central schemes covered?',
-        a: 'We pull Government of India schemes from the public MyScheme list and check what you qualify for on your phone.',
-      },
-    ],
-    meta: {
-      title: 'Thittam - Tamil Nadu welfare scheme finder',
-      description:
-        'One questionnaire matches you against every central and state welfare scheme you qualify for. Built for Tamil Nadu.',
-      keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
-    },
-  },
-  {
     slug: 'whistle',
     name: 'Whistle',
     tamilName: 'விசில்',
@@ -298,13 +186,73 @@ export const apps: AppRecord[] = [
       },
       {
         q: 'What stops the data from being misused?',
-        a: 'Patrol locations stay inside the Singa Pen system. Signing up uses the same ID checks as voter ID. The code behind the alerts, the flagging, and the dashboards is public on GitHub.',
+        a: "Patrol locations stay inside the Singa Pen system. Signing up uses the same ID checks as voter ID. The code itself is kept closed and independently security-audited, so attackers can't study it for weaknesses.",
       },
     ],
     meta: {
       title: 'Whistle - One-tap women safety app for Tamil Nadu',
       description:
         'One-tap SOS for women. Alerts emergency contacts, the police, and the nearest Singa Pen patrol vehicle. The phone whistles at max volume. ID-verified accounts only. If you have a problem, just whistle.',
+      keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
+    },
+  },
+  {
+    slug: 'inout',
+    name: 'InOut',
+    tamilName: 'உள்ளே வெளியே',
+    category: 'TASMAC oversight',
+    tagline: 'for TASMAC.',
+    shortDescription:
+      "A public clock for every TASMAC shop in Tamil Nadu. Shopkeepers check in and out, citizens see the log, and inspectors see who didn't close on time.",
+    longDescription:
+      "InOut puts a public clock on every TASMAC shop in Tamil Nadu. Shopkeepers check in at opening and check out at closing - the timestamps land on the shop's public page in real time. If a shop is still open past the declared closing hour, the inspecting officials for that constituency see it immediately and can follow up. From any shop's page, citizens can flag bribes, underage sales, or staff abuse for the same officials to act on.",
+    accent: 'leaf',
+    layout: 'split',
+    features: [
+      {
+        title: 'One tap to open. One tap to close.',
+        body: 'Shopkeepers check in at the start of every shift and check out at close. The time, a selfie, and a GPS check at the shop show up on the public log right away - no edits, no backdating.',
+      },
+      {
+        title: 'The 10 PM list',
+        body: "If a shop isn't marked closed within 15 minutes of the declared closing hour, it appears on the inspecting officer's \"still open\" list for that constituency. The flag clears only when the shop confirms close.",
+      },
+      {
+        title: 'A page for every shop',
+        body: "Every TASMAC shop has a public profile - today's shifts, the last 30 days of operations, whistle count, and a Whistle button to flag bribes, underage sales, or staff abuse.",
+      },
+      {
+        title: 'Officials see what citizens see, plus more',
+        body: 'Inspectors get a constituency map of every shop with live status, how many whistles each has, and one tap to send it to the local TASMAC office.',
+      },
+    ],
+    stats: [
+      { value: '4,800+', label: 'TASMAC shops covered' },
+      { value: '10 PM', label: 'Mandatory closing time' },
+      { value: '234', label: 'Constituencies under oversight' },
+    ],
+    faq: [
+      {
+        q: 'Why does TASMAC need this?',
+        a: "Closing-hour violations and late-night sales are routine, and citizen whistles often vanish in the chain between the customer, the shop, and the inspectorate. InOut closes the loop: every shift is timestamped, every late close is flagged automatically, and every whistle is tied to a specific shop and shift. If you have a problem, just whistle.",
+      },
+      {
+        q: 'Can shopkeepers fake check-ins?',
+        a: 'Each check-in needs the time, a GPS check at the registered shop, and a face match against the shopkeeper on file. Backdated entries are rejected. If GPS isn\'t working, the shop is marked "open but unverified" - which is itself a flag for the inspector.',
+      },
+      {
+        q: 'How are whistles verified?',
+        a: "Anonymous whistles land in the inspector's queue with the shop, shift, and timestamp. The inspector decides whether to act. Whistle outcomes (acted on / dismissed) are public, so patterns of dismissal show up over time.",
+      },
+      {
+        q: 'Can anyone download the data?',
+        a: 'Yes. Daily open and close times, late-close flags, and the whistle count per shop are free for anyone to download, refreshed nightly. Names of staff, customers, and whistleblowers are never published.',
+      },
+    ],
+    meta: {
+      title: 'InOut - public clock for Tamil Nadu TASMAC shops',
+      description:
+        "A check-in / check-out log for every TASMAC shop in Tamil Nadu. Public timestamps, automatic late-close flags, citizen whistles tied to each shop's shift. If you have a problem, just whistle.",
       keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
     },
   },
@@ -385,82 +333,6 @@ export const apps: AppRecord[] = [
     },
   },
   {
-    slug: 'tn-eet',
-    name: 'TN-EET',
-    tamilName: 'நுழைவுத் தேர்வு',
-    category: 'Fair admissions',
-    tagline: 'Ready either way.',
-    shortDescription:
-      "Tamil Nadu's own entrance exam for professional courses. If NEET is ever set aside, TN-EET is the replacement that keeps admissions merit-based. If NEET stays, TN-EET is the supplement that earmarks seats for Tamil Nadu students. One exam, ready either way.",
-    longDescription:
-      "TN-EET is not a stance on NEET - that question belongs to courts and legislatures. It's the system that works whichever way it settles. If NEET is ever set aside, admissions can't be allowed to slide back to the old days of donations and seats quietly set aside for money - and 12th marks alone can't carry the weight across different boards and different years. TN-EET steps in as the replacement: one transparent exam built on the Tamil Nadu syllabus, with the reservation system running on top exactly as written. And if NEET stays, TN-EET works as the supplement: colleges earmark a few seats per course for TN-EET rank holders, giving Tamil Nadu students a fair shot without banning anything. Either way, every rank and every seat allocation is published for anyone to check.",
-    accent: 'quill',
-    layout: 'split',
-    features: [
-      {
-        title: 'Two modes, one exam',
-        body: 'Replacement mode runs full admissions and counselling if NEET is set aside. Supplement mode earmarks a few seats per course for TN-EET rank holders while NEET continues. Same exam, same rank list - the mode is a policy switch, not a rebuild.',
-      },
-      {
-        title: 'No seats for sale',
-        body: "Every rank, every seat, every allocation is published the day counselling closes. When the whole list is public, there's no quiet corner left to sell a seat from - no donations, no management-quota backdoors.",
-      },
-      {
-        title: 'Reservation, untouched',
-        body: "Tamil Nadu's existing reservation system runs on top of the rank list exactly as written - applied in code and published with every allocation, so anyone can check that every seat went where the law says it should.",
-      },
-      {
-        title: 'Built on the TN syllabus',
-        body: 'Questions come from what Tamil Nadu students actually studied - the state board syllabus - in Tamil and English. Students from other boards can sit it too; the syllabus map is public.',
-      },
-      {
-        title: 'Free official prep',
-        body: 'The full question bank, past papers, and unlimited mock tests live in the app, free. The exam should test what you learned, not what your family could pay a coaching centre.',
-      },
-      {
-        title: 'Whistle on a seat-for-sale',
-        body: 'If any college hints at a donation for a seat, whistle it from the app. The whistle lands with the admissions regulator, tied to that college and course. If you have a problem, just whistle.',
-      },
-    ],
-    stats: [
-      { value: '2', label: 'Modes - replacement or supplement' },
-      { value: '100%', label: 'Ranks and allocations published' },
-      { value: '₹0', label: 'Official prep - papers, mocks, question bank' },
-    ],
-    faq: [
-      {
-        q: 'Is TN-EET a campaign against NEET?',
-        a: "No. TN-EET doesn't take a side on whether NEET should stay or go - that's a question for courts and legislatures. It's built so Tamil Nadu is ready either way: as the replacement if NEET is set aside, as the supplement if it stays.",
-      },
-      {
-        q: 'If NEET went away, why not just admit on 12th marks?',
-        a: "Because that's how it used to work, and it drifted into donations and seats quietly set aside for those who could pay. Marks from different boards and different years also don't compare cleanly. A single common entrance exam - the way JEE works for engineering - keeps the list comparable and leaves no room for a price tag on a seat.",
-      },
-      {
-        q: 'How does supplement mode work while NEET is running?',
-        a: 'Colleges earmark a small number of seats per course - one or two to start - for TN-EET rank holders. Every other seat is filled exactly as it is today. Tamil Nadu students get a fair shot at those seats without changing anything about NEET itself.',
-      },
-      {
-        q: 'What happens to reservation?',
-        a: "Nothing - and that's the point. The reservation system Tamil Nadu already has runs on top of the TN-EET rank list, exactly as written. The difference is that it's applied in code and published with every allocation, so anyone can verify every seat.",
-      },
-      {
-        q: 'Is the exam only in Tamil?',
-        a: 'Tamil and English - same paper, same difficulty. You pick your language when you register, and can switch per question in the exam hall.',
-      },
-      {
-        q: 'What does it cost to prepare?',
-        a: 'The official question bank, past papers, and unlimited mock tests are free in the app. Nobody should need a coaching centre to have a fair shot at a seat.',
-      },
-    ],
-    meta: {
-      title: 'TN-EET - Tamil Nadu entrance exam, ready either way',
-      description:
-        "Tamil Nadu's own entrance exam: the replacement if NEET is set aside, the supplement if it stays. Transparent ranks, reservation intact, free official prep, no seats for sale.",
-      keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
-    },
-  },
-  {
     slug: 'tut4neet',
     name: 'Tut4Neet',
     tamilName: 'நீட் பயிற்சி',
@@ -537,6 +409,82 @@ export const apps: AppRecord[] = [
       title: 'Tut4Neet - AI-taught NEET tuition from home',
       description:
         'Home NEET tuition with an AI teacher: model papers corrected in under a minute, adaptive study plans, family progress summaries, leaderboards and streaks - biology first, at a fraction of coaching-centre prices.',
+      keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
+    },
+  },
+  {
+    slug: 'tn-eet',
+    name: 'TN-EET',
+    tamilName: 'நுழைவுத் தேர்வு',
+    category: 'Fair admissions',
+    tagline: 'Ready either way.',
+    shortDescription:
+      "Tamil Nadu's own entrance exam for professional courses. If NEET is ever set aside, TN-EET is the replacement that keeps admissions merit-based. If NEET stays, TN-EET is the supplement that earmarks seats for Tamil Nadu students. One exam, ready either way.",
+    longDescription:
+      "TN-EET is not a stance on NEET - that question belongs to courts and legislatures. It's the system that works whichever way it settles. If NEET is ever set aside, admissions can't be allowed to slide back to the old days of donations and seats quietly set aside for money - and 12th marks alone can't carry the weight across different boards and different years. TN-EET steps in as the replacement: one transparent exam built on the Tamil Nadu syllabus, with the reservation system running on top exactly as written. And if NEET stays, TN-EET works as the supplement: colleges earmark a few seats per course for TN-EET rank holders, giving Tamil Nadu students a fair shot without banning anything. Either way, every rank and every seat allocation is published for anyone to check.",
+    accent: 'quill',
+    layout: 'split',
+    features: [
+      {
+        title: 'Two modes, one exam',
+        body: 'Replacement mode runs full admissions and counselling if NEET is set aside. Supplement mode earmarks a few seats per course for TN-EET rank holders while NEET continues. Same exam, same rank list - the mode is a policy switch, not a rebuild.',
+      },
+      {
+        title: 'No seats for sale',
+        body: "Every rank, every seat, every allocation is published the day counselling closes. When the whole list is public, there's no quiet corner left to sell a seat from - no donations, no management-quota backdoors.",
+      },
+      {
+        title: 'Reservation, untouched',
+        body: "Tamil Nadu's existing reservation system runs on top of the rank list exactly as written - applied in code and published with every allocation, so anyone can check that every seat went where the law says it should.",
+      },
+      {
+        title: 'Built on the TN syllabus',
+        body: 'Questions come from what Tamil Nadu students actually studied - the state board syllabus - in Tamil and English. Students from other boards can sit it too; the syllabus map is public.',
+      },
+      {
+        title: 'Free official prep',
+        body: 'The full question bank, past papers, and unlimited mock tests live in the app, free. The exam should test what you learned, not what your family could pay a coaching centre.',
+      },
+      {
+        title: 'Whistle on a seat-for-sale',
+        body: 'If any college hints at a donation for a seat, whistle it from the app. The whistle lands with the admissions regulator, tied to that college and course. If you have a problem, just whistle.',
+      },
+    ],
+    stats: [
+      { value: '2', label: 'Modes - replacement or supplement' },
+      { value: '100%', label: 'Ranks and allocations published' },
+      { value: '₹0', label: 'Official prep - papers, mocks, question bank' },
+    ],
+    faq: [
+      {
+        q: 'Is TN-EET a campaign against NEET?',
+        a: "No. TN-EET doesn't take a side on whether NEET should stay or go - that's a question for courts and legislatures. It's built so Tamil Nadu is ready either way: as the replacement if NEET is set aside, as the supplement if it stays.",
+      },
+      {
+        q: 'If NEET went away, why not just admit on 12th marks?',
+        a: "Because that's how it used to work, and it drifted into donations and seats quietly set aside for those who could pay. Marks from different boards and different years also don't compare cleanly. A single common entrance exam - the way JEE works for engineering - keeps the list comparable and leaves no room for a price tag on a seat.",
+      },
+      {
+        q: 'How does supplement mode work while NEET is running?',
+        a: 'Colleges earmark a small number of seats per course - one or two to start - for TN-EET rank holders. Every other seat is filled exactly as it is today. Tamil Nadu students get a fair shot at those seats without changing anything about NEET itself.',
+      },
+      {
+        q: 'What happens to reservation?',
+        a: "Nothing - and that's the point. The reservation system Tamil Nadu already has runs on top of the TN-EET rank list, exactly as written. The difference is that it's applied in code and published with every allocation, so anyone can verify every seat.",
+      },
+      {
+        q: 'Is the exam only in Tamil?',
+        a: 'Tamil and English - same paper, same difficulty. You pick your language when you register, and can switch per question in the exam hall.',
+      },
+      {
+        q: 'What does it cost to prepare?',
+        a: 'The official question bank, past papers, and unlimited mock tests are free in the app. Nobody should need a coaching centre to have a fair shot at a seat.',
+      },
+    ],
+    meta: {
+      title: 'TN-EET - Tamil Nadu entrance exam, ready either way',
+      description:
+        "Tamil Nadu's own entrance exam: the replacement if NEET is set aside, the supplement if it stays. Transparent ranks, reservation intact, free official prep, no seats for sale.",
       keywords: ['placeholder-keyword-1', 'placeholder-keyword-2'],
     },
   },
