@@ -161,7 +161,7 @@ export const apps: AppRecord[] = [
     stats: [
       { value: '<4 min', label: 'Median patrol arrival' },
       { value: '8,500+', label: 'Singa Pen officers' },
-      { value: '47,200+', label: 'Women safely escorted (pilot)' },
+      { value: '47,200+', label: 'Women escorted / year - design target' },
     ],
     faq: [
       {
